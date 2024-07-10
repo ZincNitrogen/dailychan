@@ -83,29 +83,43 @@ axios
                 axios
                     .get(`http://a.4cdn.org/${onlyBoard}/thread/${randomThreadDecision.no}.json`)
                     .then((res) => {
-                        console.log("working")
-                        console.log(onlyBoard)
+                        // console.log("working")
+                        // console.log(onlyBoard)
                         // console.log(res.data)// here, res.data is an object with 1 parameter, "posts", which holds am array of obejcts.
                         let numberOfPosts = res.data.posts.length;
-                        let randomPostDecision =  Math.floor(Math.random()*(numberOfPosts + 1));
-                        console.log(randomPostDecision);
-                        console.log(res.data.posts[randomPostDecision]);
+                        let randomPostNumber =  Math.floor(Math.random()*(numberOfPosts + 1));
+                        // console.log(randomPostNumber);
+                        let aRandomPost = res.data.posts[randomPostNumber];
+                        // console.log(aRandomPost);
+                        return aRandomPost;
 
                                        
                     })
-                    .catch((err) => console.log(err));
+                    .catch((err) => console.log(err, "innermost level"));
 
-                
+                //TODO: destructure aRandomPost and onlyBoard all the way to the global scope
+                console.log(onlyBoard);
+
+
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(err, "middle level"));
 
-
-
-         
-            
 
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err, "outermost level"));
+
+
+// let [aRandomPost, onlyBoards] = KeptValues;
+
+// console.log(aRandomPost);
+// console.log(onlyBoards);
+
+
+
+
+
+
+
 
 
 //some code to deliver the base html/css/js page.
