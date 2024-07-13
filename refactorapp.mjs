@@ -57,10 +57,11 @@ function get4chanBundle() {
         })
         .catch((err) => {
 
-            if (!aRandomPost || !onlyBoard) {
+            if (typeof(aRandomPost) !== "object" || typeof(onlyBoard) !== 'string') {
                 console.log("Error. Retrying...");
                 get4chanBundle();
             }
+            //this error handling needs major work
            
         })
         .finally(() => {
@@ -79,9 +80,7 @@ function get4chanBundle() {
             //
             
             app.get("/ServerSideRequest", (req, res) => { //this is working to send random stuff to frontend without template engine!
-                //res.send("woah");
-                // res.send(onlyBoard);
-                // res.json(aRandomPost);
+             
                 res.json(JSON.stringify(combinedJson));
             })
             
@@ -97,16 +96,9 @@ function get4chanBundle() {
 
 
 console.log(get4chanBundle());
-//get4chanBundle();
-//let bundle = get4chanBundle();
-
-
 
 app.use(express.static("pages"));//middleware
 
-// app.get("/ServerSideRequest", (req, res) => { //this si working to send random stuff to frontend without template engine!
-//     res.send("woah");
-// })
 
 
 app.listen(PORT, () => {
