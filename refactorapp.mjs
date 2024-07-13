@@ -4,35 +4,44 @@ const app = express();
 const PORT = 8000;
 const HOST = "localhost";
 let date = new Date().toUTCString();
+let onlyBoard;
+let aRandomPost;
 
 
-
-function get4chanBundle_Two() {
-    let onlyBoard;
-    let aRandomPost;
+function get4chanBundle() {
 
     console.log("function is running");
 
     axios
-        .get("http://a.4cdn.org/boards.json")
+        .get("http://a.4cdn.org/boards.json", {
+
+            headers: {"Content-Type": "application/json"},
+
+        })
         .then((res) => {
             let numberOfBoards = res.data.boards.length;
             let randomBoardElement = Math.floor(Math.random() * (numberOfBoards+1));
             let boardDecision = (res.data.boards[randomBoardElement]); 
             onlyBoard = boardDecision.board;
-            return axios.get(`http://a.4cdn.org/${onlyBoard}/catalog.json`);
+            return axios.get(`http://a.4cdn.org/${onlyBoard}/catalog.json`, {
+                headers: {"Content-Type": "application/json"},
+
+            });
 
             
         })
         .then((res) => {    
             let numberOfPages = res.data.length;
             let randomPagePicker = Math.floor(Math.random()*(numberOfPages+1));
-            let randomPageDecision = res.data[randomPagePicker];//randomPageDecision is an object with two parametes, "page: and "threads", the latter being an array of objects.
-            let threadAccess = randomPageDecision.threads; //given previous structural info, it should be clear that threadAccess is the value of the "threads" parameter, it is an array of objects.
+            let randomPageDecision = res.data[randomPagePicker];
+            let threadAccess = randomPageDecision.threads; 
             let randomThreadPicker = Math.floor(Math.random()*(threadAccess.length + 1));
             let randomThreadDecision = threadAccess[randomThreadPicker];
 
-            return axios.get(`http://a.4cdn.org/${onlyBoard}/thread/${randomThreadDecision.no}.json`);
+            return axios.get(`http://a.4cdn.org/${onlyBoard}/thread/${randomThreadDecision.no}.json`, {
+                headers: {"Content-Type": "application/json"},
+
+            });
 
 
         })
@@ -46,56 +55,47 @@ function get4chanBundle_Two() {
 
 
         })
-        .catch((err) => {err})
+        .catch((err) => {
+
+            if (!aRandomPost || !onlyBoard) {
+                console.log("Error. Retrying...");
+                get4chanBundle();
+            }
+           
+        })
         .finally(() => {
 
-            console.log(onlyBoard);
-            console.log(aRandomPost); 
-            //send these two variables to the front end from here(?)           
+            console.log(onlyBoard, typeof(onlyBoard));
+            console.log(aRandomPost, typeof(aRandomPost)); 
 
+
+            //send these two variables to the front end from here(?)           
+           
 
         });
-
-
-    
-
+        
 
 }
 
 
 
-//let [aRandomPost, onlyBoard] = get4chanBundle_Two();
 
-//console.log(aRandomPost);
-//console.log(onlyBoard);
-
-// async function outerValues() {
- 
-//     let [aRandomPost, onlyBoard] = await get4chanBundle_Two();
-//     console.log("outValues function working");
-
-//     console.log(aRandomPost, onlyBoard);
-
-// }
-
-// outerValues();
-
-//console.log(aRandomPost, onlyBoard);
-
-
-// console.log(`outer working: ${x}`);
-// console.log(`outer working: ${y}`);
+console.log(get4chanBundle());
+//get4chanBundle();
+//let bundle = get4chanBundle();
 
 
 
+app.use(express.static("pages"));//middleware
 
-
-console.log(get4chanBundle_Two());
-
-
-app.use(express.static("pages"));
+app.get("/ServerSideRequest", (req, res) => { //this si working to send random stuff to frontend without template engine!
+    res.send("woah");
+})
 
 
 app.listen(PORT, () => {
     console.log(`server is listening on ${HOST}:${PORT}`)
 });
+
+//TODO; CHECK IF-MODIFIED-SINCE FOR AXIOS GEET REQUESTS TO 4CHAN SERVERS.
+//TDO: How to pass a Node.js variable to the DOM? Template engines seem to be one solution, but is there a simpler way?
