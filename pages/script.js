@@ -6,9 +6,7 @@ const url = "http://localhost:8000/ServerSideRequest";
 
 async function pingProxy() {
     const response = await fetch(url);
-    //const data = await response;
-    //console.log(response.body);
-    const fourchanData = response.text();
+    const fourchanData = response.json(); 
     console.log(fourchanData);
     
 

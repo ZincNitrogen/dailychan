@@ -67,9 +67,25 @@ function get4chanBundle() {
 
             console.log(onlyBoard, typeof(onlyBoard));
             console.log(aRandomPost, typeof(aRandomPost)); 
+            let combinedJson = {
+                Board: onlyBoard,
+                Post: aRandomPost
+            };
 
+    
 
-            //send these two variables to the front end from here(?)           
+            //combine the above two in a json object
+            //send these two variables to the front end from here
+            //
+            
+            app.get("/ServerSideRequest", (req, res) => { //this is working to send random stuff to frontend without template engine!
+                //res.send("woah");
+                // res.send(onlyBoard);
+                // res.json(aRandomPost);
+                res.json(JSON.stringify(combinedJson));
+            })
+            
+
            
 
         });
@@ -88,9 +104,9 @@ console.log(get4chanBundle());
 
 app.use(express.static("pages"));//middleware
 
-app.get("/ServerSideRequest", (req, res) => { //this si working to send random stuff to frontend without template engine!
-    res.send("woah");
-})
+// app.get("/ServerSideRequest", (req, res) => { //this si working to send random stuff to frontend without template engine!
+//     res.send("woah");
+// })
 
 
 app.listen(PORT, () => {
