@@ -7,6 +7,12 @@ let date = new Date().toUTCString();
 let onlyBoard;
 let aRandomPost;
 
+let randomThreadDecision;
+let threadAccess;
+let randomThreadPicker;
+let randomPagePicker;
+let randomPageDecision;
+
 
 function get4chanBundle() {
 
@@ -20,7 +26,7 @@ function get4chanBundle() {
         })
         .then((res) => {
             let numberOfBoards = res.data.boards.length;
-            let randomBoardElement = Math.floor(Math.random() * (numberOfBoards+1));
+            let randomBoardElement = Math.floor(Math.random() * (numberOfBoards));
             let boardDecision = (res.data.boards[randomBoardElement]); 
             onlyBoard = boardDecision.board;
             return axios.get(`http://a.4cdn.org/${onlyBoard}/catalog.json`, {
@@ -28,16 +34,48 @@ function get4chanBundle() {
 
             });
 
+
             
         })
-        .then((res) => {    
-            let numberOfPages = res.data.length;
-            let randomPagePicker = Math.floor(Math.random()*(numberOfPages+1));
-            let randomPageDecision = res.data[randomPagePicker];
-            let threadAccess = randomPageDecision.threads; 
-            let randomThreadPicker = Math.floor(Math.random()*(threadAccess.length + 1));
-            let randomThreadDecision = threadAccess[randomThreadPicker];
+        .then((res) => {   
+            // console.log(`<<<<<<<<<<<<<<<<BEGIN THREAD MATRIX>>>>>>>>>>>>>>>>`) 
+            // console.log(res.data);
 
+
+
+            // console.log(`<<<<<<<<<<<<<<<<NUMBER OF PAGES>>>>>>>>>>>>>>>>`) 
+            let numberOfPages = res.data.length;
+            // console.log(numberOfPages);
+
+
+
+
+            // console.log(`<<<<<<<<<<<<<<<<RANDOM PAGE>>>>>>>>>>>>>>>>`) 
+            randomPagePicker = Math.floor(Math.random()*(numberOfPages)); //picks random apge
+            // console.log(randomPagePicker);
+
+
+            // console.log(`<<<<<<<<<<<<<<<<ACCESS PAGE>>>>>>>>>>>>>>>>`) 
+            randomPageDecision = res.data[randomPagePicker]; //access object corresponding to page value
+            // console.log(randomPageDecision);
+
+
+
+            // console.log(`<<<<<<<<<<<<<<<<ACCESS THREADS OBJECT>>>>>>>>>>>>>>>>`) 
+            threadAccess = randomPageDecision.threads; //access threads value of pagedecision object
+            // console.log(threadAccess);
+            
+
+            // console.log(`<<<<<<<<<<<<<<<<RANDOM THREAD>>>>>>>>>>>>>>>>`) 
+            randomThreadPicker = Math.floor(Math.random()*(threadAccess.length));
+            // console.log(randomThreadPicker);
+
+
+            // console.log(`<<<<<<<<<<<<<<<<THREAD DESCISION>>>>>>>>>>>>>>>>`) 
+            randomThreadDecision = threadAccess[randomThreadPicker];
+            // console.log(randomThreadDecision);
+
+       
             return axios.get(`http://a.4cdn.org/${onlyBoard}/thread/${randomThreadDecision.no}.json`, {
                 headers: {"Content-Type": "application/json"},
 
@@ -48,21 +86,27 @@ function get4chanBundle() {
         .then((res) => {
 
             let numberOfPosts = res.data.posts.length;
-            let randomPostNumber =  Math.floor(Math.random()*(numberOfPosts + 1));
+            let randomPostNumber =  Math.floor(Math.random()*(numberOfPosts));
             aRandomPost = res.data.posts[randomPostNumber];
-            //console.log(aRandomPost);
+
+            // console.log(`<<<<<<<<<<<<<<<<POSTS>>>>>>>>>>>>>>>>`) 
+            // console.log(res.data);
+
+            // console.log(`<<<<<<<<<<<<<<<<A RANDOM POST>>>>>>>>>>>>>>>>`) 
+            // console.log(aRandomPost);
+           
             return aRandomPost;
 
 
         })
         .catch((err) => {
 
-            if (typeof(aRandomPost) !== "object" || typeof(onlyBoard) !== 'string') {
+             if ((typeof(aRandomPost) === "undefined") || (typeof(onlyBoard) === 'undefined')) {
                 console.log("Error. Retrying...");
-                get4chanBundle();
+                get4chanBundle();             
             }
-            //this error handling needs major work
-           
+
+            
         })
         .finally(() => {
 
@@ -73,13 +117,14 @@ function get4chanBundle() {
                 Post: aRandomPost
             };
 
+          
     
 
             //combine the above two in a json object
             //send these two variables to the front end from here
             //
             
-            app.get("/ServerSideRequest", (req, res) => { //this is working to send random stuff to frontend without template engine!
+            app.get("/ServerSideRequest", (req, res) => {
              
                 res.json(JSON.stringify(combinedJson));
             })
@@ -105,5 +150,3 @@ app.listen(PORT, () => {
     console.log(`server is listening on ${HOST}:${PORT}`)
 });
 
-//TODO; CHECK IF-MODIFIED-SINCE FOR AXIOS GEET REQUESTS TO 4CHAN SERVERS.
-//TDO: How to pass a Node.js variable to the DOM? Template engines seem to be one solution, but is there a simpler way?
