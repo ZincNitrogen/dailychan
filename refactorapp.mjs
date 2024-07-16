@@ -4,17 +4,21 @@ const app = express();
 const PORT = 8000;
 const HOST = "localhost";
 let date = new Date().toUTCString();
-let onlyBoard;
-let aRandomPost;
+let combinedJson;
+// let onlyBoard;
+// let aRandomPost;
 
-let randomThreadDecision;
-let threadAccess;
-let randomThreadPicker;
-let randomPagePicker;
-let randomPageDecision;
+// let randomThreadDecision;
+// let threadAccess;
+// let randomThreadPicker;
+// let randomPagePicker;
+// let randomPageDecision;
 
 
 function get4chanBundle() {
+    let onlyBoard;
+    let aRandomPost;
+
 
     console.log("function is running");
 
@@ -49,30 +53,29 @@ function get4chanBundle() {
 
 
 
-
             // console.log(`<<<<<<<<<<<<<<<<RANDOM PAGE>>>>>>>>>>>>>>>>`) 
-            randomPagePicker = Math.floor(Math.random()*(numberOfPages)); //picks random apge
+            let randomPagePicker = Math.floor(Math.random()*(numberOfPages)); //picks random apge
             // console.log(randomPagePicker);
 
 
             // console.log(`<<<<<<<<<<<<<<<<ACCESS PAGE>>>>>>>>>>>>>>>>`) 
-            randomPageDecision = res.data[randomPagePicker]; //access object corresponding to page value
+            let randomPageDecision = res.data[randomPagePicker]; //access object corresponding to page value
             // console.log(randomPageDecision);
 
 
 
             // console.log(`<<<<<<<<<<<<<<<<ACCESS THREADS OBJECT>>>>>>>>>>>>>>>>`) 
-            threadAccess = randomPageDecision.threads; //access threads value of pagedecision object
+            let threadAccess = randomPageDecision.threads; //access threads value of pagedecision object
             // console.log(threadAccess);
             
 
             // console.log(`<<<<<<<<<<<<<<<<RANDOM THREAD>>>>>>>>>>>>>>>>`) 
-            randomThreadPicker = Math.floor(Math.random()*(threadAccess.length));
+            let randomThreadPicker = Math.floor(Math.random()*(threadAccess.length));
             // console.log(randomThreadPicker);
 
 
             // console.log(`<<<<<<<<<<<<<<<<THREAD DESCISION>>>>>>>>>>>>>>>>`) 
-            randomThreadDecision = threadAccess[randomThreadPicker];
+            let randomThreadDecision = threadAccess[randomThreadPicker];
             // console.log(randomThreadDecision);
 
        
@@ -110,37 +113,71 @@ function get4chanBundle() {
         })
         .finally(() => {
 
-            console.log(onlyBoard, typeof(onlyBoard));
-            console.log(aRandomPost, typeof(aRandomPost)); 
-            let combinedJson = {
+            //console.log(onlyBoard, typeof(onlyBoard));
+            //console.log(aRandomPost, typeof(aRandomPost)); 
+            combinedJson = {
                 Board: onlyBoard,
                 Post: aRandomPost
             };
 
+            console.log("=========new=========")
+            //console.log(onlyBoard);
+            //console.log(aRandomPost);
+            //console.log(combinedJson);
+
+            // app.get("/ServerSideRequest", (req, res) => {
+
+            //     // onlyBoard = null;
+            //     // aRandomPost = null
+              
+            //     console.log("=========old=========")
+            //     console.log(onlyBoard);
+            //     console.log(aRandomPost);
+            //     console.log(combinedJson); 
+             
+            //     res.json(JSON.stringify(combinedJson));
+            //     // delete combinedJson.Board;
+            //     // delete combinedJson.Post;
+
+            //     console.log(get4chanBundle());
+
+
+
+            // });
+            
           
+
+
+
     
 
             //combine the above two in a json object
             //send these two variables to the front end from here
             //
-            
-            app.get("/ServerSideRequest", (req, res) => {
-             
-                res.json(JSON.stringify(combinedJson));
-            })
-            
-
            
 
+
+            
         });
+
+        
+        //console.log(combinedJson);
+        return combinedJson;
         
 
 }
 
 
 
+app.get("/ServerSideRequest", (req, res) => {
+    res.json(JSON.stringify(get4chanBundle()));
+
+    
+})
+
 
 console.log(get4chanBundle());
+
 
 app.use(express.static("pages"));//middleware
 
@@ -150,3 +187,5 @@ app.listen(PORT, () => {
     console.log(`server is listening on ${HOST}:${PORT}`)
 });
 
+//TODO: FIGURE OUT HOW TO GET DIFFERENT VALUES TO THE FRONT END
+//TODO: filter post type by file extention (ext property)
