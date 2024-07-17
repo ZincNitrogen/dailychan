@@ -2,9 +2,10 @@
 const postContainer = document.querySelector('.post-container');
 const url = "http://localhost:8000/ServerSideRequest";
 const newPostBtn = document.querySelector(`.btn`);
-const html = document.querySelector(`html`);
 let postContainerChildren = postContainer.childNodes;
-let chanLink = document.querySelector(".quotelink");
+let chanLink;
+
+
 
 
 
@@ -59,13 +60,15 @@ async function pingProxy(source) {
     //paintCom.prepend(usableFourChanData.Post.com);
 
 
-    // if (chanLink || false) {
-    //     chanLink.setAttribute("href", `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${chanLink.firstChild} target= _blank title=See this post on 4chan.org in a new tab`);
+    chanLink = paintCom.querySelector(".quotelink");
 
-    // }
-
-        
     console.log(chanLink);
+    
+    if (chanLink || false) {
+        chanLink.setAttribute("href", `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${chanLink.firstChild} target= _blank title=See this post on 4chan.org in a new tab`);
+
+    }
+
     //chanLink.href = `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${chanLink.firstChild} target= _blank title=See this post on 4chan.org in a new tab`;
 
 
