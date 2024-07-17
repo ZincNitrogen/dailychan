@@ -187,5 +187,4 @@ app.listen(PORT, () => {
     console.log(`server is listening on ${HOST}:${PORT}`)
 });
 
-//TODO: FIGURE OUT HOW TO GET DIFFERENT VALUES TO THE FRONT END
 //TODO: filter post type by file extention (ext property)
