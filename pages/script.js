@@ -2,7 +2,8 @@
 const postContainer = document.querySelector('.post-container');
 const url = "http://localhost:8000/ServerSideRequest";
 const newPostBtn = document.querySelector(`.btn`);
-let postContainerChildern = postContainer.childNodes;
+const html = document.querySelector(`html`);
+let postContainerChildren = postContainer.childNodes;
 
 
 
@@ -17,7 +18,7 @@ async function pingProxy(source) {
 
 
     //console.log(fourchanData);
-    console.log(usableFourChanData);
+    //console.log(usableFourChanData);
     console.log(usableFourChanData.Board);
     console.log(usableFourChanData.Post);
 
@@ -31,11 +32,21 @@ async function pingProxy(source) {
     let paintCom = document.createElement("div");
 
 
-    paintBoard.prepend(usableFourChanData.Board);
-    paintNo.prepend(usableFourChanData.Post.no);
+    paintBoard.setAttribute('class',"post-container-board");
+    paintNo.setAttribute('class',"post-container-no");
+    paintNow.setAttribute('class',"post-container-now");
+    paintName.setAttribute('class',"post-container-name");
+    paintCom.setAttribute('class',"post-container-com");
+
+    
+
+    paintBoard.prepend(`/${usableFourChanData.Board}/`);
+    paintNo.prepend(`No.${usableFourChanData.Post.no}`);
     paintNow.prepend(usableFourChanData.Post.now);
     paintName.prepend(usableFourChanData.Post.name);
-    paintCom.prepend(usableFourChanData.Post.com);
+    paintCom.insertAdjacentHTML( 'afterbegin',  usableFourChanData.Post.com);
+    //paintCom.prepend(usableFourChanData.Post.com);
+
 
 
 
@@ -48,62 +59,28 @@ async function pingProxy(source) {
 }
 
 
+function containerDeletion() {
 
+  
 
-async function pingProxyTwo(source) {
+    for (let i = postContainerChildren.length -1; i >=0; i--){
+        postContainerChildren[i].remove();
 
-    const response = await fetch(source);
-    const fourchanData = await response.text(); 
-    const usableFourChanData = fourchanData;
-
-
-    //console.log(fourchanData);
-    console.log(usableFourChanData);
-    console.log(usableFourChanData.Board);
-    console.log(usableFourChanData.Post);
-
-    //console.log(usableFourChanData[Board]);
-    //console.log(usableFourChanData[1]);
-
-    let one = document.createElement("div");
-    let two = document.createElement("div");
-    let three = document.createElement("div");
-    let four = document.createElement("div");
-    let five = document.createElement("div");
-
-
-    one.prepend(usableFourChanData.Board);
-    two.prepend(usableFourChanData.Post.no);
-    three.prepend(usableFourChanData.Post.now);
-    four.prepend(usableFourChanData.Post.name);
-    five.prepend(usableFourChanData.Post.com);
-
-
-
-    postContainer.append(one);
-    postContainer.append(two);
-    postContainer.append(three);
-    postContainer.append(four);
-    postContainer.append(five);
+    }
+    
 
 }
 
 
 
-//pingProxy(url);
+pingProxy(url);
 
-
-//button must call function and refesh page
 newPostBtn.addEventListener("pointerup", (e) => {
 
-    //deleteChildren(postContainer);
+    containerDeletion();
     pingProxy(url);
 
-    // location.reload();
-    // return false;
 })
 
 
-
 //TODO: Remember to add image support from backend to frontend. 
-//TODO: FIGURE OUT HOW TO GET UNIQUE VALUES FROM BACKEND
