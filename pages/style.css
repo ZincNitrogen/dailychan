@@ -1,3 +1,9 @@
+:root {
+    --4chanQuote: #789922;
+    --4chanQuotelink: #d00;
+    --4chanName: #117743;
+}
+
 * {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
@@ -8,7 +14,8 @@
 
 html {
     font-size: 10rem;
-    color: gray;
+    /* color: gray; */
+    color: black;
 }
 
 body {
@@ -53,38 +60,89 @@ main {
 
 .post-container {
     display: flex;
-    flex-flow: row-reverse wrap;
+    flex-flow: row-reverse wrap; /*i think this has to be nowrap, must investigate */
     justify-content: flex-end;
     align-items: center;
     align-content: center;
-    column-gap: 0.02rem;
+    /* column-gap: 0.02rem; */
+    column-gap: 0.04rem;
+
     border: solid 2px black;
     max-width: 5rem;
+    padding: 0.05rem;
+
 
 
 }
 
-.post-container-board{
-    border: 1px solid black;
 
+
+.post-container-board{
+    /* border: 1px solid black; */
+    /* padding: 0.05rem; */
+    z-index: 1;
 
 }
 
 .post-container-now{
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    /* padding: 0.05rem; */
+    z-index: 1;
+
+
 }
 
 .post-container-no{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     flex-grow: 2;
+    /* padding: 0.05rem; */
+
+
+}
+
+.post-container-no > a:link{
+
+    text-decoration: wavy !important; /*why is this not working??*/
+    color: var(--4chanQuotelink);
+    font-size: 0.15rem;
+
+    
+
+
 }
 
 .post-container-name{
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    /* padding: 0.05rem; */
+    color: var(--4chanName);
+    font-weight: 700;
+    z-index: 1;
+
+
 }
 
 .post-container-com{
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    /* padding: 0.05rem; */
+    z-index: 1;
+
+
+
+}
+
+
+
+.quote{
+    color: var(--4chanQuote);
+    font-size: 0.15rem;
+    /* font-size: 10pt; */
+}
+
+.quotelink{
+
+    color: var(--4chanQuotelink);
+    font-size: 0.15rem;
+
 }
 
 footer {

@@ -8,7 +8,7 @@ let combinedJson;
 // let onlyBoard;
 // let aRandomPost;
 
-// let randomThreadDecision;
+let randomThreadDecision;
 // let threadAccess;
 // let randomThreadPicker;
 // let randomPagePicker;
@@ -75,7 +75,7 @@ function get4chanBundle() {
 
 
             // console.log(`<<<<<<<<<<<<<<<<THREAD DESCISION>>>>>>>>>>>>>>>>`) 
-            let randomThreadDecision = threadAccess[randomThreadPicker];
+            randomThreadDecision = threadAccess[randomThreadPicker];
             // console.log(randomThreadDecision);
 
        
@@ -117,7 +117,8 @@ function get4chanBundle() {
             //console.log(aRandomPost, typeof(aRandomPost)); 
             combinedJson = {
                 Board: onlyBoard,
-                Post: aRandomPost
+                Post: aRandomPost,
+                OP: randomThreadDecision
             };
 
             console.log("=========new=========")
