@@ -60,23 +60,23 @@ async function pingProxy(source) {
     //paintCom.prepend(usableFourChanData.Post.com);
 
 
-    chanLink = paintCom.querySelector(".quotelink");
-
+    chanLink = Array.from(paintCom.querySelectorAll(".quotelink"));
 
 
     if (chanLink || false) {
 
-    
+        console.log(chanLink);
+        chanLink.forEach((e) => {
+            //console.log(e.text);
+            let postReply = (e.text).slice(2);
 
-        let test = (chanLink.text).slice(2);
+            e.setAttribute("href", `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${postReply}`);
 
-        chanLink.setAttribute("href", `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${test}`);
+            e.setAttribute("target", "_blank");
+            e.setAttribute("title" , "See this post on 4chan.org in a new tab");
 
-        chanLink.setAttribute("target", "_blank");
-        chanLink.setAttribute("title" , "See this post on 4chan.org in a new tab");
+        })
 
-
-    
     
     }
 
