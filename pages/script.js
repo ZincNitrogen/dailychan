@@ -62,12 +62,27 @@ async function pingProxy(source) {
 
     chanLink = paintCom.querySelector(".quotelink");
 
-    console.log(chanLink);
-    
-    if (chanLink || false) {
-        chanLink.setAttribute("href", `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${chanLink.firstChild} target= _blank title=See this post on 4chan.org in a new tab`);
 
+
+    if (chanLink || false) {
+
+    
+
+        let test = (chanLink.text).slice(2);
+
+        chanLink.setAttribute("href", `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${test}`);
+
+        chanLink.setAttribute("target", "_blank");
+        chanLink.setAttribute("title" , "See this post on 4chan.org in a new tab");
+
+
+    
+    
     }
+
+    
+    
+  
 
     //chanLink.href = `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${chanLink.firstChild} target= _blank title=See this post on 4chan.org in a new tab`;
 
@@ -109,7 +124,5 @@ newPostBtn.addEventListener("pointerup", (e) => {
 })
 
 
-
-//TODO: Make all linkable items link back to original 4chan source
 
 //TODO: Remember to add image support from backend to frontend. 

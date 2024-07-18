@@ -188,4 +188,4 @@ app.listen(PORT, () => {
     console.log(`server is listening on ${HOST}:${PORT}`)
 });
 
-//TODO: filter post type by file extention (ext property)
+//TODO: filter post type by file extention (ext property) and get images/gifs to display
