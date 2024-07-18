@@ -34,6 +34,10 @@ async function pingProxy(source) {
     let paintNow = document.createElement("div");
     let paintName = document.createElement("div");
     let paintCom = document.createElement("div");
+    let paintFileName = document.createElement("div");
+    let paintFsize = document.createElement("div");
+ 
+
 
 
     paintBoard.setAttribute('class',"post-container-board");
@@ -41,9 +45,15 @@ async function pingProxy(source) {
     paintNow.setAttribute('class',"post-container-now");
     paintName.setAttribute('class',"post-container-name");
     paintCom.setAttribute('class',"post-container-com");
+    paintFileName.setAttribute('class',"post-container-filename");
+
+    paintFsize.setAttribute('class',"post-container-fsize");
 
 
-    
+
+    paintFileName.prepend(`File: ${usableFourChanData.Post.filename}${usableFourChanData.Post.ext}`); //including "ext" here and only here
+    paintFsize.prepend(usableFourChanData.Post.fsize); //might have to round. investigate 4chan format
+
 
     paintBoard.prepend(`/${usableFourChanData.Board}/`);
 
@@ -96,7 +106,14 @@ async function pingProxy(source) {
     postContainer.append(paintNow);
     postContainer.append(paintName);
     postContainer.append(paintCom);
+    if (typeof(usableFourChanData.Post.filename) !== "undefined") {
+        postContainer.append(paintFileName);
+        postContainer.append(paintFsize);
+        
+    
 
+    }
+  
 }
 
 

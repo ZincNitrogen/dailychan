@@ -132,6 +132,24 @@ main {
 
 
 
+.post-container-fsize{
+    border: 1px solid black;
+    /* padding: 0.05rem; */
+    z-index: 1;
+
+
+
+}
+
+.post-container-filename{
+    border: 1px solid black;
+    /* padding: 0.05rem; */
+    z-index: 1;
+
+
+
+}
+
 .quote{
     color: var(--4chanQuote);
     font-size: 0.15rem;
