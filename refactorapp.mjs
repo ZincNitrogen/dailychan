@@ -14,6 +14,8 @@ let randomThreadDecision;
 // let randomPagePicker;
 // let randomPageDecision;
 
+let thumbnail;
+
 
 function get4chanBundle() {
     let onlyBoard;
@@ -98,9 +100,18 @@ function get4chanBundle() {
             // console.log(`<<<<<<<<<<<<<<<<A RANDOM POST>>>>>>>>>>>>>>>>`) 
             // console.log(aRandomPost);
            
-            return aRandomPost;
+            //return aRandomPost;
+            return axios.get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
+                headers: {"Content-Type": "image/jpeg"},
+                //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
+                //this url serves thumbnails!!!
+            }); 
 
 
+        })
+        .then((res) => {
+            console.log(res.data);
+            thumbnail = res.data;
         })
         .catch((err) => {
 
@@ -118,7 +129,8 @@ function get4chanBundle() {
             combinedJson = {
                 Board: onlyBoard,
                 Post: aRandomPost,
-                OP: randomThreadDecision
+                OP: randomThreadDecision,
+                Thumbnail: thumbnail,
             };
 
             console.log("=========new=========")
@@ -188,4 +200,9 @@ app.listen(PORT, () => {
     console.log(`server is listening on ${HOST}:${PORT}`)
 });
 
-//TODO: filter post type by file extention (ext property) and get images/gifs to display
+
+//get image/gif from endpoint: thumbnails and full files (headers are content type: application/octet-stream <--try this one first, image/jpeg, image/png, image/gif, video/webm , audio/weba, /swf)
+//add it to combinedjson to pipe to front end
+//fornt end recievd it and parses out file
+//add cs class to it to put it in its place
+//paint it in post container with everything else

@@ -60,7 +60,7 @@ main {
 
 .post-container {
     display: flex;
-    flex-flow: row-reverse wrap; /*i think this has to be nowrap, must investigate */
+    flex-flow: row wrap; /*i think this has to be nowrap, must investigate */
     justify-content: flex-end;
     align-items: center;
     align-content: center;
@@ -78,24 +78,27 @@ main {
 
 
 .post-container-board{
-    /* border: 1px solid black; */
+    border: 1px solid black;
     /* padding: 0.05rem; */
-    z-index: 1;
+    order: 4;
 
 }
 
 .post-container-now{
-    /* border: 1px solid black; */
+    border: 1px solid black;
     /* padding: 0.05rem; */
-    z-index: 1;
+    order: 2;
+
 
 
 }
 
 .post-container-no{
-    /* border: 1px solid black; */
+    border: 1px solid black;
     flex-grow: 2;
     /* padding: 0.05rem; */
+    order: 3;
+
 
 
 }
@@ -112,19 +115,18 @@ main {
 }
 
 .post-container-name{
-    /* border: 1px solid black; */
+    border: 1px solid black;
     /* padding: 0.05rem; */
     color: var(--4chanName);
     font-weight: 700;
-    z-index: 1;
-
+    order: 1;
 
 }
 
 .post-container-com{
-    /* border: 1px solid black; */
+    border: 1px solid black;
     /* padding: 0.05rem; */
-    z-index: 1;
+    order: 7;
 
 
 
@@ -135,7 +137,7 @@ main {
 .post-container-fsize{
     border: 1px solid black;
     /* padding: 0.05rem; */
-    z-index: 1;
+    order: 6;
 
 
 
@@ -144,7 +146,7 @@ main {
 .post-container-filename{
     border: 1px solid black;
     /* padding: 0.05rem; */
-    z-index: 1;
+    order: 5;
 
 
 
