@@ -5,8 +5,9 @@ const PORT = 8000;
 const HOST = "localhost";
 let date = new Date().toUTCString();
 let combinedJson;
-// let onlyBoard;
-// let aRandomPost;
+
+let onlyBoard;
+let aRandomPost;
 
 let randomThreadDecision;
 // let threadAccess;
@@ -18,8 +19,7 @@ let thumbnail;
 
 
 function get4chanBundle() {
-    let onlyBoard;
-    let aRandomPost;
+   
 
 
     console.log("function is running");
@@ -101,8 +101,12 @@ function get4chanBundle() {
             // console.log(aRandomPost);
            
             //return aRandomPost;
+
             return axios.get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
+                //responseType: "stream",
                 headers: {"Content-Type": "image/jpeg"},
+                //headers: {"Content-Type": "application/json"},
+
                 //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
                 //this url serves thumbnails!!!
             }); 
@@ -110,7 +114,9 @@ function get4chanBundle() {
 
         })
         .then((res) => {
-            console.log(res.data);
+            //console.log(res.data); 
+            console.log(res);
+            console.log(typeof(res.data));
             thumbnail = res.data;
         })
         .catch((err) => {
@@ -180,6 +186,28 @@ function get4chanBundle() {
 
 }
 
+// function getThumbnail() {
+
+//     axios
+//     .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
+//             //headers: {"Content-Type": "image/jpeg"},
+//             responseType: "blob",
+//             //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
+//             //this url serves thumbnails!!!
+//         })
+//         .then((res) => {
+//             thumbnail= res.data;
+//             console.log(typeof(thumbnail));
+//             console.log(thumbnail);
+//         })
+//         .catch((err) =>{err})
+//         .finally(() => {
+//             let test = URL.createObjectURL(thumbnail);
+//         })
+
+
+// }
+
 
 
 app.get("/ServerSideRequest", (req, res) => {
@@ -187,6 +215,13 @@ app.get("/ServerSideRequest", (req, res) => {
 
     
 })
+
+
+// app.get("/ServeThumbnail", (req, res) =>{
+//     res.send(getThumbnail());
+//     // console.log(getThumbnail());
+    
+// })
 
 
 console.log(get4chanBundle());

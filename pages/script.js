@@ -1,6 +1,7 @@
 
 const postContainer = document.querySelector('.post-container');
 const url = "http://localhost:8000/ServerSideRequest";
+const thumbnailURL = "http://localhost:8000/ServeThumbnail";
 const newPostBtn = document.querySelector(`.btn`);
 let postContainerChildren = postContainer.childNodes;
 let chanLink;
@@ -18,6 +19,7 @@ async function pingProxy(source) {
     const response = await fetch(source);
     const fourchanData = await response.json(); 
     const usableFourChanData = JSON.parse(fourchanData);
+    //const convertThumbnail = usableFourChanData.Thumbnail;
 
 
     //console.log(fourchanData);
@@ -25,9 +27,15 @@ async function pingProxy(source) {
     console.log(usableFourChanData.Board);
     console.log(usableFourChanData.Post);
     console.log(usableFourChanData.OP.no);
+    console.log(usableFourChanData.Thumbnail);
 
     //console.log(usableFourChanData[Board]);
     //console.log(usableFourChanData[1]);
+
+    //let test = btoa(usableFourChanData.Thumbnail);
+    let test = usableFourChanData.Thumbnail;
+
+    console.log(typeof(test));
 
     let paintBoard = document.createElement("div");
     let paintNo = document.createElement("div");
@@ -36,6 +44,9 @@ async function pingProxy(source) {
     let paintCom = document.createElement("div");
     let paintFileName = document.createElement("div");
     let paintFsize = document.createElement("div");
+    
+    let paintImg = document.createElement("img");
+
  
 
 
@@ -48,6 +59,13 @@ async function pingProxy(source) {
     paintFileName.setAttribute('class',"post-container-filename");
 
     paintFsize.setAttribute('class',"post-container-fsize");
+
+    // paintImg.setAttribute("src", `data:image/jpeg;base64,${test}`);
+
+    paintImg.setAttribute("src", `${test}`);
+    paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
+    paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
+    paintImg.setAttribute("class", "post-contianer-thumbnail");
 
 
 
@@ -68,6 +86,8 @@ async function pingProxy(source) {
     
     paintCom.insertAdjacentHTML( 'afterbegin',  usableFourChanData.Post.com);
     //paintCom.prepend(usableFourChanData.Post.com);
+
+
 
 
     chanLink = Array.from(paintCom.querySelectorAll(".quotelink"));
@@ -113,6 +133,7 @@ async function pingProxy(source) {
     
 
     }
+    postContainer.append(paintImg);
   
 }
 
@@ -130,12 +151,29 @@ function containerDeletion() {
 }
 
 
+// async function getThumbnail(source) {
+
+//     const response = await fetch(source);
+//     const blobbyResponse =  response;
+//     console.log(blobbyResponse);
+//     console.log(typeof(blobbyResponse));  
+//     //const thumbnail = URL.createObjectURL(blobbyResponse);
+
+
+//     // const mediaContainer = document.createElement("img");
+//     // mediaContainer.setAttribute("src", thumbnail);
+//     // postContainer.append(mediaContainer);
+
+// }
+
+
 
 pingProxy(url);
 
 newPostBtn.addEventListener("pointerup", (e) => {
 
     containerDeletion();
+    //getThumbnail(thumbnailURL);
     pingProxy(url);
 
 })

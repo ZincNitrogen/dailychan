@@ -126,7 +126,7 @@ main {
 .post-container-com{
     border: 1px solid black;
     /* padding: 0.05rem; */
-    order: 7;
+    order: 8;
 
 
 
@@ -137,13 +137,22 @@ main {
 .post-container-fsize{
     border: 1px solid black;
     /* padding: 0.05rem; */
-    order: 6;
+    order: 7;
 
 
 
 }
 
 .post-container-filename{
+    border: 1px solid black;
+    /* padding: 0.05rem; */
+    order: 6;
+
+
+
+}
+
+.post-container-thumbnail{
     border: 1px solid black;
     /* padding: 0.05rem; */
     order: 5;
