@@ -1,3 +1,4 @@
+//import {arrayBufferToBlob} from "./node_modules/blob-util/dist/blob-util.js"; //NOTE: THIS IS THE CURRENT PROBLEM - IMPORTING MODULES ON THE BROWSER SIDE.
 
 const postContainer = document.querySelector('.post-container');
 const url = "http://localhost:8000/ServerSideRequest";
@@ -5,6 +6,7 @@ const thumbnailURL = "http://localhost:8000/ServeThumbnail";
 const newPostBtn = document.querySelector(`.btn`);
 let postContainerChildren = postContainer.childNodes;
 let chanLink;
+let usableFourChanData;
 
 
 
@@ -18,7 +20,7 @@ async function pingProxy(source) {
 
     const response = await fetch(source);
     const fourchanData = await response.json(); 
-    const usableFourChanData = JSON.parse(fourchanData);
+    usableFourChanData = JSON.parse(fourchanData);
     //const convertThumbnail = usableFourChanData.Thumbnail;
 
 
@@ -27,15 +29,16 @@ async function pingProxy(source) {
     console.log(usableFourChanData.Board);
     console.log(usableFourChanData.Post);
     console.log(usableFourChanData.OP.no);
-    console.log(usableFourChanData.Thumbnail);
+    //console.log(usableFourChanData.Thumbnail);
 
     //console.log(usableFourChanData[Board]);
     //console.log(usableFourChanData[1]);
 
     //let test = btoa(usableFourChanData.Thumbnail);
-    let test = usableFourChanData.Thumbnail;
+    //let test = (usableFourChanData.Thumbnail);
 
-    console.log(typeof(test));
+    // console.log(test);
+    // console.log(typeof(test));
 
     let paintBoard = document.createElement("div");
     let paintNo = document.createElement("div");
@@ -45,7 +48,7 @@ async function pingProxy(source) {
     let paintFileName = document.createElement("div");
     let paintFsize = document.createElement("div");
     
-    let paintImg = document.createElement("img");
+    //let paintImg = document.createElement("img");
 
  
 
@@ -62,10 +65,10 @@ async function pingProxy(source) {
 
     // paintImg.setAttribute("src", `data:image/jpeg;base64,${test}`);
 
-    paintImg.setAttribute("src", `${test}`);
-    paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
-    paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
-    paintImg.setAttribute("class", "post-contianer-thumbnail");
+    // paintImg.setAttribute("src", `data:image/jpeg;base64,` + test);
+    // paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
+    // paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
+    // paintImg.setAttribute("class", "post-contianer-thumbnail");
 
 
 
@@ -133,7 +136,11 @@ async function pingProxy(source) {
     
 
     }
-    postContainer.append(paintImg);
+    //postContainer.append(paintImg);
+
+
+    return usableFourChanData 
+   
   
 }
 
@@ -151,33 +158,178 @@ function containerDeletion() {
 }
 
 
-// async function getThumbnail(source) {
+async function getThumbnail(source) {
 
-//     const response = await fetch(source);
-//     const blobbyResponse =  response;
-//     console.log(blobbyResponse);
-//     console.log(typeof(blobbyResponse));  
-//     //const thumbnail = URL.createObjectURL(blobbyResponse);
+    const response = await fetch(source);
+    const blobbyResponse =  await response.blob();
+    console.log(blobbyResponse);
+    //console.log(blobbyResponse.text());
+    console.log(typeof(blobbyResponse));  
+    //const thumbnail = URL.createObjectURL(blobbyResponse);
 
 
-//     // const mediaContainer = document.createElement("img");
-//     // mediaContainer.setAttribute("src", thumbnail);
-//     // postContainer.append(mediaContainer);
+    // const mediaContainer = document.createElement("img");
+    // mediaContainer.setAttribute("src", thumbnail);
+    // postContainer.append(mediaContainer);
 
-// }
+    //console.log(URL.createObjectURL(blobbyResponse));
+
+
+    let paintImg = document.createElement("img");
+    paintImg.setAttribute("src", `data:image/jpeg;base64,` + blobbyResponse);
+    //paintImg.setAttribute("src", URL.createObjectURL(blobbyResponse));
+
+    paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
+    paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
+    paintImg.setAttribute("class", "post-contianer-thumbnail");
+    postContainer.append(paintImg);
+
+
+
+
+}
+
+
+
+async function getThumbnailNonBlob(source) {
+
+    const response = await fetch(source);
+    const Response = await response.json();
+    const usableThumbnailData = JSON.parse(Response);
+
+    console.log(usableThumbnailData);
+    //console.log(blobbyResponse.text());
+    console.log(typeof(usableThumbnailData));  
+    //const thumbnail = URL.createObjectURL(blobbyResponse);
+
+
+    // const mediaContainer = document.createElement("img");
+    // mediaContainer.setAttribute("src", thumbnail);
+    // postContainer.append(mediaContainer);
+
+    //console.log(URL.createObjectURL(blobbyResponse));
+
+
+    let paintImg = document.createElement("img");
+    paintImg.setAttribute("src", `data:image/jpeg;base64,` + usableThumbnailData);
+    //paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData));
+
+    paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
+    paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
+    paintImg.setAttribute("class", "post-contianer-thumbnail");
+    postContainer.append(paintImg);
+
+
+
+
+}
+
+
+async function getThumbnailArrrayBufferBinary(source) {
+
+    const response = await fetch(source);
+    const usableThumbnailData = await response.arrayBuffer(); //binaryStringToBlob(response.formData.toString("binary"));
+
+    console.log(usableThumbnailData);
+    //console.log(blobbyResponse.text());
+    console.log(typeof(usableThumbnailData));  
+    //const thumbnail = URL.createObjectURL(blobbyResponse);
+
+
+
+
+
+
+    //turn arraybuffer into blob(?)
+    //const test = blobUtil.arrayBufferToBlob(usableThumbnailData, 'image/jpeg');
+    const test = new Blob([usableThumbnailData], {type: "image/jpeg"});
+    console.log(test);
+
+
+
+    // const mediaContainer = document.createElement("img");
+    // mediaContainer.setAttribute("src", thumbnail);
+    // postContainer.append(mediaContainer);
+
+    //console.log(URL.createObjectURL(blobbyResponse));
+
+
+    let paintImg = document.createElement("img");
+    //paintImg.setAttribute("src", `data:image/jpeg;base64,` + usableThumbnailData);
+    //paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData));
+    paintImg.setAttribute("src", URL.createObjectURL(test));
+
+
+    paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
+    paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
+    paintImg.setAttribute("class", "post-contianer-thumbnail");
+    postContainer.append(paintImg);
+
+
+
+
+}
+
+
+
+async function getThumbnailBinaryStringPlainText(source) {
+
+    const response = await fetch(source);
+    const usableThumbnailData = await binaryStringToBlob(response.text().toString('binary'));
+
+
+
+    console.log(usableThumbnailData);
+    //console.log(blobbyResponse.text());
+    console.log(typeof(usableThumbnailData));  
+    //const thumbnail = URL.createObjectURL(blobbyResponse);
+
+
+    // const mediaContainer = document.createElement("img");
+    // mediaContainer.setAttribute("src", thumbnail);
+    // postContainer.append(mediaContainer);
+
+    //console.log(URL.createObjectURL(blobbyResponse));
+
+
+    let paintImg = document.createElement("img");
+    paintImg.setAttribute("src", `data:image/jpeg;base64,` + usableThumbnailData);
+    //paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData));
+
+    paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
+    paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
+    paintImg.setAttribute("class", "post-contianer-thumbnail");
+    postContainer.append(paintImg);
+
+
+
+
+}
+
+
+
+
 
 
 
 pingProxy(url);
+//getThumbnail(thumbnailURL);
+//getThumbnailNonBlob(thumbnailURL)
+ getThumbnailArrrayBufferBinary(thumbnailURL);
+//getThumbnailBinaryStringPlainText(thumbnailURL);
 
 newPostBtn.addEventListener("pointerup", (e) => {
-
     containerDeletion();
     //getThumbnail(thumbnailURL);
+    //getThumbnailNonBlob(thumbnailURL)
+    getThumbnailArrrayBufferBinary(thumbnailURL);
+    //getThumbnailBinaryStringPlainText(thumbnailURL);
     pingProxy(url);
 
 })
 
 
 
-//TODO: Remember to add image support from backend to frontend. 
+//TODO: Remember to add image/webm support from backend to frontend. 
+
+//TODO: ADD A TOGGLE OPTION FOR THUMBNAIL BLUR

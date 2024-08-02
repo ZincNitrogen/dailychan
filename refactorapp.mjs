@@ -1,5 +1,7 @@
 import express from "express";
 import axios from "axios";
+import { arrayBufferToBinaryString } from "blob-util";
+
 const app = express();
 const PORT = 8000;
 const HOST = "localhost";
@@ -100,25 +102,39 @@ function get4chanBundle() {
             // console.log(`<<<<<<<<<<<<<<<<A RANDOM POST>>>>>>>>>>>>>>>>`) 
             // console.log(aRandomPost);
            
-            //return aRandomPost;
+            return aRandomPost;
 
-            return axios.get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
-                //responseType: "stream",
-                headers: {"Content-Type": "image/jpeg"},
-                //headers: {"Content-Type": "application/json"},
+            // return axios.get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
+            //     //responseType: "blob",
+            //     headers: {"Content-Type": "image/jpeg",
+            //         "Accept": "image/jpeg",
 
-                //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
-                //this url serves thumbnails!!!
-            }); 
+            //     },
+            //     // headers: {"Content-Type" : "image/jpeg"},
+            //     // responseType: "blob",
+
+            //     //headers: {"Content-Type": "application/json"},
+            //     //headers: {"Content-Type": "*/*"},
+            //     //headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            //     //headers: {"Content-Type": "application/octet-stream"},
+            //     //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
+            //     //this url serves thumbnails!!!
+            // }); 
 
 
         })
-        .then((res) => {
-            //console.log(res.data); 
-            console.log(res);
-            console.log(typeof(res.data));
-            thumbnail = res.data;
-        })
+        // .then((res) => {
+
+
+        //     //console.log(res);
+
+
+        //     console.log(res.headers);
+        //     console.log(res.request);
+        //     //console.log(typeof(res.data));
+        //     thumbnail = (res.data);
+        //     console.log(thumbnail);
+        // })
         .catch((err) => {
 
              if ((typeof(aRandomPost) === "undefined") || (typeof(onlyBoard) === 'undefined')) {
@@ -136,7 +152,7 @@ function get4chanBundle() {
                 Board: onlyBoard,
                 Post: aRandomPost,
                 OP: randomThreadDecision,
-                Thumbnail: thumbnail,
+                //Thumbnail: thumbnail,
             };
 
             console.log("=========new=========")
@@ -186,28 +202,84 @@ function get4chanBundle() {
 
 }
 
-// function getThumbnail() {
 
-//     axios
-//     .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
-//             //headers: {"Content-Type": "image/jpeg"},
-//             responseType: "blob",
-//             //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
-//             //this url serves thumbnails!!!
-//         })
-//         .then((res) => {
-//             thumbnail= res.data;
-//             console.log(typeof(thumbnail));
-//             console.log(thumbnail);
-//         })
-//         .catch((err) =>{err})
-//         .finally(() => {
-//             let test = URL.createObjectURL(thumbnail);
-//         })
+function getThumbnail() {
+
+    axios
+    .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
+            //headers: {"Content-Type": "image/jpeg"},
+            // headers: {"Content-Type": "application/octet-stream",
+            //     "Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
+
+            // },
+            headers: {"Content-Type": "image/jpeg",
+                //"Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
+
+            },
+
+            //responseType: "buffer",
+            //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
+            //this url serves thumbnails!!!
+        })
+        .then((res) => {
+            thumbnail = res.data;
+            //console.log(typeof(res));
+            console.log(thumbnail);
+            //console.log(res.request);
+        })
+        .catch((err) =>{err});
+        
+
+    return thumbnail
 
 
-// }
 
+}
+
+
+
+function getThumbnailTwo() {
+
+    axios
+    .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
+            headers: {"Content-Type": "image/jpeg"},
+            responseType: "arraybuffer",
+            // headers: {"Content-Type": "application/octet-stream",
+            //     "Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
+
+            // },
+            // headers: {"Content-Type": "image/jpeg",
+            //     //"Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
+
+            // },
+
+
+
+           
+            //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
+            //this url serves thumbnails!!!
+        })
+        .then((res) => {
+
+            //thumbnail = arrayBufferToBinaryString(res.data); //convert arraybuffer to binary string via blob-util library
+            thumbnail = res.data;
+            console.log(typeof(thumbnail));
+            console.log(thumbnail);
+            //thumbnail = res;
+            //console.log(`Raw Array Buffer data: ${res.data}`);
+
+            //console.log(typeof(res));
+            //console.log(`Array Buffer converted to binary: ${thumbnail}`);
+            //console.log(res.request);
+        })
+        .catch((err) =>{err});
+        
+
+    return thumbnail
+
+
+
+}
 
 
 app.get("/ServerSideRequest", (req, res) => {
@@ -218,11 +290,17 @@ app.get("/ServerSideRequest", (req, res) => {
 
 
 // app.get("/ServeThumbnail", (req, res) =>{
-//     res.send(getThumbnail());
-//     // console.log(getThumbnail());
+//     res.json(JSON.stringify(getThumbnail()));
+//     //console.log(decodeURI(getThumbnail()));
     
 // })
 
+
+app.get("/ServeThumbnail", (req, res) =>{
+    res.send(getThumbnailTwo());
+    //console.log(decodeURI(getThumbnail()));
+    
+})
 
 console.log(get4chanBundle());
 
@@ -241,3 +319,12 @@ app.listen(PORT, () => {
 //fornt end recievd it and parses out file
 //add cs class to it to put it in its place
 //paint it in post container with everything else
+
+
+
+
+//try seoerate axios get functions on the server side - a seperate function that returns only a blob type
+//i tried that already, but it failed..i wonder if it's because express can't natively send blob types
+
+
+//
