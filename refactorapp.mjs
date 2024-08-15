@@ -17,7 +17,7 @@ let randomThreadDecision;
 // let randomPagePicker;
 // let randomPageDecision;
 
-let thumbnail;
+//let thumbnail;
 
 
 function get4chanBundle() {
@@ -240,9 +240,11 @@ function getThumbnail() {
 
 function getThumbnailTwo() {
 
+    //thumbnail = null; -> makes all blobs/bufers return 0 butes
+
     axios
     .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
-            headers: {"Content-Type": "image/jpeg"},
+            headers: {"Content-Type": "application/octet-stream"}, // or image/jpeg (???) since thumbnails are supposed to be only jog's
             responseType: "arraybuffer",
             // headers: {"Content-Type": "application/octet-stream",
             //     "Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
@@ -275,7 +277,7 @@ function getThumbnailTwo() {
         .catch((err) =>{err});
         
 
-    return thumbnail
+    return thumbnail;
 
 
 
@@ -296,11 +298,36 @@ app.get("/ServerSideRequest", (req, res) => {
 // })
 
 
-app.get("/ServeThumbnail", (req, res) =>{
-    res.send(getThumbnailTwo());
-    //console.log(decodeURI(getThumbnail()));
+// app.get("/ServeThumbnail", (req, res) =>{
+//     res.send(getThumbnailTwo());
+//     //thumbnail = null;
+
+//     //console.log(decodeURI(getThumbnail()));
+    
+// })
+
+app.get("/ServeThumbnail", (imagerequest, imageresponse) =>{
+    
+    axios
+    .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
+            headers: {"Content-Type": "application/octet-stream"}, 
+            responseType: "arraybuffer",
+        })
+        .then((res) => {
+
+            let thumbnail = res.data;
+            console.log(typeof(thumbnail));
+            console.log(thumbnail);
+            imageresponse.send(thumbnail);
+
+
+        })
+        .catch((err) =>{err});
+
+
     
 })
+
 
 console.log(get4chanBundle());
 

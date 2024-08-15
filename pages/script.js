@@ -1,4 +1,3 @@
-//import {arrayBufferToBlob} from "./node_modules/blob-util/dist/blob-util.js"; //NOTE: THIS IS THE CURRENT PROBLEM - IMPORTING MODULES ON THE BROWSER SIDE.
 
 const postContainer = document.querySelector('.post-container');
 const url = "http://localhost:8000/ServerSideRequest";
@@ -7,6 +6,7 @@ const newPostBtn = document.querySelector(`.btn`);
 let postContainerChildren = postContainer.childNodes;
 let chanLink;
 let usableFourChanData;
+let paintImg;
 
 
 
@@ -25,7 +25,7 @@ async function pingProxy(source) {
 
 
     //console.log(fourchanData);
-    //console.log(usableFourChanData);
+    console.log(usableFourChanData);
     console.log(usableFourChanData.Board);
     console.log(usableFourChanData.Post);
     console.log(usableFourChanData.OP.no);
@@ -148,41 +148,92 @@ async function pingProxy(source) {
 function containerDeletion() {
 
   
+    //paintImg.removeAttribute("src");
 
     for (let i = postContainerChildren.length -1; i >=0; i--){
         postContainerChildren[i].remove();
-
     }
+
+
+
+
+
+
     
 
 }
 
 
-async function getThumbnail(source) {
-
-    const response = await fetch(source);
-    const blobbyResponse =  await response.blob();
-    console.log(blobbyResponse);
-    //console.log(blobbyResponse.text());
-    console.log(typeof(blobbyResponse));  
-    //const thumbnail = URL.createObjectURL(blobbyResponse);
 
 
-    // const mediaContainer = document.createElement("img");
-    // mediaContainer.setAttribute("src", thumbnail);
-    // postContainer.append(mediaContainer);
+async function getThumbnailArrayBufferBinary(source) {
 
-    //console.log(URL.createObjectURL(blobbyResponse));
+    try {
+
+        const response = await fetch(source, {
+            headers: {
+                "Content-Type": "application/octet-stream",
+            },
+        });
+
+        
+        const usableThumbnailData = await response.blob(); //takes in the incoming array buffer and resolves it as a blob
+    
+
+        //const usableThumbnailData =  URL.createObjectURL( await response.blob());
+
+        console.log(usableThumbnailData);
+        console.log(usableThumbnailData.text());
+        //console.log(blobbyResponse.text());
+        console.log(typeof(usableThumbnailData));  
+        //const thumbnail = URL.createObjectURL(blobbyResponse);
+    
+    
+    
+    
+    
+    
+        //turn arraybuffer into blob(?) NOW I HAVE TO FIGURE OUT WHY OLD THUMBNAILS SOMETIMES STICKAROUND PAST THEIR WELCOME!!
 
 
-    let paintImg = document.createElement("img");
-    paintImg.setAttribute("src", `data:image/jpeg;base64,` + blobbyResponse);
-    //paintImg.setAttribute("src", URL.createObjectURL(blobbyResponse));
 
-    paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
-    paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
-    paintImg.setAttribute("class", "post-contianer-thumbnail");
-    postContainer.append(paintImg);
+        // const test =  new Blob([usableThumbnailData], {type: "image/*"}); //"or image/jpeg" ? since thumbnails are supposed to be only jpg's
+        // console.log(test);
+
+        
+    
+    
+    
+        // const mediaContainer = document.createElement("img");
+        // mediaContainer.setAttribute("src", thumbnail);
+        // postContainer.append(mediaContainer);
+    
+        //console.log(URL.createObjectURL(blobbyResponse));
+
+
+        //****put usableThumbnailData into local storage, then pull it out on line 211 for use isn dataURL */ */
+    
+    
+        paintImg = document.createElement("img");
+        //paintImg.setAttribute("src", usableThumbnailData);
+        // let realThumbnail = URL.createObjectURL(usableThumbnailData);
+        // paintImg.setAttribute("src", realThumbnail); 
+
+        paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData)); //test 
+    
+    
+        paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
+        paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
+        paintImg.setAttribute("class", "post-contianer-thumbnail");
+        postContainer.append(paintImg);
+    
+
+    } catch(err) {
+        
+        console.log(err + " or no image");
+    }
+
+
 
 
 
@@ -191,58 +242,140 @@ async function getThumbnail(source) {
 
 
 
-async function getThumbnailNonBlob(source) {
 
-    const response = await fetch(source);
-    const Response = await response.json();
-    const usableThumbnailData = JSON.parse(Response);
+async function newPost(postURLSRC, thumbnailURLSRC) {
+
+    //i think the issue with the thumbnails are that the thumbniuals are slower thnan the post info. I need to create promises out og the two functions
+
+
+    //the two functions being ping proxy and getthumbnailbufferarray
+
+
+    // let promiseNewPost = new Promise((resolve, reject) => {
+
+    //     pingProxy(url);
+    //     getThumbnailArrrayBufferBinary(thumbnailURL);
+
+    // })
+
+    // let newPostPromise = await Promise.all([
+    //     getThumbnailArrrayBufferBinary(thumbnailURL),
+    //     pingProxy(url),
+    // ])
+
+
+    // return newPostPromise;
+
+    // let tn = await getThumbnailArrrayBufferBinary(thumbnailURL);
+    // let pp = await pingProxy(url);
+
+    const response = await fetch(postURLSRC);
+    const fourchanData = await response.json(); 
+
+    const tn_response = await fetch(thumbnailURLSRC);
+    const usableThumbnailData = await tn_response.arrayBuffer();
+
+
+    usableFourChanData = JSON.parse(fourchanData);
+  
+
+
 
     console.log(usableThumbnailData);
-    //console.log(blobbyResponse.text());
     console.log(typeof(usableThumbnailData));  
-    //const thumbnail = URL.createObjectURL(blobbyResponse);
 
-
-    // const mediaContainer = document.createElement("img");
-    // mediaContainer.setAttribute("src", thumbnail);
-    // postContainer.append(mediaContainer);
-
-    //console.log(URL.createObjectURL(blobbyResponse));
-
-
-    let paintImg = document.createElement("img");
-    paintImg.setAttribute("src", `data:image/jpeg;base64,` + usableThumbnailData);
-    //paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData));
-
-    paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
-    paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
-    paintImg.setAttribute("class", "post-contianer-thumbnail");
-    postContainer.append(paintImg);
+    console.log(usableFourChanData.Board);
+    console.log(usableFourChanData.Post);
+    console.log(usableFourChanData.OP.no);
 
 
 
+    let paintBoard = document.createElement("div");
+    let paintNo = document.createElement("div");
+    let paintNow = document.createElement("div");
+    let paintName = document.createElement("div");
+    let paintCom = document.createElement("div");
+    let paintFileName = document.createElement("div");
+    let paintFsize = document.createElement("div");
 
-}
+    paintBoard.setAttribute('class',"post-container-board");
+    paintNo.setAttribute('class',"post-container-no");
+    paintNow.setAttribute('class',"post-container-now");
+    paintName.setAttribute('class',"post-container-name");
+    paintCom.setAttribute('class',"post-container-com");
+    paintFileName.setAttribute('class',"post-container-filename");
+
+    paintFsize.setAttribute('class',"post-container-fsize");
 
 
-async function getThumbnailArrrayBufferBinary(source) {
-
-    const response = await fetch(source);
-    const usableThumbnailData = await response.arrayBuffer(); //binaryStringToBlob(response.formData.toString("binary"));
-
-    console.log(usableThumbnailData);
-    //console.log(blobbyResponse.text());
-    console.log(typeof(usableThumbnailData));  
-    //const thumbnail = URL.createObjectURL(blobbyResponse);
+    paintFileName.prepend(`File: ${usableFourChanData.Post.filename}${usableFourChanData.Post.ext}`); //including "ext" here and only here
+    paintFsize.prepend(usableFourChanData.Post.fsize); //might have to round. investigate 4chan format
 
 
+    paintBoard.prepend(`/${usableFourChanData.Board}/`);
+
+    paintNo.insertAdjacentHTML("afterbegin", '<a href=' + `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${usableFourChanData.Post.no}` +" target= '_blank' " + "title='See this post on 4chan.org in a new tab'" + '>' + `No.${usableFourChanData.Post.no}` + "</a>");
+
+    
+    paintNow.prepend(usableFourChanData.Post.now);
+    paintName.prepend(usableFourChanData.Post.name);
+        
+    paintCom.insertAdjacentHTML( 'afterbegin',  usableFourChanData.Post.com);
+
+
+
+    chanLink = Array.from(paintCom.querySelectorAll(".quotelink"));
+
+
+    if (chanLink || false) {
+
+        console.log(chanLink);
+        chanLink.forEach((e) => {
+            //console.log(e.text);
+            let postReply = (e.text).slice(2);
+
+            e.setAttribute("href", `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${postReply}`);
+
+            e.setAttribute("target", "_blank");
+            e.setAttribute("title" , "See this post on 4chan.org in a new tab");
+
+        })
+
+    
+    }
+
+    
+
+    postContainer.append(paintBoard);
+    postContainer.append(paintNo);
+    postContainer.append(paintNow);
+    postContainer.append(paintName);
+    postContainer.append(paintCom);
+    if (typeof(usableFourChanData.Post.filename) !== "undefined") {
+        postContainer.append(paintFileName);
+        postContainer.append(paintFsize);
+        
+    
+
+    }
 
 
 
 
-    //turn arraybuffer into blob(?)
+
+
+   //return usableFourChanData 
+
+
+    
+
+
+
+
+
+    //turn arraybuffer into blob(?) NOW I HAVE TO FIGURE OUT WHY OLD THUMBNAILS SOMETIMES STICKAROUND PAST THEIR WELCOME!!
     //const test = blobUtil.arrayBufferToBlob(usableThumbnailData, 'image/jpeg');
-    const test = new Blob([usableThumbnailData], {type: "image/jpeg"});
+    const test =  new Blob([usableThumbnailData], {type: "image/*"}); //"or image/jpeg" ? since thumbnails are supposed to be only jog's
     console.log(test);
 
 
@@ -254,7 +387,7 @@ async function getThumbnailArrrayBufferBinary(source) {
     //console.log(URL.createObjectURL(blobbyResponse));
 
 
-    let paintImg = document.createElement("img");
+    paintImg = document.createElement("img");
     //paintImg.setAttribute("src", `data:image/jpeg;base64,` + usableThumbnailData);
     //paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData));
     paintImg.setAttribute("src", URL.createObjectURL(test));
@@ -268,63 +401,73 @@ async function getThumbnailArrrayBufferBinary(source) {
 
 
 
-}
-
-
-
-async function getThumbnailBinaryStringPlainText(source) {
-
-    const response = await fetch(source);
-    const usableThumbnailData = await binaryStringToBlob(response.text().toString('binary'));
-
-
-
-    console.log(usableThumbnailData);
-    //console.log(blobbyResponse.text());
-    console.log(typeof(usableThumbnailData));  
-    //const thumbnail = URL.createObjectURL(blobbyResponse);
-
-
-    // const mediaContainer = document.createElement("img");
-    // mediaContainer.setAttribute("src", thumbnail);
-    // postContainer.append(mediaContainer);
-
-    //console.log(URL.createObjectURL(blobbyResponse));
-
-
-    let paintImg = document.createElement("img");
-    paintImg.setAttribute("src", `data:image/jpeg;base64,` + usableThumbnailData);
-    //paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData));
-
-    paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
-    paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
-    paintImg.setAttribute("class", "post-contianer-thumbnail");
-    postContainer.append(paintImg);
 
 
 
 
 }
 
+async function parallelInfoPost() {
+
+    //await getThumbnailArrrayBufferBinary
+
+    //then call pingProxy()
+
+    //this fails :(
+    await getThumbnailArrayBufferBinary(thumbnailURL);
+    pingProxy(url);
+}
+
+async function frontendThumbnail() {
+
+
+    try {
+
+        const response = `http://i.4cdn.org/${usableFourChanData.Board}/${usableFourChanData.tim}s.jpg`;
+        
+        paintImg = document.createElement("img");
+        paintImg.setAttribute("src", response);  
+    
+    
+        paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
+        paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
+        paintImg.setAttribute("class", "post-contianer-thumbnail");
+        postContainer.append(paintImg);
+
+    } catch {
+        console.log("post has not media");
+    }
 
 
 
 
 
+    console.log("test");
 
+
+
+}
+
+
+
+
+getThumbnailArrayBufferBinary(thumbnailURL);
+//frontendThumbnail();
 pingProxy(url);
-//getThumbnail(thumbnailURL);
-//getThumbnailNonBlob(thumbnailURL)
- getThumbnailArrrayBufferBinary(thumbnailURL);
-//getThumbnailBinaryStringPlainText(thumbnailURL);
+
+//newPost(url, thumbnailURL);
+//parallelInfoPost();
 
 newPostBtn.addEventListener("pointerup", (e) => {
     containerDeletion();
-    //getThumbnail(thumbnailURL);
-    //getThumbnailNonBlob(thumbnailURL)
-    getThumbnailArrrayBufferBinary(thumbnailURL);
-    //getThumbnailBinaryStringPlainText(thumbnailURL);
+    getThumbnailArrayBufferBinary(thumbnailURL);
+    //frontendThumbnail();
     pingProxy(url);
+    //newPost(url, thumbnailURL);
+    //parallelInfoPost();
+
+
+    
 
 })
 
@@ -333,3 +476,9 @@ newPostBtn.addEventListener("pointerup", (e) => {
 //TODO: Remember to add image/webm support from backend to frontend. 
 
 //TODO: ADD A TOGGLE OPTION FOR THUMBNAIL BLUR
+
+//CURRENT ISSUE: THUMBNAILS ARE  PAINTING 1 POST LATE. ARRAYBUFFER FOR FIRST THUMBNAIL OF SESSION COMES IN EMPTY AND POPULATES ITSELF ON THE NEXT POST. MUST FIGURE THIS OUT!!!!!
+//me thinks i figured out the above problem - the issue is that the thumbnails are being pulled from local browser storage. The first thumbnail is not stored at the moment it it painted
+//and thus is not being pulled to paint. Solution is to expicitly store thumbnail in local storage as soonas it is piped in from backend, then pull it when needed.
+
+//ALTERNATIVELY, FIGURE OUT WHY THE INITIAL BLOB COMES UP AT EMPTY WHEN I KNOW THE DATA SHOULD BE PIPED THROUGH
