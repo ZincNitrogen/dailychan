@@ -238,7 +238,7 @@ function getThumbnail() {
 
 
 
-function getThumbnailTwo() {
+function getThumbnailTwo(imageresponse) {
 
     //thumbnail = null; -> makes all blobs/bufers return 0 butes
 
@@ -264,9 +264,10 @@ function getThumbnailTwo() {
         .then((res) => {
 
             //thumbnail = arrayBufferToBinaryString(res.data); //convert arraybuffer to binary string via blob-util library
-            thumbnail = res.data;
+            let thumbnail = res.data;
             console.log(typeof(thumbnail));
             console.log(thumbnail);
+            imageresponse.send(thumbnail);
             //thumbnail = res;
             //console.log(`Raw Array Buffer data: ${res.data}`);
 
@@ -277,7 +278,7 @@ function getThumbnailTwo() {
         .catch((err) =>{err});
         
 
-    return thumbnail;
+    // return thumbnail;
 
 
 
@@ -306,27 +307,36 @@ app.get("/ServerSideRequest", (req, res) => {
     
 // })
 
-app.get("/ServeThumbnail", (imagerequest, imageresponse) =>{
+// app.get("/ServeThumbnail", (imagerequest, imageresponse) =>{
     
-    axios
-    .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
-            headers: {"Content-Type": "application/octet-stream"}, 
-            responseType: "arraybuffer",
-        })
-        .then((res) => {
+//     axios
+//     .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
+//             headers: {"Content-Type": "application/octet-stream"}, 
+//             responseType: "arraybuffer",
+//         })
+//         .then((res) => {
 
-            let thumbnail = res.data;
-            console.log(typeof(thumbnail));
-            console.log(thumbnail);
-            imageresponse.send(thumbnail);
+//             let thumbnail = res.data;
+//             console.log(typeof(thumbnail));
+//             console.log(thumbnail);
+//             imageresponse.send(thumbnail);
 
 
-        })
-        .catch((err) =>{err});
+//         })
+//         .catch((err) =>{err});
+
+
+    
+// })
+
+
+app.get("/ServeThumbnail", (imagerequest, imageresponse) =>{
+   getThumbnailTwo(imageresponse)
 
 
     
 })
+
 
 
 console.log(get4chanBundle());
