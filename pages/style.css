@@ -58,14 +58,25 @@ main {
 
 }
 
-.post-container {
+.post-container {      /*may have to convert micro layout in post container into a grid layout for ease.*/
     display: flex;
-    flex-flow: row wrap; /*i think this has to be nowrap, must investigate */
+    flex-flow: row wrap; 
     justify-content: flex-end;
     align-items: center;
     align-content: center;
     /* column-gap: 0.02rem; */
+
+
+
+
+
+    
     column-gap: 0.04rem;
+
+
+
+
+
 
     border: solid 2px black;
     max-width: 5rem;
@@ -76,18 +87,18 @@ main {
 }
 
 
-
-.post-container-board{
+.post-container-name{
     border: 1px solid black;
     /* padding: 0.05rem; */
-    order: 4;
+    color: var(--4chanName);
+    font-weight: 700;
+   
 
 }
 
 .post-container-now{
     border: 1px solid black;
     /* padding: 0.05rem; */
-    order: 2;
 
 
 
@@ -97,7 +108,6 @@ main {
     border: 1px solid black;
     flex-grow: 2;
     /* padding: 0.05rem; */
-    order: 3;
 
 
 
@@ -114,52 +124,55 @@ main {
 
 }
 
-.post-container-name{
+.post-container-board{
     border: 1px solid black;
     /* padding: 0.05rem; */
-    color: var(--4chanName);
-    font-weight: 700;
-    order: 1;
-
-}
-
-.post-container-com{
-    border: 1px solid black;
-    /* padding: 0.05rem; */
-    order: 8;
-
-
 
 }
 
 
 
-.post-container-fsize{
-    border: 1px solid black;
-    /* padding: 0.05rem; */
-    order: 7;
 
-
-
-}
 
 .post-container-filename{
     border: 1px solid black;
     /* padding: 0.05rem; */
-    order: 6;
+
 
 
 
 }
+
+.post-container-fsize{
+    border: 1px solid black;
+    /* padding: 0.05rem; */
+    
+
+
+
+
+}
+
+
 
 .post-container-thumbnail{
     border: 1px solid black;
     /* padding: 0.05rem; */
-    order: 5;
+    /* -align-self: flex-end; */
 
 
 
 }
+
+
+.post-container-com{
+    border: 1px solid black;
+    /* padding: 0.05rem; */
+
+
+
+}
+
 
 .quote{
     color: var(--4chanQuote);

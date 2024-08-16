@@ -39,15 +39,17 @@ async function pingProxy(source) {
 
     // console.log(test);
     // console.log(typeof(test));
-
-    let paintBoard = document.createElement("div");
-    let paintNo = document.createElement("div");
-    let paintNow = document.createElement("div");
     let paintName = document.createElement("div");
-    let paintCom = document.createElement("div");
+    let paintNow = document.createElement("div");
+
+    let paintNo = document.createElement("div");
+    let paintBoard = document.createElement("div");
     let paintFileName = document.createElement("div");
     let paintFsize = document.createElement("div");
     
+
+    let paintCom = document.createElement("div");
+   
     //let paintImg = document.createElement("img");
 
  
@@ -123,12 +125,16 @@ async function pingProxy(source) {
 
 
 
-
-    postContainer.append(paintBoard);
-    postContainer.append(paintNo);
-    postContainer.append(paintNow);
     postContainer.append(paintName);
-    postContainer.append(paintCom);
+    postContainer.append(paintNow);
+    postContainer.append(paintNo);
+    postContainer.append(paintBoard);
+
+
+
+
+
+
     if (typeof(usableFourChanData.Post.filename) !== "undefined") {
         postContainer.append(paintFileName);
         postContainer.append(paintFsize);
@@ -137,6 +143,8 @@ async function pingProxy(source) {
 
     }
     //postContainer.append(paintImg);
+
+    postContainer.append(paintCom);
 
 
     return usableFourChanData 
@@ -215,16 +223,14 @@ async function getThumbnailArrayBufferBinary(source) {
     
     
         paintImg = document.createElement("img");
-        //paintImg.setAttribute("src", usableThumbnailData);
-        // let realThumbnail = URL.createObjectURL(usableThumbnailData);
-        // paintImg.setAttribute("src", realThumbnail); 
+      
 
         paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData)); //test 
     
     
         paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
         paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
-        paintImg.setAttribute("class", "post-contianer-thumbnail");
+        paintImg.setAttribute("class", "post-container-thumbnail");
         postContainer.append(paintImg);
     
 
@@ -477,8 +483,4 @@ newPostBtn.addEventListener("pointerup", (e) => {
 
 //TODO: ADD A TOGGLE OPTION FOR THUMBNAIL BLUR
 
-//CURRENT ISSUE: THUMBNAILS ARE  PAINTING 1 POST LATE. ARRAYBUFFER FOR FIRST THUMBNAIL OF SESSION COMES IN EMPTY AND POPULATES ITSELF ON THE NEXT POST. MUST FIGURE THIS OUT!!!!!
-//me thinks i figured out the above problem - the issue is that the thumbnails are being pulled from local browser storage. The first thumbnail is not stored at the moment it it painted
-//and thus is not being pulled to paint. Solution is to expicitly store thumbnail in local storage as soonas it is piped in from backend, then pull it when needed.
-
-//ALTERNATIVELY, FIGURE OUT WHY THE INITIAL BLOB COMES UP AT EMPTY WHEN I KNOW THE DATA SHOULD BE PIPED THROUGH
+//TODO CURRENT: FORMAT THUMBNAIL SO THAT IT PROPERLY MIMICS 4CHAN STYLE. THEN, BEGIN INTEGRATING COMPLETE VERSIONS OF MEDIA!

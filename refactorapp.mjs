@@ -138,7 +138,7 @@ function get4chanBundle() {
         .catch((err) => {
 
              if ((typeof(aRandomPost) === "undefined") || (typeof(onlyBoard) === 'undefined')) {
-                console.log("Error. Retrying...");
+                console.log("Error. Retrying... " + err );
                 get4chanBundle();             
             }
 
@@ -331,7 +331,7 @@ app.get("/ServerSideRequest", (req, res) => {
 
 
 app.get("/ServeThumbnail", (imagerequest, imageresponse) =>{
-   getThumbnailTwo(imageresponse)
+   getThumbnailTwo(imageresponse);
 
 
     
@@ -359,9 +359,3 @@ app.listen(PORT, () => {
 
 
 
-
-//try seoerate axios get functions on the server side - a seperate function that returns only a blob type
-//i tried that already, but it failed..i wonder if it's because express can't natively send blob types
-
-
-//
