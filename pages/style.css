@@ -25,6 +25,8 @@ body {
     border: solid 2px black;
     /* height: 100%; */
     min-height: 5.1rem;
+    background-color: blueviolet;
+
 }
 
 header {
@@ -34,6 +36,7 @@ header {
     align-items: center;
     align-content: center;
     border: solid 2px black;
+    background-color: yellow;
 }
 
 
@@ -57,6 +60,8 @@ main {
     align-content: center;
     border: solid 2px black;
     min-height: 3rem;
+    background-color: goldenrod;
+
 
 }
 
@@ -100,6 +105,8 @@ main {
     border: solid 2px black;
     padding: 0.05rem;
     max-width: 5rem; 
+    background-color: yellowgreen;
+
 
 
 
@@ -228,4 +235,6 @@ footer {
     align-items: center;
     align-content: center;
     border: solid 2px black;
+    background-color: rgb(143, 118, 150);
+
 }
