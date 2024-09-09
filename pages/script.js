@@ -89,7 +89,11 @@ async function pingProxy(source) {
     
     //paintCom.insertAdjacentHTML( 'afterbegin',  usableFourChanData.Post.com + `<span class=quote>>this is a test, a test, a test, a test quote!</span>`);
     
-    paintCom.insertAdjacentHTML( 'afterbegin',  usableFourChanData.Post.com);
+    if (usableFourChanData.Post.com != undefined) {
+        paintCom.insertAdjacentHTML( 'afterbegin',  usableFourChanData.Post.com);
+
+
+    }
     //paintCom.prepend(usableFourChanData.Post.com);
 
 

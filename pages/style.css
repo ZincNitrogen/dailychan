@@ -37,6 +37,8 @@ header {
     align-content: center;
     border: solid 2px black;
     background-color: yellow;
+    padding-left: 0.05rem;
+    padding-right: 0.05rem;
 }
 
 
