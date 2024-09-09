@@ -1,6 +1,5 @@
 import express from "express";
 import axios from "axios";
-import { arrayBufferToBinaryString } from "blob-util";
 
 const app = express();
 const PORT = 8000;
@@ -265,6 +264,7 @@ function getThumbnailTwo(imageresponse) {
 
             //thumbnail = arrayBufferToBinaryString(res.data); //convert arraybuffer to binary string via blob-util library
             let thumbnail = res.data;
+            console.log(res.status);
             console.log(typeof(thumbnail));
             console.log(thumbnail);
             imageresponse.send(thumbnail);
@@ -275,7 +275,22 @@ function getThumbnailTwo(imageresponse) {
             //console.log(`Array Buffer converted to binary: ${thumbnail}`);
             //console.log(res.request);
         })
-        .catch((err) =>{err});
+        .catch((err) =>{
+            console.log(err);
+            imageresponse.send(err.response.data);
+            //console.log(err.response);
+            //console.log(err.response.data);
+            //console.log(err.request);
+            //console.log(err.request.data);
+
+
+
+
+
+
+
+
+        });
         
 
     // return thumbnail;
@@ -358,4 +373,16 @@ app.listen(PORT, () => {
 //paint it in post container with everything else
 
 
+//========The new disapeparing thumbnail issue
+//1)Is API endpoint working properly? -YES, i tested the endpoint in the browser and can confirm it works properly.
+//2)Is a connection being made to the api endpoint? - NO, it appears when printing out the error to the console (line 278), I am given an "axios error 429" - "Too Many Requests"...am i being rate limited?.
+//When i get unblocked, I have to get the rate limit to 1 request every 10 seconds. Doing this every buttonpress leads to a ghey user experience. To preserve fluidity, I will have to build a caching protocol that updates the cache with a new set of random posts every 10 seconds but before then, allows the user to button press and pull a post from the cache..
+//3)Is data flowing from API to this server
+//4)Is data flowing from server to frontend?
+//5)Is frontend handling data properly?
 
+//observations and assumptions:
+//No code changes between previous working state and current broken state
+//NOTHING can be logged to the console in the area where I expect array buffer to be logged (in the "then" on line 263)
+//
+//*tried updating package dependencies - to no avail (axios 1.7.2 -> 1.7.5)

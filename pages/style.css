@@ -58,19 +58,21 @@ main {
 
 }
 
-.post-container {      /*may have to convert micro layout in post container into a grid layout for ease.*/
-    display: flex;
+.post-container {   
+    
+    /*may have to convert micro layout in post container into a grid layout for ease.*/
+    /* display: flex;
     flex-flow: row wrap; 
     justify-content: flex-end;
     align-items: center;
-    align-content: center;
+    align-content: center; */
     /* column-gap: 0.02rem; */
 
 
 
 
 
-    
+/*     
     column-gap: 0.04rem;
 
 
@@ -81,6 +83,22 @@ main {
     border: solid 2px black;
     max-width: 5rem;
     padding: 0.05rem;
+ */
+
+
+
+
+
+    display:grid;
+    grid-template-columns: repeat(4, auto);
+    grid-template-rows: repeat(3, auto);
+
+    column-gap: 0.04rem;
+
+    border: solid 2px black;
+    padding: 0.05rem;
+    max-width: 5rem; 
+
 
 
 
@@ -106,7 +124,6 @@ main {
 
 .post-container-no{
     border: 1px solid black;
-    flex-grow: 2;
     /* padding: 0.05rem; */
 
 
@@ -137,6 +154,10 @@ main {
 .post-container-filename{
     border: 1px solid black;
     /* padding: 0.05rem; */
+    font-size: 0.1rem;
+    grid-column: 3/4;
+    grid-row: 2/3;
+
 
 
 
@@ -146,6 +167,10 @@ main {
 .post-container-fsize{
     border: 1px solid black;
     /* padding: 0.05rem; */
+    font-size: 0.1rem;
+    grid-column: 4;
+    grid-row: 2/3;
+
     
 
 
@@ -156,9 +181,11 @@ main {
 
 
 .post-container-thumbnail{
-    border: 1px solid black;
+    border: 1px solid red;
     /* padding: 0.05rem; */
     /* -align-self: flex-end; */
+    grid-column: 1/2;
+    grid-row: 3/4;
 
 
 
@@ -168,6 +195,8 @@ main {
 .post-container-com{
     border: 1px solid black;
     /* padding: 0.05rem; */
+    grid-column: 2/3 ;
+    grid-row: 3/4;
 
 
 
