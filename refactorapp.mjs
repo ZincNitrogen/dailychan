@@ -386,3 +386,5 @@ app.listen(PORT, () => {
 //NOTHING can be logged to the console in the area where I expect array buffer to be logged (in the "then" on line 263)
 //
 //*tried updating package dependencies - to no avail (axios 1.7.2 -> 1.7.5)
+
+//for 4chan post: "Hey anon, is my plebsite cool?"
