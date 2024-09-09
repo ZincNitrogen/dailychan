@@ -54,6 +54,10 @@ header {
     list-style: none;
 }
 
+#allownsfwlabel {
+    font-size: 0.101rem;
+}
+
 main {
     display: flex;
     flex-flow: column wrap;
