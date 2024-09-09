@@ -3,7 +3,10 @@ const postContainer = document.querySelector('.post-container');
 const url = "http://localhost:8000/ServerSideRequest";
 const thumbnailURL = "http://localhost:8000/ServeThumbnail";
 const newPostBtn = document.querySelector(`.btn`);
+const ALLOW_NSFW_CHECKBOX = document.querySelector('#allownsfw');
+const nsfwBoards = ['s', "hc", 'hm', 'h', 'e', 'u', 'd', 'y', 't', 'hr', 'gif', 'aco', 'r', 'b', 'r9k', 'pol', 'bant', 'soc', 's4s', 'trash'];
 let postContainerChildren = postContainer.childNodes;
+
 let chanLink;
 let usableFourChanData;
 let paintImg;
@@ -14,13 +17,53 @@ let paintImg;
 
 
 
-
-
 async function pingProxy(source) {
+    let boardSafety = 1;
 
-    const response = await fetch(source);
-    const fourchanData = await response.json(); 
-    usableFourChanData = JSON.parse(fourchanData);
+
+
+    do {
+        console.log("top");
+        const response = await fetch(source);
+        const fourchanData = await response.json(); 
+        usableFourChanData = JSON.parse(fourchanData);
+        console.log(ALLOW_NSFW_CHECKBOX.checked);
+
+
+        // if (ALLOW_NSFW_CHECKBOX.checked == "false") {
+        //     nsfwBoards.forEach((i) => {
+        //         if (i == usableFourChanData.Board) {
+                
+                
+        //             console.log("This board is nsfw and allownsfw is not turned on");
+        //             boardSafety = 0;
+        //         }
+
+        //     })
+        // }
+
+        
+        if (ALLOW_NSFW_CHECKBOX.checked == false) {
+            for (let i of nsfwBoards) {
+
+                if (i == usableFourChanData.Board) {
+                
+                    console.log("This board is nsfw and allownsfw is not turned on");
+                    boardSafety = 0;
+                }
+
+
+            }
+               
+           
+        }
+
+
+    } while (boardSafety == 0);
+
+
+
+ 
     //const convertThumbnail = usableFourChanData.Thumbnail;
 
 
@@ -29,6 +72,17 @@ async function pingProxy(source) {
     console.log(usableFourChanData.Board);
     console.log(usableFourChanData.Post);
     console.log(usableFourChanData.OP.no);
+
+
+
+
+
+
+   
+
+
+
+
     //console.log(usableFourChanData.Thumbnail);
 
     //console.log(usableFourChanData[Board]);
