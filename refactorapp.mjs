@@ -202,38 +202,275 @@ function get4chanBundle() {
 }
 
 
-function getThumbnail() {
+
+
+
+function get4chanBundleWorksafe() {
+   
+
+
+    console.log("function is running");
+  
 
     axios
-    .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
-            //headers: {"Content-Type": "image/jpeg"},
-            // headers: {"Content-Type": "application/octet-stream",
-            //     "Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
+        .get("http://a.4cdn.org/boards.json", {
 
-            // },
-            headers: {"Content-Type": "image/jpeg",
-                //"Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
+            headers: {"Content-Type": "application/json"},
 
-            },
-
-            //responseType: "buffer",
-            //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
-            //this url serves thumbnails!!!
         })
         .then((res) => {
-            thumbnail = res.data;
-            //console.log(typeof(res));
-            console.log(thumbnail);
-            //console.log(res.request);
+            let numberOfBoards = res.data.boards.length;
+            let randomBoardElement = Math.floor(Math.random() * (numberOfBoards));
+
+
+            do {
+
+                let boardDecision = null;
+                boardDecision = (res.data.boards[randomBoardElement]); 
+                console.log(boardDecision.board);
+                let isNSFW = +boardDecision.ws_board;  //0 is nsfw, 1 is sfw.
+                console.log(`is worksafe?: ${isNSFW}`);
+               
+                
+                
+
+            }while (isNSFW == 0);
+          
+
+            onlyBoard = boardDecision.board;
+            console.log(onlyBoard);
+
+
+            
+            
+
+
+
+
+
+
+            return axios.get(`http://a.4cdn.org/${onlyBoard}/catalog.json`, {
+                headers: {"Content-Type": "application/json"},
+
+            });
+
+
+            
         })
-        .catch((err) =>{err});
+        .then((res) => {   
+            // console.log(`<<<<<<<<<<<<<<<<BEGIN THREAD MATRIX>>>>>>>>>>>>>>>>`) 
+            // console.log(res.data);
+
+
+
+            // console.log(`<<<<<<<<<<<<<<<<NUMBER OF PAGES>>>>>>>>>>>>>>>>`) 
+            let numberOfPages = res.data.length;
+            // console.log(numberOfPages);
+
+
+
+            // console.log(`<<<<<<<<<<<<<<<<RANDOM PAGE>>>>>>>>>>>>>>>>`) 
+            let randomPagePicker = Math.floor(Math.random()*(numberOfPages)); //picks random apge
+            // console.log(randomPagePicker);
+
+
+            // console.log(`<<<<<<<<<<<<<<<<ACCESS PAGE>>>>>>>>>>>>>>>>`) 
+            let randomPageDecision = res.data[randomPagePicker]; //access object corresponding to page value
+            // console.log(randomPageDecision);
+
+
+
+            // console.log(`<<<<<<<<<<<<<<<<ACCESS THREADS OBJECT>>>>>>>>>>>>>>>>`) 
+            let threadAccess = randomPageDecision.threads; //access threads value of pagedecision object
+            // console.log(threadAccess);
+            
+
+            // console.log(`<<<<<<<<<<<<<<<<RANDOM THREAD>>>>>>>>>>>>>>>>`) 
+            let randomThreadPicker = Math.floor(Math.random()*(threadAccess.length));
+            // console.log(randomThreadPicker);
+
+
+            // console.log(`<<<<<<<<<<<<<<<<THREAD DESCISION>>>>>>>>>>>>>>>>`) 
+            randomThreadDecision = threadAccess[randomThreadPicker];
+            // console.log(randomThreadDecision);
+
+       
+            return axios.get(`http://a.4cdn.org/${onlyBoard}/thread/${randomThreadDecision.no}.json`, {
+                headers: {"Content-Type": "application/json"},
+
+            });
+
+
+        })
+        .then((res) => {
+
+            let numberOfPosts = res.data.posts.length;
+            let randomPostNumber =  Math.floor(Math.random()*(numberOfPosts));
+            aRandomPost = res.data.posts[randomPostNumber];
+
+            // console.log(`<<<<<<<<<<<<<<<<POSTS>>>>>>>>>>>>>>>>`) 
+            // console.log(res.data);
+
+            // console.log(`<<<<<<<<<<<<<<<<A RANDOM POST>>>>>>>>>>>>>>>>`) 
+            // console.log(aRandomPost);
+           
+            return aRandomPost;
+
+            // return axios.get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
+            //     //responseType: "blob",
+            //     headers: {"Content-Type": "image/jpeg",
+            //         "Accept": "image/jpeg",
+
+            //     },
+            //     // headers: {"Content-Type" : "image/jpeg"},
+            //     // responseType: "blob",
+
+            //     //headers: {"Content-Type": "application/json"},
+            //     //headers: {"Content-Type": "*/*"},
+            //     //headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            //     //headers: {"Content-Type": "application/octet-stream"},
+            //     //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
+            //     //this url serves thumbnails!!!
+            // }); 
+
+
+        })
+        // .then((res) => {
+
+
+        //     //console.log(res);
+
+
+        //     console.log(res.headers);
+        //     console.log(res.request);
+        //     //console.log(typeof(res.data));
+        //     thumbnail = (res.data);
+        //     console.log(thumbnail);
+        // })
+        .catch((err) => {
+
+            if ((typeof(aRandomPost) === "undefined") || (typeof(onlyBoard) === 'undefined')) {
+                console.log("Error. Retrying... " + err );
+                get4chanBundleWorksafe();             
+            }
+
+
+            
+        })
+        .finally(() => {
+
+            //console.log(onlyBoard, typeof(onlyBoard));
+            //console.log(aRandomPost, typeof(aRandomPost)); 
+            combinedJson = {
+                Board: onlyBoard,
+                Post: aRandomPost,
+                OP: randomThreadDecision,
+                //Thumbnail: thumbnail,
+            };
+
+            console.log("=========new=========")
+            //console.log(onlyBoard);
+            //console.log(aRandomPost);
+            //console.log(combinedJson);
+
+            // app.get("/ServerSideRequest", (req, res) => {
+
+            //     // onlyBoard = null;
+            //     // aRandomPost = null
+              
+            //     console.log("=========old=========")
+            //     console.log(onlyBoard);
+            //     console.log(aRandomPost);
+            //     console.log(combinedJson); 
+             
+            //     res.json(JSON.stringify(combinedJson));
+            //     // delete combinedJson.Board;
+            //     // delete combinedJson.Post;
+
+            //     console.log(get4chanBundle());
+
+
+
+            // });
+            
+          
+
+
+
+    
+
+            //combine the above two in a json object
+            //send these two variables to the front end from here
+            //
+           
+
+
+            
+        });
+
+        
+        //console.log(combinedJson);
+    return combinedJson;
         
 
-    return thumbnail
-
-
-
 }
+
+
+
+
+/*
+try{
+    axios
+    "throw" error inside axios if board is not worksafe
+
+
+
+}catch (err) {
+    if (err "instanceof" ErrorObject) {     //retrhowing mechanism
+
+
+        console.log("this board is nsfw. Retrying...");
+    } else{
+     throw err;
+    }
+
+
+
+
+*/
+
+// function getThumbnail() {
+
+//     axios
+//     .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
+//             //headers: {"Content-Type": "image/jpeg"},
+//             // headers: {"Content-Type": "application/octet-stream",
+//             //     "Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
+
+//             // },
+//             headers: {"Content-Type": "image/jpeg",
+//                 //"Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
+
+//             },
+
+//             //responseType: "buffer",
+//             //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
+//             //this url serves thumbnails!!!
+//         })
+//         .then((res) => {
+//             thumbnail = res.data;
+//             //console.log(typeof(res));
+//             console.log(thumbnail);
+//             //console.log(res.request);
+//         })
+//         .catch((err) =>{err});
+        
+
+//     return thumbnail
+
+
+
+// }
 
 
 
@@ -276,7 +513,7 @@ function getThumbnailTwo(imageresponse) {
             //console.log(res.request);
         })
         .catch((err) =>{
-            console.log(err);
+            console.log("No thumbnail");
             imageresponse.send(err.response.data);
             //console.log(err.response);
             //console.log(err.response.data);
@@ -304,6 +541,10 @@ app.get("/ServerSideRequest", (req, res) => {
     res.json(JSON.stringify(get4chanBundle()));
 
     
+})
+
+app.get("/WorksafeServerSideRequest", (req, res) => {
+    res.json(JSON.stringify(get4chanBundleWorksafe()));
 })
 
 

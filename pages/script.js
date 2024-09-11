@@ -1,10 +1,10 @@
 
 const postContainer = document.querySelector('.post-container');
 const url = "http://localhost:8000/ServerSideRequest";
+const worksafeURL = "http://localhost:8000/WorksafeServerSideRequest";
 const thumbnailURL = "http://localhost:8000/ServeThumbnail";
 const newPostBtn = document.querySelector(`.btn`);
 const ALLOW_NSFW_CHECKBOX = document.querySelector('#allownsfw');
-const nsfwBoards = ['s', "hc", 'hm', 'h', 'e', 'u', 'd', 'y', 't', 'hr', 'gif', 'aco', 'r', 'b', 'r9k', 'pol', 'bant', 'soc', 's4s', 'trash'];
 let postContainerChildren = postContainer.childNodes;
 
 let chanLink;
@@ -17,31 +17,34 @@ let paintImg;
 
 
 
-async function pingProxy(source) {
-    let isNsfw = null;
-
+async function pingProxy(source, worksafeSource) {
     //while this solution works, the latency is terrible. I think a better way of doing this is to implement
-    // some sort of flag sent with the request that lets the server know the state of the checkbox
+    //some sort of flag sent with the request that lets the server know the state of the checkbox
     //the server will then only choose from boards that are approved.
 
-    do {
-        console.log("top");
+    
+    console.log("top");
+    console.log(ALLOW_NSFW_CHECKBOX.checked);
+
+    if (ALLOW_NSFW_CHECKBOX.checked == false) {
+        let response =  await fetch(worksafeSource);
+        let fourchanData =  await response.json(); 
+        usableFourChanData = JSON.parse(fourchanData);
+
+
+    }else {
         let response =  await fetch(source);
         let fourchanData =  await response.json(); 
         usableFourChanData = JSON.parse(fourchanData);
-        console.log(ALLOW_NSFW_CHECKBOX.checked);
-        isNsfw = nsfwBoards.includes(usableFourChanData.Board);
-        if (ALLOW_NSFW_CHECKBOX.checked == false && isNsfw == true) {
-            console.log(`/${usableFourChanData.Board}/ is nsfw and allownsfw is not turned on. Retrying...`);
-
-            response = null;
-            fourchanData = null;
-        
-        } 
 
 
+    }
 
-    } while (ALLOW_NSFW_CHECKBOX.checked == false && isNsfw == true);
+    
+    
+    
+
+
 
 
 
@@ -501,7 +504,7 @@ async function getThumbnailArrayBufferBinary(source) {
 
 
 
-pingProxy(url);
+pingProxy(url, worksafeURL);
 getThumbnailArrayBufferBinary(thumbnailURL);
 // frontendThumbnail();
 
@@ -511,7 +514,7 @@ getThumbnailArrayBufferBinary(thumbnailURL);
 
 newPostBtn.addEventListener("pointerup", (e) => {
     containerDeletion();
-    pingProxy(url);
+    pingProxy(url, worksafeURL);
     getThumbnailArrayBufferBinary(thumbnailURL);
     // frontendThumbnail();
    
