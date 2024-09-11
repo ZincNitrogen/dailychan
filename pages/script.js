@@ -18,19 +18,28 @@ let paintImg;
 
 
 async function pingProxy(source) {
-    let boardSafety = 1;
+    let isNsfw = null;
 
 
 
     do {
         console.log("top");
-        const response = await fetch(source);
-        const fourchanData = await response.json(); 
+        let response =  await fetch(source);
+        let fourchanData =  await response.json(); 
         usableFourChanData = JSON.parse(fourchanData);
         console.log(ALLOW_NSFW_CHECKBOX.checked);
+        isNsfw = nsfwBoards.includes(usableFourChanData.Board);
+        if (ALLOW_NSFW_CHECKBOX.checked == false && isNsfw == true) {
+            console.log(`/${usableFourChanData.Board}/ is nsfw and allownsfw is not turned on. Retrying...`);
+
+            response = null;
+            fourchanData = null;
+        } 
 
 
-        // if (ALLOW_NSFW_CHECKBOX.checked == "false") {
+
+
+        // if (ALLOW_NSFW_CHECKBOX.checked == false) {
         //     nsfwBoards.forEach((i) => {
         //         if (i == usableFourChanData.Board) {
                 
@@ -43,23 +52,23 @@ async function pingProxy(source) {
         // }
 
         
-        if (ALLOW_NSFW_CHECKBOX.checked == false) {
-            for (let i of nsfwBoards) {
+        // if (ALLOW_NSFW_CHECKBOX.checked == false) {
+        //     for (let i of nsfwBoards) {
 
-                if (i == usableFourChanData.Board) {
+        //         if (i == usableFourChanData.Board) {
                 
-                    console.log("This board is nsfw and allownsfw is not turned on");
-                    boardSafety = 0;
-                }
+        //             console.log("This board is nsfw and allownsfw is not turned on");
+        //             boardSafety = 0;
+        //         }
 
 
-            }
+        //     }
                
            
-        }
+        // }
 
 
-    } while (boardSafety == 0);
+    } while (ALLOW_NSFW_CHECKBOX.checked == false && isNsfw == true);
 
 
 
