@@ -20,7 +20,9 @@ let paintImg;
 async function pingProxy(source) {
     let isNsfw = null;
 
-
+    //while this solution works, the latency is terrible. I think a better way of doing this is to implement
+    // some sort of flag sent with the request that lets the server know the state of the checkbox
+    //the server will then only choose from boards that are approved.
 
     do {
         console.log("top");
@@ -34,38 +36,9 @@ async function pingProxy(source) {
 
             response = null;
             fourchanData = null;
+        
         } 
 
-
-
-
-        // if (ALLOW_NSFW_CHECKBOX.checked == false) {
-        //     nsfwBoards.forEach((i) => {
-        //         if (i == usableFourChanData.Board) {
-                
-                
-        //             console.log("This board is nsfw and allownsfw is not turned on");
-        //             boardSafety = 0;
-        //         }
-
-        //     })
-        // }
-
-        
-        // if (ALLOW_NSFW_CHECKBOX.checked == false) {
-        //     for (let i of nsfwBoards) {
-
-        //         if (i == usableFourChanData.Board) {
-                
-        //             console.log("This board is nsfw and allownsfw is not turned on");
-        //             boardSafety = 0;
-        //         }
-
-
-        //     }
-               
-           
-        // }
 
 
     } while (ALLOW_NSFW_CHECKBOX.checked == false && isNsfw == true);
@@ -528,19 +501,20 @@ async function getThumbnailArrayBufferBinary(source) {
 
 
 
-
+pingProxy(url);
 getThumbnailArrayBufferBinary(thumbnailURL);
 // frontendThumbnail();
-pingProxy(url);
+
 
 //newPost(url, thumbnailURL);
 //parallelInfoPost();
 
 newPostBtn.addEventListener("pointerup", (e) => {
     containerDeletion();
+    pingProxy(url);
     getThumbnailArrayBufferBinary(thumbnailURL);
     // frontendThumbnail();
-    pingProxy(url);
+   
     //newPost(url, thumbnailURL);
     //parallelInfoPost();
 
