@@ -26,18 +26,15 @@ async function pingProxy(source, worksafeSource) {
     console.log("top");
     console.log(ALLOW_NSFW_CHECKBOX.checked);
 
-    if (ALLOW_NSFW_CHECKBOX.checked == false) {
-        let response =  await fetch(worksafeSource);
-        let fourchanData =  await response.json(); 
-        usableFourChanData = JSON.parse(fourchanData);
 
-
-    }else {
+    if (ALLOW_NSFW_CHECKBOX.checked) {
         let response =  await fetch(source);
         let fourchanData =  await response.json(); 
         usableFourChanData = JSON.parse(fourchanData);
-
-
+    } else {
+        let response =  await fetch(worksafeSource);
+        let fourchanData =  await response.json(); 
+        usableFourChanData = JSON.parse(fourchanData);
     }
 
     
@@ -503,9 +500,14 @@ async function getThumbnailArrayBufferBinary(source) {
 // }
 
 
+//on pageload?
+
 
 pingProxy(url, worksafeURL);
 getThumbnailArrayBufferBinary(thumbnailURL);
+
+
+
 // frontendThumbnail();
 
 

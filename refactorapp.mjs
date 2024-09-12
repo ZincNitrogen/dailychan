@@ -7,7 +7,7 @@ const HOST = "localhost";
 let date = new Date().toUTCString();
 let combinedJson;
 
-let onlyBoard;
+let onlyBoard = null;
 let aRandomPost;
 
 let randomThreadDecision;
@@ -23,7 +23,8 @@ function get4chanBundle() {
    
 
 
-    console.log("function is running");
+    //console.log("function is running");
+    console.log("nonworksafe function is running");
 
     axios
         .get("http://a.4cdn.org/boards.json", {
@@ -209,7 +210,7 @@ function get4chanBundleWorksafe() {
    
 
 
-    console.log("function is running");
+    console.log("worksafe function is running");
   
 
     axios
@@ -244,12 +245,14 @@ function get4chanBundleWorksafe() {
                     isNSFW = "YES!"; 
                     console.log(`is NSFW?: ${isNSFW}`);
                     console.log("checkpoint two - nsfw");
+                    continue;
                 } else if (isWorksafe == 1) {
                     isNSFW = "NO!";
                     console.log(`is NSFW?: ${isNSFW}`);
                     console.log("checkpoint two -non-nsfw");
                     onlyBoard = boardDecision.board;
-                    continue;
+                    
+                    
                 }
                 
                 
@@ -386,6 +389,7 @@ function get4chanBundleWorksafe() {
 
             //console.log(onlyBoard, typeof(onlyBoard));
             //console.log(aRandomPost, typeof(aRandomPost)); 
+            console.log(`final board: ${onlyBoard}`);
             console.log(onlyBoard);
             combinedJson = {
                 Board: onlyBoard,
@@ -443,60 +447,6 @@ function get4chanBundleWorksafe() {
 
 
 
-
-/*
-try{
-    axios
-    "throw" error inside axios if board is not worksafe
-
-
-
-}catch (err) {
-    if (err "instanceof" ErrorObject) {     //retrhowing mechanism
-
-
-        console.log("this board is nsfw. Retrying...");
-    } else{
-     throw err;
-    }
-
-
-
-
-*/
-
-// function getThumbnail() {
-
-//     axios
-//     .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
-//             //headers: {"Content-Type": "image/jpeg"},
-//             // headers: {"Content-Type": "application/octet-stream",
-//             //     "Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
-
-//             // },
-//             headers: {"Content-Type": "image/jpeg",
-//                 //"Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
-
-//             },
-
-//             //responseType: "buffer",
-//             //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
-//             //this url serves thumbnails!!!
-//         })
-//         .then((res) => {
-//             thumbnail = res.data;
-//             //console.log(typeof(res));
-//             console.log(thumbnail);
-//             //console.log(res.request);
-//         })
-//         .catch((err) =>{err});
-        
-
-//     return thumbnail
-
-
-
-// }
 
 
 
@@ -574,42 +524,7 @@ app.get("/WorksafeServerSideRequest", (req, res) => {
 })
 
 
-// app.get("/ServeThumbnail", (req, res) =>{
-//     res.json(JSON.stringify(getThumbnail()));
-//     //console.log(decodeURI(getThumbnail()));
-    
-// })
 
-
-// app.get("/ServeThumbnail", (req, res) =>{
-//     res.send(getThumbnailTwo());
-//     //thumbnail = null;
-
-//     //console.log(decodeURI(getThumbnail()));
-    
-// })
-
-// app.get("/ServeThumbnail", (imagerequest, imageresponse) =>{
-    
-//     axios
-//     .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
-//             headers: {"Content-Type": "application/octet-stream"}, 
-//             responseType: "arraybuffer",
-//         })
-//         .then((res) => {
-
-//             let thumbnail = res.data;
-//             console.log(typeof(thumbnail));
-//             console.log(thumbnail);
-//             imageresponse.send(thumbnail);
-
-
-//         })
-//         .catch((err) =>{err});
-
-
-    
-// })
 
 
 app.get("/ServeThumbnail", (imagerequest, imageresponse) =>{
@@ -621,7 +536,8 @@ app.get("/ServeThumbnail", (imagerequest, imageresponse) =>{
 
 
 
-console.log(get4chanBundle());
+//console.log(get4chanBundle()); //initial data paint, nsfw allowed
+console.log(get4chanBundleWorksafe()); //initial data paint, nsfw not allowed - this should be the default of the app.
 
 
 app.use(express.static("pages"));//middleware
@@ -640,18 +556,11 @@ app.listen(PORT, () => {
 //paint it in post container with everything else
 
 
-//========The new disapeparing thumbnail issue
-//1)Is API endpoint working properly? -YES, i tested the endpoint in the browser and can confirm it works properly.
-//2)Is a connection being made to the api endpoint? - NO, it appears when printing out the error to the console (line 278), I am given an "axios error 429" - "Too Many Requests"...am i being rate limited?.
-//When i get unblocked, I have to get the rate limit to 1 request every 10 seconds. Doing this every buttonpress leads to a ghey user experience. To preserve fluidity, I will have to build a caching protocol that updates the cache with a new set of random posts every 10 seconds but before then, allows the user to button press and pull a post from the cache..
-//3)Is data flowing from API to this server
-//4)Is data flowing from server to frontend?
-//5)Is frontend handling data properly?
 
-//observations and assumptions:
-//No code changes between previous working state and current broken state
-//NOTHING can be logged to the console in the area where I expect array buffer to be logged (in the "then" on line 263)
-//
-//*tried updating package dependencies - to no avail (axios 1.7.2 -> 1.7.5)
 
 //for 4chan post: "Hey anon, is my plebsite cool?"
+
+
+//NSFW filter lag likely caused by either having the function excecute upon server start (line
+//540) but I honestly can't figure out how to solve it. It's not really a major problem since the user experience is not hindered. 
+//Going to put it on the back burner.
