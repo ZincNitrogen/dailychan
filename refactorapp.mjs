@@ -220,25 +220,50 @@ function get4chanBundleWorksafe() {
         })
         .then((res) => {
             let numberOfBoards = res.data.boards.length;
-            let randomBoardElement = Math.floor(Math.random() * (numberOfBoards));
+            let isWorksafe = null;
 
+            console.log("checkpoint one");
 
             do {
 
                 let boardDecision = null;
+                let randomBoardElement = null;
+                onlyBoard = null;
+            
+                let isNSFW = null; //isNSFW is the human readable version of isWorksafe. Better for debugging purposes.
+
+                randomBoardElement = Math.floor(Math.random() * (numberOfBoards));
                 boardDecision = (res.data.boards[randomBoardElement]); 
                 console.log(boardDecision.board);
-                let isNSFW = +boardDecision.ws_board;  //0 is nsfw, 1 is sfw.
-                console.log(`is worksafe?: ${isNSFW}`);
+
+                isWorksafe = +boardDecision.ws_board; //gets value of ws_board property (0 is nsfw, 1 is sfw.)
+
+
+
+                if (isWorksafe == 0) {
+                    isNSFW = "YES!"; 
+                    console.log(`is NSFW?: ${isNSFW}`);
+                    console.log("checkpoint two - nsfw");
+                } else if (isWorksafe == 1) {
+                    isNSFW = "NO!";
+                    console.log(`is NSFW?: ${isNSFW}`);
+                    console.log("checkpoint two -non-nsfw");
+                    onlyBoard = boardDecision.board;
+                    continue;
+                }
+                
+                
                
                 
                 
 
-            }while (isNSFW == 0);
+            } while (isWorksafe == 0);
           
 
-            onlyBoard = boardDecision.board;
+            
             console.log(onlyBoard);
+            console.log("checkpoint three");
+
 
 
             
@@ -361,6 +386,7 @@ function get4chanBundleWorksafe() {
 
             //console.log(onlyBoard, typeof(onlyBoard));
             //console.log(aRandomPost, typeof(aRandomPost)); 
+            console.log(onlyBoard);
             combinedJson = {
                 Board: onlyBoard,
                 Post: aRandomPost,
