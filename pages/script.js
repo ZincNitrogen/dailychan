@@ -1,4 +1,10 @@
 
+let stylesheetRoot = document.querySelector(':root');
+
+
+
+
+
 const postContainer = document.querySelector('.post-container');
 const url = "http://localhost:8000/ServerSideRequest";
 const worksafeURL = "http://localhost:8000/WorksafeServerSideRequest";
@@ -10,6 +16,14 @@ let postContainerChildren = postContainer.childNodes;
 let chanLink;
 let usableFourChanData;
 let paintImg;
+
+
+
+//stylesheetRoot.setAttribute("class", `MinimalPaperTheme`);
+//stylesheetRoot.setAttribute("class", `AnontismTheme`);
+// stylesheetRoot.setAttribute("class", `SleekTheme`);
+stylesheetRoot.setAttribute("class", `DefaultTheme`);
+
 
 
 
