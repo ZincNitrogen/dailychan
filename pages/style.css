@@ -76,7 +76,7 @@
     --navTextColor: #34345c;
     --headerTextOpacity: 1;
 
-    --buttonTextColor: #34345c; 
+    --buttonTextColor: #33335b; 
 
     --bgColor_dropdowncontent: var(--bgColor_postcontainer);
     --dropdownTextColor: var(--headerTextColor);
@@ -112,19 +112,26 @@ body {
 header {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content:flex-end;
     align-items: center;
     align-content: center;
     border: var(--borders);
     background-color: var(--bgColor_header);
     padding-left: 0.05rem;
     padding-right: 0.05rem;
+    /* border: solid 2px black; */
+ 
+    
+
 }
 
 
 .sitename {
     color: var(--headerTextColor);
     opacity: var(--headerTextOpacity);
+    /* border: solid 2px black; */
+    margin-right: auto; /*can use this to make items to as far to the other side of their parent container as possible*/
+
 }
 
 
@@ -140,14 +147,16 @@ header {
     border: var(--borders);
     column-gap: 0.2rem;
     list-style: none;
+    /* border: solid 2px black; */
 }
+
+
 
 #allownsfwlabel {
     font-size: 0.101rem;
 }
 
 .dropdown {
-    /* border: solid 1px black; */
     border: none;
 }
 
@@ -157,19 +166,18 @@ header {
     justify-content: center;
     align-content: center;
     align-items: center;
-    row-gap: 0.1rem;
-    padding: 0.05rem;
 
 
 
 
     list-style: none;
-    /* max-width: 110px; */
-    /* min-height: 1rem; */
-    max-width: 200px;
+    min-width: 100px;
 
-    /* background-color: rgba(214, 218, 240, 0.5); */
-    background-color: #eef2ff ;
+    background-color: var(--bgColor_dropdowncontent);
+    border: solid 1px #b7c5d9;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+    
     
     color: var(--dropdownTextColor);
    
@@ -177,13 +185,47 @@ header {
 
 
     position:absolute;
-    right: 0.32rem;
+    right: 0.47rem;
     top: 0.2rem;
-    /* text-align: center; */
-    /* display: none; */
+}
+
+.dropdown-content li {
+
+    min-width: 100%;
+    min-height: 0.3rem;
+    text-align: center; 
+    padding-top: 0.1rem;
+ 
+
+
+
+}
+
+.dropdown-content :nth-child(3) {
+    padding-top: 0.05rem;
 }
 
 
+.dropdown-content li:hover {
+    background-color: #eef2ff ;
+   
+
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+
+.dropdownarrow {
+    position: relative;
+    right: 0.47rem;
+
+}
 main {
     display: flex;
     flex-flow: column wrap;

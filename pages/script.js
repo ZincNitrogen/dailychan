@@ -7,6 +7,7 @@ let stylesheetRoot = document.querySelector(':root');
 
 let themesDropdownBtn = document.querySelector(`.dropdown`);
 let themesDropdownContent = document.querySelector(`.dropdown-content`);
+let themesDropdownIcon = document.querySelector(`.dropdownarrow`);
 
 
 
@@ -38,6 +39,8 @@ themesDropdownContent.style.display = "none"; //by default, dropdown is invisibl
 
 themesDropdownBtn.addEventListener("pointerenter", (e) => {
     themesDropdownContent.style.display = "flex"; 
+    themesDropdownIcon.style.transform = "rotate(180deg)";
+
 
 
 });
@@ -45,7 +48,10 @@ themesDropdownBtn.addEventListener("pointerenter", (e) => {
 
 document.body.addEventListener("pointerdown", (e) => {
     themesDropdownContent.style.display = "none";
-    e.stopPropogation(); 
+    themesDropdownIcon.style.transform = "rotate(0deg)";
+    
+
+    e.stopPropagation(); 
 
 
 });
@@ -53,11 +59,14 @@ document.body.addEventListener("pointerdown", (e) => {
 
 themesDropdownContent.addEventListener("pointerenter", (e) => {
     themesDropdownContent.style.display = "flex"; 
+    themesDropdownIcon.style.transform = "rotate(180deg)";
+
 
 });
 
 themesDropdownContent.addEventListener("pointerleave", (e) => {
     themesDropdownContent.style.display = "none"; 
+    themesDropdownIcon.style.transform = "rotate(0deg)";
 
 });
 
