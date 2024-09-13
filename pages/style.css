@@ -78,6 +78,10 @@
 
     --buttonTextColor: #34345c; 
 
+    --bgColor_dropdowncontent: var(--bgColor_postcontainer);
+    --dropdownTextColor: var(--headerTextColor);
+    --opacity_dropdowncontent: 0.5;
+
 }
 
 * {
@@ -141,6 +145,44 @@ header {
 #allownsfwlabel {
     font-size: 0.101rem;
 }
+
+.dropdown {
+    /* border: solid 1px black; */
+    border: none;
+}
+
+.dropdown-content {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    row-gap: 0.1rem;
+    padding: 0.05rem;
+
+
+
+
+    list-style: none;
+    /* max-width: 110px; */
+    /* min-height: 1rem; */
+    max-width: 200px;
+
+    /* background-color: rgba(214, 218, 240, 0.5); */
+    background-color: #eef2ff ;
+    
+    color: var(--dropdownTextColor);
+   
+    font-size: 0.15rem;
+
+
+    position:absolute;
+    right: 0.32rem;
+    top: 0.2rem;
+    /* text-align: center; */
+    /* display: none; */
+}
+
 
 main {
     display: flex;

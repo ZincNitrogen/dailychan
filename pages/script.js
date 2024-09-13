@@ -5,6 +5,12 @@ let stylesheetRoot = document.querySelector(':root');
 
 
 
+let themesDropdownBtn = document.querySelector(`.dropdown`);
+let themesDropdownContent = document.querySelector(`.dropdown-content`);
+
+
+
+
 const postContainer = document.querySelector('.post-container');
 const url = "http://localhost:8000/ServerSideRequest";
 const worksafeURL = "http://localhost:8000/WorksafeServerSideRequest";
@@ -18,6 +24,7 @@ let usableFourChanData;
 let paintImg;
 
 
+//THEMEING
 
 //stylesheetRoot.setAttribute("class", `MinimalPaperTheme`);
 //stylesheetRoot.setAttribute("class", `AnontismTheme`);
@@ -26,10 +33,42 @@ stylesheetRoot.setAttribute("class", `DefaultTheme`);
 
 
 
+//DROPDOWN
+themesDropdownContent.style.display = "none"; //by default, dropdown is invisible
+
+themesDropdownBtn.addEventListener("pointerenter", (e) => {
+    themesDropdownContent.style.display = "flex"; 
+
+
+});
+
+
+document.body.addEventListener("pointerdown", (e) => {
+    themesDropdownContent.style.display = "none";
+    e.stopPropogation(); 
+
+
+});
+
+
+themesDropdownContent.addEventListener("pointerenter", (e) => {
+    themesDropdownContent.style.display = "flex"; 
+
+});
+
+themesDropdownContent.addEventListener("pointerleave", (e) => {
+    themesDropdownContent.style.display = "none"; 
+
+});
 
 
 
 
+
+
+
+
+//API DATA GATHERING AND PAINTING
 
 async function pingProxy(source, worksafeSource) {
     //while this solution works, the latency is terrible. I think a better way of doing this is to implement
@@ -308,235 +347,17 @@ async function getThumbnailArrayBufferBinary(source) {
 }
 
 
-// async function newPost(postURLSRC, thumbnailURLSRC) {
-
-//     //i think the issue with the thumbnails are that the thumbniuals are slower thnan the post info. I need to create promises out og the two functions
-
-
-//     //the two functions being ping proxy and getthumbnailbufferarray
-
-
-//     // let promiseNewPost = new Promise((resolve, reject) => {
-
-//     //     pingProxy(url);
-//     //     getThumbnailArrrayBufferBinary(thumbnailURL);
-
-//     // })
-
-//     // let newPostPromise = await Promise.all([
-//     //     getThumbnailArrrayBufferBinary(thumbnailURL),
-//     //     pingProxy(url),
-//     // ])
-
-
-//     // return newPostPromise;
-
-//     // let tn = await getThumbnailArrrayBufferBinary(thumbnailURL);
-//     // let pp = await pingProxy(url);
-
-//     const response = await fetch(postURLSRC);
-//     const fourchanData = await response.json(); 
-
-//     const tn_response = await fetch(thumbnailURLSRC);
-//     const usableThumbnailData = await tn_response.arrayBuffer();
-
-
-//     usableFourChanData = JSON.parse(fourchanData);
-  
-
-
-
-//     console.log(usableThumbnailData);
-//     console.log(typeof(usableThumbnailData));  
-
-//     console.log(usableFourChanData.Board);
-//     console.log(usableFourChanData.Post);
-//     console.log(usableFourChanData.OP.no);
-
-
-
-//     let paintBoard = document.createElement("div");
-//     let paintNo = document.createElement("div");
-//     let paintNow = document.createElement("div");
-//     let paintName = document.createElement("div");
-//     let paintCom = document.createElement("div");
-//     let paintFileName = document.createElement("div");
-//     let paintFsize = document.createElement("div");
-
-//     paintBoard.setAttribute('class',"post-container-board");
-//     paintNo.setAttribute('class',"post-container-no");
-//     paintNow.setAttribute('class',"post-container-now");
-//     paintName.setAttribute('class',"post-container-name");
-//     paintCom.setAttribute('class',"post-container-com");
-//     paintFileName.setAttribute('class',"post-container-filename");
-
-//     paintFsize.setAttribute('class',"post-container-fsize");
-
-
-//     paintFileName.prepend(`File: ${usableFourChanData.Post.filename}${usableFourChanData.Post.ext}`); //including "ext" here and only here
-//     paintFsize.prepend(usableFourChanData.Post.fsize); //might have to round. investigate 4chan format
-
-
-//     paintBoard.prepend(`/${usableFourChanData.Board}/`);
-
-//     paintNo.insertAdjacentHTML("afterbegin", '<a href=' + `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${usableFourChanData.Post.no}` +" target= '_blank' " + "title='See this post on 4chan.org in a new tab'" + '>' + `No.${usableFourChanData.Post.no}` + "</a>");
-
-    
-//     paintNow.prepend(usableFourChanData.Post.now);
-//     paintName.prepend(usableFourChanData.Post.name);
-        
-//     paintCom.insertAdjacentHTML( 'afterbegin',  usableFourChanData.Post.com);
-
-
-
-//     chanLink = Array.from(paintCom.querySelectorAll(".quotelink"));
-
-
-//     if (chanLink || false) {
-
-//         console.log(chanLink);
-//         chanLink.forEach((e) => {
-//             //console.log(e.text);
-//             let postReply = (e.text).slice(2);
-
-//             e.setAttribute("href", `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${postReply}`);
-
-//             e.setAttribute("target", "_blank");
-//             e.setAttribute("title" , "See this post on 4chan.org in a new tab");
-
-//         })
-
-    
-//     }
-
-    
-
-//     postContainer.append(paintBoard);
-//     postContainer.append(paintNo);
-//     postContainer.append(paintNow);
-//     postContainer.append(paintName);
-//     postContainer.append(paintCom);
-//     if (typeof(usableFourChanData.Post.filename) !== "undefined") {
-//         postContainer.append(paintFileName);
-//         postContainer.append(paintFsize);
-        
-    
-
-//     }
-
-
-
-
-
-
-//    //return usableFourChanData 
-
-
-    
-
-
-
-
-
-//     //turn arraybuffer into blob(?) NOW I HAVE TO FIGURE OUT WHY OLD THUMBNAILS SOMETIMES STICKAROUND PAST THEIR WELCOME!!
-//     //const test = blobUtil.arrayBufferToBlob(usableThumbnailData, 'image/jpeg');
-//     const test =  new Blob([usableThumbnailData], {type: "image/*"}); //"or image/jpeg" ? since thumbnails are supposed to be only jog's
-//     console.log(test);
-
-
-
-//     // const mediaContainer = document.createElement("img");
-//     // mediaContainer.setAttribute("src", thumbnail);
-//     // postContainer.append(mediaContainer);
-
-//     //console.log(URL.createObjectURL(blobbyResponse));
-
-
-//     paintImg = document.createElement("img");
-//     //paintImg.setAttribute("src", `data:image/jpeg;base64,` + usableThumbnailData);
-//     //paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData));
-//     paintImg.setAttribute("src", URL.createObjectURL(test));
-
-
-//     paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
-//     paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
-//     paintImg.setAttribute("class", "post-contianer-thumbnail");
-//     postContainer.append(paintImg);
-
-
-
-
-
-
-
-
-// }
-
-// async function parallelInfoPost() {
-
-//     //await getThumbnailArrrayBufferBinary
-
-//     //then call pingProxy()
-
-//     //this fails :(
-//     await getThumbnailArrayBufferBinary(thumbnailURL);
-//     pingProxy(url);
-// }
-
-// async function frontendThumbnail() {
-
-
-//     try {
-
-//         const response = `http://i.4cdn.org/${usableFourChanData.Board}/${usableFourChanData.tim}s.jpg`;
-        
-//         paintImg = document.createElement("img");
-//         paintImg.setAttribute("src", response);  
-    
-    
-//         paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
-//         paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
-//         paintImg.setAttribute("class", "post-contianer-thumbnail");
-//         postContainer.append(paintImg);
-
-//     } catch {
-//         console.log("post has not media");
-//     }
-
-
-
-
-
-//     console.log("test");
-
-
-
-// }
-
-
-//on pageload?
-
 
 pingProxy(url, worksafeURL);
 getThumbnailArrayBufferBinary(thumbnailURL);
 
 
 
-// frontendThumbnail();
-
-
-//newPost(url, thumbnailURL);
-//parallelInfoPost();
 
 newPostBtn.addEventListener("pointerup", (e) => {
     containerDeletion();
     pingProxy(url, worksafeURL);
     getThumbnailArrayBufferBinary(thumbnailURL);
-    // frontendThumbnail();
-   
-    //newPost(url, thumbnailURL);
-    //parallelInfoPost();
-
 
     
 

@@ -559,6 +559,7 @@ app.listen(PORT, () => {
 
 
 //for 4chan post: "Hey anon, is my plebsite cool?"
+//or perhaps: "Hey anon, how can I make my website cooler?"
 
 
 //NSFW filter lag likely caused by either having the function excecute upon server start (line
