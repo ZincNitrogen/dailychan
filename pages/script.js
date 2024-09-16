@@ -10,6 +10,14 @@ let themesDropdownContent = document.querySelector(`.dropdown-content`);
 let themesDropdownIcon = document.querySelector(`.dropdownarrow`);
 
 
+let defaultOption = document.querySelector(`#DefaultOption`);
+let slelegantOption = document.querySelector(`#SlelegantOption`);
+let minimalPaperOption = document.querySelector(`#MinimalPaperOption`);
+let desktopLiteOption = document.querySelector(`#DesktopLiteOption`);
+let anontismOption = document.querySelector(`#AnontismOption`);
+
+
+
 
 
 const postContainer = document.querySelector('.post-container');
@@ -70,7 +78,34 @@ themesDropdownContent.addEventListener("pointerleave", (e) => {
 
 });
 
+//when theme option is clicked, remove al classes and add theme class to root elemnt
 
+
+defaultOption.addEventListener('pointerdown' , (e) => { 
+    stylesheetRoot.setAttribute("class", `DefaultTheme`);
+});
+   
+
+
+slelegantOption.addEventListener('pointerdown' , (e) => {
+    stylesheetRoot.setAttribute("class", `SleekTheme`);
+
+});
+
+minimalPaperOption.addEventListener('pointerdown' , (e) => {
+    stylesheetRoot.setAttribute("class", `MinimalPaperTheme`);
+
+});
+    
+desktopLiteOption.addEventListener('pointerdown' , (e) => {
+    stylesheetRoot.setAttribute("class", `DesktopLiteTheme`);
+
+});
+
+anontismOption.addEventListener('pointerdown' , (e) => {
+    stylesheetRoot.setAttribute("class", `AnontismTheme`);
+
+});
 
 
 
@@ -379,3 +414,6 @@ newPostBtn.addEventListener("pointerup", (e) => {
 //TODO: ADD A TOGGLE OPTION FOR THUMBNAIL BLUR
 
 //TODO CURRENT: FORMAT THUMBNAIL SO THAT IT PROPERLY MIMICS 4CHAN STYLE. THEN, BEGIN INTEGRATING COMPLETE VERSIONS OF MEDIA!
+
+//TODO: IMplement a mini game : the game will be a weekly lottery. All week, donations to a crypto pool will be open. 
+//Only those that participated will have a chance to win. At the end of every week. a winner is randomly selected by wallet and they get the toal pool money.
