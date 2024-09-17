@@ -11,9 +11,7 @@ let themesDropdownIcon = document.querySelector(`.dropdownarrow`);
 
 
 let defaultOption = document.querySelector(`#DefaultOption`);
-let slelegantOption = document.querySelector(`#SlelegantOption`);
 let minimalPaperOption = document.querySelector(`#MinimalPaperOption`);
-let desktopLiteOption = document.querySelector(`#DesktopLiteOption`);
 let anontismOption = document.querySelector(`#AnontismOption`);
 
 
@@ -87,20 +85,12 @@ defaultOption.addEventListener('pointerdown' , (e) => {
    
 
 
-slelegantOption.addEventListener('pointerdown' , (e) => {
-    stylesheetRoot.setAttribute("class", `SleekTheme`);
-
-});
-
 minimalPaperOption.addEventListener('pointerdown' , (e) => {
     stylesheetRoot.setAttribute("class", `MinimalPaperTheme`);
 
 });
     
-desktopLiteOption.addEventListener('pointerdown' , (e) => {
-    stylesheetRoot.setAttribute("class", `DesktopLiteTheme`);
 
-});
 
 anontismOption.addEventListener('pointerdown' , (e) => {
     stylesheetRoot.setAttribute("class", `AnontismTheme`);

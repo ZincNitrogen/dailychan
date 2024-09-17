@@ -19,6 +19,8 @@
 .AnontismTheme {
     --borders: solid 2px black;
     --contianerborder: var(var(--borders));
+    --containerborderleft: none;
+
     --smallborders: solid 1px black;
     --bgColor_body:  blueviolet;
     --bgColor_header: yellow;
@@ -32,32 +34,47 @@
 
 .MinimalPaperTheme {
     --borders: none;
-    --containerborder: solid 2px black;
+    --containerborder: none; /*solid 2px black;*/
+
     --smallborders: none;
-    --bgColor_body:  whitesmoke;
-    --bgColor_header: whitesmoke;
-    --bgColor_main:  whitesmoke;
-    --bgColor_postcontainer: whitesmoke;
-    --bgColor_footer: whitesmoke;
+    --bgColor_body:  #F0EAD6;
+    --bgColor_header: #F0EAD6;
+    --bgColor_main:  #F0EAD6;
+    --bgColor_postcontainer: #F0EAD6;
+    --bgColor_footer: #F0EAD6;
 
     --headerTextColor: grey;
     --headerTextOpacity: 0.3;
 
+    
+
+
 }
+/* 
+.MinimalPaperTheme-style-vertical-line {
+    border-left: var(--containerborderleft);
+    position: absolute;
+
+} */
 
 
 .SleekTheme { /*https://colorhunt.co/palette/5222588c3061c63c51d95f59*/
 
     --borders: none;
-    --containerborder: solid 2px #C63C51;
-    --smallborders: none;
-    --bgColor_body:  #522258;
-    --bgColor_header: #522258;
-    --bgColor_main:  #522258;
-    --bgColor_postcontainer: #C63C51;
-    --bgColor_footer: #522258;
+    --containerborder: solid 2px #363062;
+    --containerborderleft: none;
 
-    --headerTextColor: #D95F59;
+    --smallborders: none;
+    --bgColor_body:  #363062;
+    --bgColor_header: #363062;
+    --bgColor_main:  #363062;
+    --bgColor_postcontainer: #435585;
+    --bgColor_footer: #363062;
+
+    --navTextColor: #F5E8C7;
+    --dropdownTextColor: #F5E8C7;
+
+    --headerTextColor: #F5E8C7;
     --headerTextOpacity: 0.9;
 }
 
@@ -65,6 +82,8 @@
 .DefaultTheme {
     --borders: none;
     --containerborder: solid 2px #b7c5d9;
+    --containerborderleft: none;
+
     --smallborders: none;
     --bgColor_body:  #eef2ff;
     --bgColor_header: #eef2ff;
@@ -201,7 +220,7 @@ header {
 
 }
 
-.dropdown-content :nth-child(3) {
+.dropdown-content :nth-child(2) {
     padding-top: 0.05rem;
 }
 
@@ -379,6 +398,7 @@ main {
 
 .post-container-com{
     border: var(--smallborders);
+
     /* padding: 0.05rem; */
     font-size: 0.15rem;
     grid-column: 2/5 ;
@@ -387,6 +407,8 @@ main {
 
 
 }
+
+.
 
 
 .quote{
