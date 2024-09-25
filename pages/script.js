@@ -76,7 +76,7 @@ themesDropdownContent.addEventListener("pointerleave", (e) => {
 
 });
 
-//when theme option is clicked, remove al classes and add theme class to root elemnt
+//when theme option is clicked, remove all classes and add theme class to root elemnt
 
 
 defaultOption.addEventListener('pointerdown' , (e) => { 
@@ -392,6 +392,7 @@ newPostBtn.addEventListener("pointerup", (e) => {
     containerDeletion();
     pingProxy(url, worksafeURL);
     getThumbnailArrayBufferBinary(thumbnailURL);
+
 
     
 

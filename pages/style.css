@@ -170,12 +170,16 @@ header {
     column-gap: 0.2rem;
     list-style: none;
     /* border: solid 2px black; */
+    cursor:pointer;
+
 }
 
 
 
 #allownsfwlabel {
     font-size: 0.101rem;
+    cursor:pointer;
+
 }
 
 .dropdown {
@@ -188,6 +192,8 @@ header {
     justify-content: center;
     align-content: center;
     align-items: center;
+    cursor:pointer;
+
 
 
 
@@ -427,6 +433,12 @@ main {
     mask-size: 100% 100%;
   }
 
+
+
+
+
+
+
 .quote{
     color: var(--4chanQuote);
     font-size: 0.15rem;
@@ -442,12 +454,35 @@ main {
 
 .btn {
     color: var(--buttonTextColor);
+
     background-color: var(--bgColor_main);
-    border: none;
+    border: 1px solid var(--buttonTextColor);
+    border-radius: 0.2rem;
     opacity: var(--headerTextOpacity);
+    padding: 0.1rem;
+    margin-top: 0.1rem;
+    cursor:pointer;
 
    
 }
+
+.btn:hover {
+    background-color: var(--buttonTextColor);
+    color: var(--bgColor_main);
+
+
+
+}
+
+.btn p {
+    font-size: 0.1rem;
+    font-weight: 700;
+
+
+}
+
+
+
 
 footer { 
     display: flex;
