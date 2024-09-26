@@ -535,6 +535,24 @@ footer {
     
     }
 
+    .dropdown-content {
+        
+        position:absolute;
+        top: 0.4rem;
+        left: 1.5rem;
+       
+    }
+
+  
+    .dropdownarrow {
+        position: relative;
+        left: 0.45rem;
+        bottom:0.13rem;
+       
+    
+    }
+
+
 
     .post-container {
 
