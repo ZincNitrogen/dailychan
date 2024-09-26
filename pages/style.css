@@ -557,8 +557,8 @@ footer {
     .post-container {
 
         display:grid;
-        grid-template-columns: repeat(4, fit-content());
-        grid-template-rows: repeat(4, min-content);
+        grid-template-columns: repeat(2, fit-content());
+        grid-template-rows: repeat(6, min-content);
         justify-items: start;
         align-items: center;
         justify-content:start ;
@@ -575,22 +575,29 @@ footer {
 
     
     .post-container-name{
-        font-size: 10px;
-        /* font-size: 0.15rem; */
+        /* font-size: 10px; */
+        font-size: 0.14rem;
+        grid-column: 1/2;
+        grid-row: 1/2;
     
 
     }
 
     .post-container-now{
-        font-size: 10px;
-        /* font-size: 0.15rem; */
-
+        /* font-size: 10px; */
+        font-size: 0.14rem;
+        grid-column: 2;
+        grid-row: 1/2;
 
 
     }
 
     .post-container-no{
-        font-size: 10px;
+        /* font-size: 10px; */
+        font-size: 0.14rem;
+
+        grid-column: 1/2;
+        grid-row: 2/3;
 
 
 
@@ -599,7 +606,9 @@ footer {
 
     .post-container-no > a:link{
 
-        font-size: 10px;
+        /* font-size: 10px; */
+        font-size: 0.14rem;
+
 
 
         
@@ -608,7 +617,11 @@ footer {
     }
 
     .post-container-board{
-        font-size: 10px;
+        /* font-size: 10px; */
+        font-size: 0.14rem;
+
+        grid-column: 2;
+        grid-row: 2/3;
         
 
     }
@@ -619,7 +632,12 @@ footer {
 
     .post-container-filename{
 
-        font-size: 10px;
+        /* font-size: 10px; */
+        font-size: 0.13rem;
+
+        grid-column: 1/2;
+        grid-row: 3/4;
+        
     
 
 
@@ -630,8 +648,13 @@ footer {
 
     .post-container-fsize{
      
-        font-size: 10px;
+        /* font-size: 10px; */
+        font-size: 0.13rem;
+
+        grid-column: 2;
+        grid-row: 3/4;
         
+    
         
 
 
@@ -645,8 +668,8 @@ footer {
         border: var(--smallborders);
         /* padding: 0.05rem; */
         /* -align-self: flex-end; */
-        grid-column: 2/span 2;
-        grid-row: 3/4;
+        grid-column: 1/span 2;
+        grid-row: 4/5;
         justify-self: center;
         cursor:pointer;
 
@@ -661,9 +684,11 @@ footer {
     .post-container-com{
        
 
-        font-size: 10px;
+        /* font-size: 10px; */
+        font-size: 0.14rem;
+
         grid-column: 1/4;
-        grid-row: 4;
+        grid-row: 5;
      
 
 
@@ -672,14 +697,16 @@ footer {
 
 
     .quote{
-        font-size: 10px;
+        /* font-size: 10px; */
+        font-size: 0.14rem;
         
     }
     
     .quotelink{
     
-        font-size: 10px;
-    
+        /* font-size: 10px; */
+        font-size: 0.14rem;
+
     }
 
 
