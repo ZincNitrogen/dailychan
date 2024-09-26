@@ -109,7 +109,7 @@ async function pingProxy(source, worksafeSource) {
     //some sort of flag sent with the request that lets the server know the state of the checkbox
     //the server will then only choose from boards that are approved.
 
-    
+    // let usableFourChanData;
     console.log("top");
     console.log(ALLOW_NSFW_CHECKBOX.checked);
 
@@ -117,11 +117,11 @@ async function pingProxy(source, worksafeSource) {
     if (ALLOW_NSFW_CHECKBOX.checked) {
         let response =  await fetch(source);
         let fourchanData =  await response.json(); 
-        usableFourChanData = JSON.parse(fourchanData);
+        usableFourChanData =  JSON.parse(fourchanData);
     } else {
         let response =  await fetch(worksafeSource);
         let fourchanData =  await response.json(); 
-        usableFourChanData = JSON.parse(fourchanData);
+        usableFourChanData =  JSON.parse(fourchanData);
     }
 
     
@@ -197,7 +197,28 @@ async function pingProxy(source, worksafeSource) {
 
 
 
+    // if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length > 15) {
+    //     let shortenedFilename =   usableFourChanData.Post.filename.substr(0,15);
+    //     console.log(shortenedFilename);
+    //     paintFileName.prepend(`File: ${shortenedFilename}(...)${  usableFourChanData.Post.ext}`); //including "ext" here and only here
+
+
+    
+    // } else if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length <= 15) {
+    //     let fullFilename =  usableFourChanData.Post.filename;
+    //     console.log(fullFilename);
+    //     paintFileName.prepend(`File: ${fullFilename}${  usableFourChanData.Post.ext}`); //including "ext" here and only here
+
+
+    // }
+   
+
+
+
+    
+
     paintFileName.prepend(`File: ${usableFourChanData.Post.filename}${usableFourChanData.Post.ext}`); //including "ext" here and only here
+
     paintFsize.prepend(usableFourChanData.Post.fsize); //might have to round. investigate 4chan format
 
 
@@ -263,6 +284,7 @@ async function pingProxy(source, worksafeSource) {
 
 
     if (typeof(usableFourChanData.Post.filename) !== "undefined") {
+      
         postContainer.append(paintFileName);
         postContainer.append(paintFsize);
         
