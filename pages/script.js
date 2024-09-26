@@ -28,6 +28,9 @@ let postContainerChildren = postContainer.childNodes;
 
 let chanLink;
 let usableFourChanData;
+
+// Eventually attempt to get rid of these global variables. Start with defining usableFourChanData in the pingproxy function where it is usableFourChanData, used 
+// then since it is already returned from that function, just add that function as a callback to the thumbnail function.
 let paintImg;
 
 

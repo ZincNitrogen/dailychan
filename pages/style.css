@@ -537,18 +537,35 @@ footer {
 
 
     .post-container {
-        max-width: 2rem;
+
+        display:grid;
+        grid-template-columns: repeat(4, fit-content());
+        grid-template-rows: repeat(4, min-content);
+        justify-items: start;
+        align-items: center;
+        justify-content:start ;
+        align-content: center;
+
+        column-gap: 0.04rem;
+
+        border: var(--containerborder);
+        padding: 0.05rem;
+        background-color: var(--bgColor_postcontainer);
+        max-width: 2.5rem;
+
     }
 
     
     .post-container-name{
         font-size: 10px;
+        /* font-size: 0.15rem; */
     
 
     }
 
     .post-container-now{
         font-size: 10px;
+        /* font-size: 0.15rem; */
 
 
 
@@ -610,8 +627,9 @@ footer {
         border: var(--smallborders);
         /* padding: 0.05rem; */
         /* -align-self: flex-end; */
-        grid-column: 1/2;
+        grid-column: 2/span 2;
         grid-row: 3/4;
+        justify-self: center;
         cursor:pointer;
 
 
@@ -626,6 +644,8 @@ footer {
        
 
         font-size: 10px;
+        grid-column: 1/4;
+        grid-row: 4;
      
 
 
