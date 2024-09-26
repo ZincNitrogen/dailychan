@@ -197,27 +197,27 @@ async function pingProxy(source, worksafeSource) {
 
 
 
-    // if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length > 15) {
-    //     let shortenedFilename =   usableFourChanData.Post.filename.substr(0,15);
-    //     console.log(shortenedFilename);
-    //     paintFileName.prepend(`File: ${shortenedFilename}(...)${  usableFourChanData.Post.ext}`); //including "ext" here and only here
+    if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length > 15) {
+        let shortenedFilename =   usableFourChanData.Post.filename.substr(0,15);
+        console.log(shortenedFilename);
+        paintFileName.prepend(`File: ${shortenedFilename}(...)${  usableFourChanData.Post.ext}`); //including "ext" here and only here
 
 
     
-    // } else if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length <= 15) {
-    //     let fullFilename =  usableFourChanData.Post.filename;
-    //     console.log(fullFilename);
-    //     paintFileName.prepend(`File: ${fullFilename}${  usableFourChanData.Post.ext}`); //including "ext" here and only here
+    } else if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length <= 15) {
+        let fullFilename =  usableFourChanData.Post.filename;
+        console.log(fullFilename);
+        paintFileName.prepend(`File: ${fullFilename}${  usableFourChanData.Post.ext}`); //including "ext" here and only here
 
 
-    // }
+    }
    
 
 
 
     
 
-    paintFileName.prepend(`File: ${usableFourChanData.Post.filename}${usableFourChanData.Post.ext}`); //including "ext" here and only here
+    // paintFileName.prepend(`File: ${usableFourChanData.Post.filename}${usableFourChanData.Post.ext}`); //including "ext" here and only here
 
     paintFsize.prepend(usableFourChanData.Post.fsize); //might have to round. investigate 4chan format
 
