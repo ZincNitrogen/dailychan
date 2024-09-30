@@ -300,7 +300,7 @@ main {
 
 
     display:grid;
-    grid-template-columns: repeat(4, fit-content());
+    grid-template-columns: repeat(3, min-content) auto;
 
     /* grid-template-columns: repeat(4, minmax(min-content,auto)); */
     grid-template-rows: repeat(3, min-content);
@@ -370,7 +370,7 @@ main {
     /* padding: 0.05rem; */
     grid-column: 4;
     grid-row: 1;
-
+    justify-self: end;
 
 }
 
