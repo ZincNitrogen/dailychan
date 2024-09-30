@@ -22,6 +22,8 @@ const postContainer = document.querySelector('.post-container');
 const url = "http://localhost:8000/ServerSideRequest";
 const worksafeURL = "http://localhost:8000/WorksafeServerSideRequest";
 const thumbnailURL = "http://localhost:8000/ServeThumbnail";
+const mediaURL = "http://localhost:8000/ServeFullMedia";
+
 const newPostBtn = document.querySelector(`.btn`);
 const ALLOW_NSFW_CHECKBOX = document.querySelector('#allownsfw');
 let postContainerChildren = postContainer.childNodes;
@@ -405,10 +407,26 @@ async function getThumbnailArrayBufferBinary(source) {
 
 }
 
+async function getMedia(source) {
+    const response = await fetch(source, {
+        headers: {
+            "Content-Type": "application/octet-stream",
+
+        },
+    });
+
+    const fullMedia = await response.blob();
+    console.log(`This is the full media: ${await fullMedia.text()}`);
+
+
+    //I want to open a clickable. draggable window when thumbnail is clicked that will show the full media.
+
+}
 
 
 pingProxy(url, worksafeURL);
 getThumbnailArrayBufferBinary(thumbnailURL);
+getMedia(mediaURL);
 
 
 
@@ -417,6 +435,7 @@ newPostBtn.addEventListener("pointerup", (e) => {
     containerDeletion();
     pingProxy(url, worksafeURL);
     getThumbnailArrayBufferBinary(thumbnailURL);
+    getMedia(mediaURL);
 
 
     

@@ -388,7 +388,7 @@ function get4chanBundleWorksafe() {
         .finally(() => {
 
             //console.log(onlyBoard, typeof(onlyBoard));
-            //console.log(aRandomPost, typeof(aRandomPost)); 
+            console.log(aRandomPost, typeof(aRandomPost)); 
             console.log(`final board: ${onlyBoard}`);
             console.log(onlyBoard);
             combinedJson = {
@@ -513,6 +513,49 @@ function getThumbnailTwo(imageresponse) {
 }
 
 
+function getFullUserMedia(mediaresponse) {
+    axios
+    .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}${aRandomPost.ext}`, {
+            headers: {"Content-Type": "application/octet-stream"}, // or image/jpeg (???) since thumbnails are supposed to be only jog's
+            responseType: "arraybuffer",
+        
+        })
+        .then((res) => {
+
+            //thumbnail = arrayBufferToBinaryString(res.data); //convert arraybuffer to binary string via blob-util library
+            let thumbnail = res.data;
+            console.log(res.status);
+            console.log(typeof(thumbnail));
+            console.log(thumbnail);
+            mediaresponse.send(thumbnail);
+            //thumbnail = res;
+            //console.log(`Raw Array Buffer data: ${res.data}`);
+
+            //console.log(typeof(res));
+            //console.log(`Array Buffer converted to binary: ${thumbnail}`);
+            //console.log(res.request);
+        })
+        .catch((err) =>{
+            console.log("No thumbnail");
+            mediaresponse.send(err.response.data);
+            //console.log(err.response);
+            //console.log(err.response.data);
+            //console.log(err.request);
+            //console.log(err.request.data);
+
+
+
+
+
+
+
+
+        });
+        
+
+
+}
+
 app.get("/ServerSideRequest", (req, res) => {
     res.json(JSON.stringify(get4chanBundle()));
 
@@ -534,6 +577,10 @@ app.get("/ServeThumbnail", (imagerequest, imageresponse) =>{
     
 })
 
+
+app.get("/ServeFullMedia", (mediarequest, mediaresponse) => {
+    getFullUserMedia(mediaresponse);
+})
 
 
 //console.log(get4chanBundle()); //initial data paint, nsfw allowed
