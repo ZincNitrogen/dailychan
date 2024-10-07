@@ -446,10 +446,6 @@ function get4chanBundleWorksafe() {
 }
 
 
-
-
-
-
 function getThumbnailTwo(imageresponse) {
 
     //thumbnail = null; -> makes all blobs/bufers return 0 butes
@@ -523,11 +519,14 @@ function getFullUserMedia(mediaresponse) {
         .then((res) => {
 
             //thumbnail = arrayBufferToBinaryString(res.data); //convert arraybuffer to binary string via blob-util library
-            let thumbnail = res.data;
-            console.log(res.status);
-            console.log(typeof(thumbnail));
-            console.log(thumbnail);
-            mediaresponse.send(thumbnail);
+            let media = res.data;
+            // console.log(res.status);
+            console.log("=====FULL MEDIA INFO-- START --=========================")
+            console.log(typeof(media));
+            console.log(media);
+            console.log("=====FULL MEDIA INFO-- END --=========================")
+
+            mediaresponse.send(media);
             //thumbnail = res;
             //console.log(`Raw Array Buffer data: ${res.data}`);
 
@@ -536,7 +535,7 @@ function getFullUserMedia(mediaresponse) {
             //console.log(res.request);
         })
         .catch((err) =>{
-            console.log("No thumbnail");
+            console.log("No media");
             mediaresponse.send(err.response.data);
             //console.log(err.response);
             //console.log(err.response.data);

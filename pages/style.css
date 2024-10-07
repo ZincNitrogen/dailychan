@@ -311,9 +311,15 @@ main {
 
     column-gap: 0.04rem;
 
-    border: var(--containerborder);
+    /* border: var(--containerborder); */
+    /* border: 2px solid black;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem; */
+
     padding: 0.05rem;
     max-width: 5rem; 
+    /* max-width: auto; */
+
     background-color: var(--bgColor_postcontainer);
 
 
@@ -418,6 +424,15 @@ main {
 
 
 
+}
+
+.post-container-fullmedia {
+    border: var(--smallborders);
+    /* padding: 0.05rem; */
+    /* -align-self: flex-end; */
+    grid-column: 1/-1 !important;
+    grid-row: 3/4 !important;
+    cursor:pointer;
 }
 
 /* must do somw auto flow thing so that the thumbnail pushes the com block over when appears, but when there is not thumbnail, the com block is in the center. */

@@ -1,5 +1,6 @@
 
 let stylesheetRoot = document.querySelector(':root');
+let body = document.body;
 
 
 
@@ -34,6 +35,14 @@ let usableFourChanData;
 // Eventually attempt to get rid of these global variables. Start with defining usableFourChanData in the pingproxy function where it is usableFourChanData, used 
 // then since it is already returned from that function, just add that function as a callback to the thumbnail function.
 let paintImg;
+
+let fullMedia;
+
+
+
+
+
+
 
 
 //THEMEING
@@ -326,7 +335,6 @@ function containerDeletion() {
 }
 
 
-
 async function getThumbnailArrayBufferBinary(source) {
 
     try {
@@ -392,6 +400,89 @@ async function getThumbnailArrayBufferBinary(source) {
         }
        
 
+        //Meda Access
+
+             //on thumbnail click - replace the thumbnail specs with that of the specs of the full media, add a "close" button near the spot.
+
+        // paintImg.addEventListener("pointerdown", (e)=> { //needs modal window
+        //     console.log("thumbnail clicked");
+
+
+        //     let heightClac = () => {
+        //         let dataHeight;
+        //         if (!(usableFourChanData.Post.h) > 1000) {
+        //             dataHeight = `${usableFourChanData.Post.h/2}px`;
+        //             console.log(usableFourChanData.h, typeof(usableFourChanData.h));
+        //             console.log('greater h')
+
+        //         }else {
+        //             dataHeight = `${usableFourChanData.Post.h}px`;
+        //         }
+
+        //         return dataHeight;
+        //     };
+
+
+            
+
+        //     let widthCalc = () => {
+
+        //         let dataWidth; 
+        //         if (!(usableFourChanData.Post.w) > 1000) {
+        //             dataWidth =  `${usableFourChanData.Post.w/2}px`;
+        //             console.log(usableFourChanData.w, typeof(usableFourChanData.w));
+
+        //             console.log('greater w')
+
+
+        //         } else {
+        //             dataWidth =  `${usableFourChanData.Post.w}px`;
+
+        //         }
+
+        //         return dataWidth;
+        //     };
+
+
+        //     paintImg.setAttribute("height", `${heightClac()}`); 
+
+
+
+        //     paintImg.setAttribute("width", `${widthCalc()}`);
+
+        //     console.log(usableFourChanData.h, typeof(usableFourChanData.h));
+        //     console.log(usableFourChanData.w, typeof(usableFourChanData.w));
+
+
+        //     console.log(`computed height: ${heightClac()}px`);
+        //     console.log(`computed width: ${widthCalc()}px`);
+
+        //     // paintImg.setAttribute("class", "post-container-thumbnail");
+
+
+        
+
+        // })
+  
+
+
+
+
+
+
+        // paintImg.addEventListener("pointerdown", (e)=> { //temp solution to sizinf connundrum that the above event listener tries to fox - must figure out how 4chan calculates display size of user media when user media full sizes aren't used.
+        //     console.log("thumbnail is clicked u utter sucker");
+
+
+        //     paintImg.setAttribute("class", "post-container-fullmedia");
+            
+
+        //     // paintImg.setAttribute("height", `${usableFourChanData.Post.h/3}`); 
+        //     // paintImg.setAttribute("width",`${usableFourChanData.Post.w/3}`);
+
+        // })
+
+
     } catch(err) {
         
         console.log(err + " or no image");
@@ -399,6 +490,8 @@ async function getThumbnailArrayBufferBinary(source) {
       
 
     }
+
+
 
 
 
@@ -419,14 +512,35 @@ async function getMedia(source) {
     console.log(`This is the full media: ${await fullMedia.text()}`);
 
 
+    
+    paintImg.addEventListener("pointerdown", (e)=> { //temp solution to sizinf connundrum that the above event listener tries to fox - must figure out how 4chan calculates display size of user media when user media full sizes aren't used.
+        console.log("thumbnail is clicked u utter sucker");
+
+        paintImg.setAttribute("src", URL.createObjectURL(fullMedia));
+        paintImg.setAttribute("class", "post-container-fullmedia");
+        
+
+        paintImg.setAttribute("height", `${usableFourChanData.Post.h}`); 
+        paintImg.setAttribute("width",`${usableFourChanData.Post.w}`);
+
+    })
+
+    
+
+
+
     //I want to open a clickable. draggable window when thumbnail is clicked that will show the full media.
 
+    return fullMedia;
 }
 
 
+
+
 pingProxy(url, worksafeURL);
-getThumbnailArrayBufferBinary(thumbnailURL);
 getMedia(mediaURL);
+getThumbnailArrayBufferBinary(thumbnailURL);
+
 
 
 
@@ -434,8 +548,9 @@ getMedia(mediaURL);
 newPostBtn.addEventListener("pointerup", (e) => {
     containerDeletion();
     pingProxy(url, worksafeURL);
-    getThumbnailArrayBufferBinary(thumbnailURL);
     getMedia(mediaURL);
+
+    getThumbnailArrayBufferBinary(thumbnailURL);
 
 
     
