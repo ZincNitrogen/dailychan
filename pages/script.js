@@ -198,6 +198,11 @@ async function pingProxy(source, worksafeSource) {
     // paintImg = document.createElement("img");   
 
     mediaAndTextFlexContainer = document.createElement("div");
+    let fileInfoFlexContainer = document.createElement("div");
+    let postTitleFlexContainer = document.createElement("div");
+
+
+
     
 
  
@@ -213,6 +218,8 @@ async function pingProxy(source, worksafeSource) {
 
     paintFsize.setAttribute('class',"post-container-fsize");
     mediaAndTextFlexContainer.setAttribute("class", "media-text-flex-container");
+    fileInfoFlexContainer.setAttribute("class", "file-info-flex-container");
+    postTitleFlexContainer.setAttribute("class", "post-title-flex-container");
 
 
     // paintImg.setAttribute("src", `data:image/jpeg;base64,${test}`);
@@ -300,9 +307,10 @@ async function pingProxy(source, worksafeSource) {
 
 
 
-    postContainer.append(paintName);
-    postContainer.append(paintNow);
-    postContainer.append(paintNo);
+    postTitleFlexContainer.append(paintName);
+    postTitleFlexContainer.append(paintNow);
+    postTitleFlexContainer.append(paintNo);
+    
     postContainer.append(paintBoard);
 
 
@@ -312,8 +320,8 @@ async function pingProxy(source, worksafeSource) {
 
     if (typeof(usableFourChanData.Post.filename) !== "undefined") {
       
-        postContainer.append(paintFileName);
-        postContainer.append(paintFsize);
+        fileInfoFlexContainer.append(paintFileName);
+        fileInfoFlexContainer.append(paintFsize);
         
     
 
@@ -329,6 +337,8 @@ async function pingProxy(source, worksafeSource) {
     mediaAndTextFlexContainer.append(paintCom);
 
     postContainer.append(mediaAndTextFlexContainer);
+    postContainer.append(fileInfoFlexContainer);
+    postContainer.append(postTitleFlexContainer);
 
 
     return usableFourChanData 
