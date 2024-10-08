@@ -300,7 +300,7 @@ main {
 
 
     display:grid;
-    grid-template-columns: repeat(3, min-content) auto;
+    grid-template-columns: repeat(2, min-content) auto;
 
     /* grid-template-columns: repeat(4, minmax(min-content,auto)); */
     grid-template-rows: repeat(3, min-content);
@@ -328,7 +328,6 @@ main {
 
 }
 
-
 .post-container-name{
     border: var(--smallborders);
     /* padding: 0.05rem; */
@@ -343,18 +342,19 @@ main {
 .post-container-now{
     border: var(--smallborders);
     /* padding: 0.05rem; */
-    grid-column: 2/3;
+    grid-column: 1/2;
     grid-row: 1;
-
-
+    margin-left: 0.9rem; /*should be margin*/
 
 }
 
 .post-container-no{
     border: var(--smallborders);
     /* padding: 0.05rem; */
-    grid-column: 3/4;
+    grid-column: 1/2;
     grid-row: 1;
+    margin-left: 2.50rem; /*should be margin*/
+
 
 
 
@@ -374,7 +374,7 @@ main {
 .post-container-board{
     border: var(--smallborders);
     /* padding: 0.05rem; */
-    grid-column: 4;
+    grid-column: 3;
     grid-row: 1;
     justify-self: end;
 
@@ -388,7 +388,7 @@ main {
     border: var(--smallborders);
     /* padding: 0.05rem; */
     font-size: 0.1rem;
-    grid-column: 3/4;
+    grid-column: 2/3;
     grid-row: 2/3;
 
 
@@ -401,7 +401,7 @@ main {
     border: var(--smallborders);
     /* padding: 0.05rem; */
     font-size: 0.1rem;
-    grid-column: 4;
+    grid-column: 3;
     grid-row: 2/3;
 
     
@@ -412,43 +412,76 @@ main {
 }
 
 
-
-.post-container-thumbnail{
-    border: var(--smallborders);
-    /* padding: 0.05rem; */
-    /* -align-self: flex-end; */
-    grid-column: 1/2;
+.media-text-flex-container {
+    border: 2px solid black;
+    grid-column: 1/ -1;
     grid-row: 3/4;
-    cursor:pointer;
-
-
-
+    
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    width:inherit;
+    
 
 }
 
-.post-container-fullmedia {
+
+/* .post-container-thumbnail{
     border: var(--smallborders);
-    /* padding: 0.05rem; */
-    /* -align-self: flex-end; */
-    grid-column: 1/-1 !important;
-    grid-row: 3/4 !important;
+    grid-column: 1/ -1;
+    grid-row: 3/4;
+    justify-self: start;
     cursor:pointer;
+    z-index: 0;
+
+
+
+
+} */
+
+.post-container-thumbnail{ /*flex child version*/
+    border: var(--smallborders);
+    order: 1;
+ 
+    cursor:pointer;
+  
+
+
 }
+
+
 
 /* must do somw auto flow thing so that the thumbnail pushes the com block over when appears, but when there is not thumbnail, the com block is in the center. */
 
 
-.post-container-com{
+/* .post-container-com{
     border: var(--smallborders);
-
-    /* padding: 0.05rem; */
     font-size: 0.15rem;
-    grid-column: 2/5 ;
+    grid-column: 1/-1 ;
     grid-row: 3/4;
+    z-index: 0;
+
+    
+    
+
+
+
+} */
+
+
+.post-container-com{ /*flex child version*/
+    border: var(--smallborders);
+    font-size: 0.15rem;
+    order: 2;
+
+    
+    
 
 
 
 }
+
 
 
 .ic--baseline-autorenew {
