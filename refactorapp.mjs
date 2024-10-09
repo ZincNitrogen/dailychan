@@ -353,13 +353,13 @@ function get4chanBundleWorksafe() {
 
             let webmFilterErr = new Error("not webm...Retrying"); //webm filter
 
-            if (aRandomPost.ext != ".webm"){//webm filter
-                throw(webmFilterErr);
+            // if (aRandomPost.ext != ".webm"){//webm filter
+            //     throw(webmFilterErr);
 
 
         
     
-            }
+            // }
            
             return aRandomPost;
 
@@ -402,14 +402,14 @@ function get4chanBundleWorksafe() {
             }
 
           
-            if (aRandomPost.ext != ".webm"){//webm filter
-                console.log("not webm...Retrying");
+            // if (aRandomPost.ext != ".webm"){//webm filter
+            //     console.log("not webm...Retrying");
                 
-                get4chanBundleWorksafe();
+            //     get4chanBundleWorksafe();
 
         
     
-            }
+            // }
            
 
             
