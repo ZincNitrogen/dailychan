@@ -222,7 +222,6 @@ function get4chanBundleWorksafe() {
         .then((res) => {
             let numberOfBoards = res.data.boards.length;
             let isWorksafe = null;
-
             console.log("checkpoint one");
 
             do {
@@ -232,6 +231,7 @@ function get4chanBundleWorksafe() {
                 onlyBoard = null;
             
                 let isNSFW = null; //isNSFW is the human readable version of isWorksafe. Better for debugging purposes.
+
 
                 randomBoardElement = Math.floor(Math.random() * (numberOfBoards));
                 boardDecision = (res.data.boards[randomBoardElement]); 
@@ -243,11 +243,15 @@ function get4chanBundleWorksafe() {
 
                 if (isWorksafe == 0) {
                     isNSFW = "YES!"; 
+    
                     console.log(`is NSFW?: ${isNSFW}`);
+
                     console.log("checkpoint two - nsfw");
                     continue;
                 } else if (isWorksafe == 1) {
                     isNSFW = "NO!";
+                    // isWebm = "YES!"; //webm fileter
+                    // console.log(`is WEBM?: ${isWebm}`); //webm filter
                     console.log(`is NSFW?: ${isNSFW}`);
                     console.log("checkpoint two -non-nsfw");
                     onlyBoard = boardDecision.board;
@@ -264,6 +268,11 @@ function get4chanBundleWorksafe() {
           
 
             
+
+
+
+
+
             console.log(onlyBoard);
             console.log("checkpoint three");
 
@@ -341,6 +350,16 @@ function get4chanBundleWorksafe() {
 
             // console.log(`<<<<<<<<<<<<<<<<A RANDOM POST>>>>>>>>>>>>>>>>`) 
             // console.log(aRandomPost);
+
+            let webmFilterErr = new Error("not webm...Retrying"); //webm filter
+
+            if (aRandomPost.ext != ".webm"){//webm filter
+                throw(webmFilterErr);
+
+
+        
+    
+            }
            
             return aRandomPost;
 
@@ -382,6 +401,16 @@ function get4chanBundleWorksafe() {
                 get4chanBundleWorksafe();             
             }
 
+          
+            if (aRandomPost.ext != ".webm"){//webm filter
+                console.log("not webm...Retrying");
+                
+                get4chanBundleWorksafe();
+
+        
+    
+            }
+           
 
             
         })

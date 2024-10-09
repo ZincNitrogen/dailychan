@@ -41,7 +41,7 @@ let paintImg;
 let fullMedia;
 
 let mediaAndTextFlexContainer;
-
+let fileInfoFlexContainer = null; 
 
 
 
@@ -198,7 +198,7 @@ async function pingProxy(source, worksafeSource) {
     // paintImg = document.createElement("img");   
 
     mediaAndTextFlexContainer = document.createElement("div");
-    let fileInfoFlexContainer = document.createElement("div");
+    fileInfoFlexContainer = document.createElement("div");
     let postTitleFlexContainer = document.createElement("div");
 
 
@@ -581,40 +581,84 @@ async function getMedia(source) {
     
         const fullMedia = await response.blob();
         console.log(`This is the full media: ${await fullMedia.text()}`);
+
     
     
         //get extention of the media
         //if img, keep img tag
         //if video, turn paintimg into video.
+
+        let closebtn = document.createElement("p");
+        closebtn.append(document.createTextNode("close"));
+        closebtn.setAttribute("class", "closebtn");
+
     
     
         paintImg.addEventListener("pointerdown", (e)=> { //temp solution to sizinf connundrum that the above event listener tries to fox - must figure out how 4chan calculates display size of user media when user media full sizes aren't used.
             console.log("thumbnail is clicked u utter sucker");
+            
     
     
             
             if (usableFourChanData.Post.ext == ".webm") {
-                paintImg = document.createElement("video");
-                paintImg.setAttribute("src", URL.createObjectURL(fullMedia));
-                paintImg.setAttribute("controls", " ");
-                mediaAndTextFlexContainer.append(paintImg);
+                
+
+                fileInfoFlexContainer.append(closebtn);
+
+                let paintVid = document.createElement("video");
+
+
+
+
+
+                paintVid.setAttribute("src", URL.createObjectURL(fullMedia));
+                paintVid.setAttribute("controls", " ");
+                paintVid.setAttribute("class", "post-container-thumbnail");
+                paintImg.replaceWith(paintVid);
+                paintVid.setAttribute("height", `${usableFourChanData.Post.h/3}`); 
+                paintVid.setAttribute("width",`${usableFourChanData.Post.w/3}`);
+    
+
+
+
+
     
     
     
     
             } else {
-                console.log('1');
-                paintImg.setAttribute("src", URL.createObjectURL(fullMedia));
-                console.log('2');
+                // let closebtn = document.createElement("p");
+                closebtn.append(document.createTextNode("close"));
+                closebtn.setAttribute("class", "closebtn");
+                let paintFullImg = document.createElement("img");
+                paintFullImg.setAttribute("src", URL.createObjectURL(fullMedia));
+                paintImg.replaceWith(paintFullImg);
+                fileInfoFlexContainer.append(closebtn);
+                paintFullImg.setAttribute("height", `${usableFourChanData.Post.h/3}`); 
+                paintFullImg.setAttribute("width",`${usableFourChanData.Post.w/3}`);
+    
+        
     
             }
             // paintImg.setAttribute("class", "post-container-fullmedia");
             
     
-            paintImg.setAttribute("height", `${usableFourChanData.Post.h/3}`); 
-            paintImg.setAttribute("width",`${usableFourChanData.Post.w/3}`);
+
+
+            
+        
+
     
         })
+
+        closebtn.addEventListener("pointerdown", (e)=> {
+            mediaAndTextFlexContainer.children[1].replaceWith(paintImg); //1st index is second child of mediaandtextflexcontainer.
+            closebtn.remove();
+
+
+
+        })
+
 
 
     }catch(error){

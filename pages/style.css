@@ -497,6 +497,17 @@ main {
 
 }
 
+.closebtn {
+    text-decoration: underline;
+    color: blue;
+    font-size: 0.1rem;
+
+    cursor:pointer;
+    order: 3;
+
+
+}
+
 
 
 .media-text-flex-container {
@@ -509,6 +520,7 @@ main {
     justify-content: space-between;
     align-items: center;
     width:inherit;
+    /*eventually adda column gap here*/
     
 
 }
