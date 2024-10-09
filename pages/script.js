@@ -310,7 +310,7 @@ async function pingProxy(source, worksafeSource) {
     postTitleFlexContainer.append(paintName);
     postTitleFlexContainer.append(paintNow);
     postTitleFlexContainer.append(paintNo);
-    
+
     postContainer.append(paintBoard);
 
 
@@ -597,7 +597,7 @@ async function getMedia(source) {
                 paintImg = document.createElement("video");
                 paintImg.setAttribute("src", URL.createObjectURL(fullMedia));
                 paintImg.setAttribute("controls", " ");
-                // mediaAndTextFlexContainer.append(paintImg);
+                mediaAndTextFlexContainer.append(paintImg);
     
     
     
@@ -618,7 +618,7 @@ async function getMedia(source) {
 
 
     }catch(error){
-        throw(error+ ` or there is no media`);
+        throw(error + ` or there is no media`);
     }
 
 
