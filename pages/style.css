@@ -741,7 +741,7 @@ footer {
         
         display: flex;
         flex-flow: row wrap;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         column-gap: 0.05rem;
         
@@ -799,17 +799,30 @@ footer {
 
 
  
+    /* .post-container-board{
+        border: var(--smallborders);
+       
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        font-size: 0.11rem;
+
+
+
+    } */
+
+
     .post-container-board{
         border: var(--smallborders);
         /* padding: 0.05rem; */
-        grid-column: 2;
-        grid-row: 1;
+        order: 4;
         justify-self: end;
         font-size: 0.15rem;
 
 
 
     }
+
 
 
 

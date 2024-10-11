@@ -117,9 +117,23 @@ anontismOption.addEventListener('pointerdown' , (e) => {
 
 
 
+//MEDIA QUERIES
+
+const mobileSizing = window.matchMedia('(max-width: 800px)');
+
+function mediaQurey(e) {
+    if (e.matches) {
+        //do something with the board placement
+        ;console.log("placeholder for mq")
+    }
+}
+
+mobileSizing.addEventListener("change", ()=> {
+    mediaQurey(mobileSizing);
+});
 
 
-
+mediaQurey(mobileSizing);
 //API DATA GATHERING AND PAINTING
 
 async function pingProxy(source, worksafeSource) {
@@ -285,8 +299,8 @@ async function pingProxy(source, worksafeSource) {
     postTitleFlexContainer.append(paintNow);
     postTitleFlexContainer.append(paintNo);
 
-    postContainer.append(paintBoard);
-    // postTitleFlexContainer.append(paintBoard);
+    // postContainer.append(paintBoard);
+    postTitleFlexContainer.append(paintBoard);
 
 
 
