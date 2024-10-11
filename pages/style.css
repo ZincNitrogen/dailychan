@@ -139,8 +139,9 @@ header {
     align-content: center;
     border: var(--borders);
     background-color: var(--bgColor_header);
-    padding-left: 0.05rem;
-    padding-right: 0.05rem;
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    margin-top: 0.1rem;
     /* border: solid 2px black; */
  
     
@@ -694,8 +695,8 @@ footer {
     .dropdown-content {
         
         position:absolute;
-        top: 0.4rem;
-        left: 1.5rem;
+        top: 0.5rem;
+        left: 1.3rem;
        
     }
 
