@@ -520,8 +520,7 @@ main {
     justify-content: space-between;
     align-items: center;
     width:inherit;
-    /*eventually adda column gap here*/
-    
+    column-gap: 0.8rem;    
 
 }
 
