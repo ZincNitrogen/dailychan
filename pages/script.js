@@ -615,26 +615,20 @@ async function getMedia(source) {
                 paintVid.setAttribute("controls", " ");
                 paintVid.setAttribute("class", "post-container-thumbnail");
                 paintImg.replaceWith(paintVid);
+                console.log("a");
                 // paintVid.setAttribute("height", `${usableFourChanData.Post.h/3}`); 
                 // paintVid.setAttribute("width",`${usableFourChanData.Post.w/3}`);
     
-
-
-
-
-    
-    
-    
-    
             } else {
                 // let closebtn = document.createElement("p");
-                closebtn.append(document.createTextNode("close"));
-                closebtn.setAttribute("class", "closebtn");
+               
                 let paintFullImg = document.createElement("img");
                 paintFullImg.setAttribute("src", URL.createObjectURL(fullMedia));
                 paintFullImg.setAttribute("class", "post-container-thumbnail");
                 paintImg.replaceWith(paintFullImg);
                 fileInfoFlexContainer.append(closebtn);
+                console.log("b");
+
                 // paintFullImg.setAttribute("height", `${usableFourChanData.Post.h/3}`); 
                 // paintFullImg.setAttribute("width",`${usableFourChanData.Post.w/3}`);
     
@@ -653,8 +647,9 @@ async function getMedia(source) {
         })
 
         closebtn.addEventListener("pointerdown", (e)=> {
-            mediaAndTextFlexContainer.children[1].replaceWith(paintImg); //1st index is second child of mediaandtextflexcontainer.
             closebtn.remove();
+            mediaAndTextFlexContainer.children[1].replaceWith(paintImg); //1st index is second child of mediaandtextflexcontainer.
+            
 
 
 
