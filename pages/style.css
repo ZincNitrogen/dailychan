@@ -798,19 +798,6 @@ footer {
     }
 
 
- 
-    /* .post-container-board{
-        border: var(--smallborders);
-       
-        grid-column: 2;
-        grid-row: 1;
-        justify-self: end;
-        font-size: 0.11rem;
-
-
-
-    } */
-
 
     .post-container-board{
         border: var(--smallborders);
@@ -893,8 +880,8 @@ footer {
         order: 1;
      
         cursor:pointer;
-        max-width: 773.433px;
-        max-height: 435.056px;
+        max-width: 350px;
+        max-height: 750px;
       
     
     
