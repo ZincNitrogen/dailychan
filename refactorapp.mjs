@@ -11,12 +11,6 @@ let onlyBoard = null;
 let aRandomPost;
 
 let randomThreadDecision;
-// let threadAccess;
-// let randomThreadPicker;
-// let randomPagePicker;
-// let randomPageDecision;
-
-//let thumbnail;
 
 
 function get4chanBundle() {
@@ -250,8 +244,6 @@ function get4chanBundleWorksafe() {
                     continue;
                 } else if (isWorksafe == 1) {
                     isNSFW = "NO!";
-                    // isWebm = "YES!"; //webm fileter
-                    // console.log(`is WEBM?: ${isWebm}`); //webm filter
                     console.log(`is NSFW?: ${isNSFW}`);
                     console.log("checkpoint two -non-nsfw");
                     onlyBoard = boardDecision.board;
@@ -345,13 +337,8 @@ function get4chanBundleWorksafe() {
             let randomPostNumber =  Math.floor(Math.random()*(numberOfPosts));
             aRandomPost = res.data.posts[randomPostNumber];
 
-            // console.log(`<<<<<<<<<<<<<<<<POSTS>>>>>>>>>>>>>>>>`) 
-            // console.log(res.data);
-
-            // console.log(`<<<<<<<<<<<<<<<<A RANDOM POST>>>>>>>>>>>>>>>>`) 
-            // console.log(aRandomPost);
-
-            let webmFilterErr = new Error("not webm...Retrying"); //webm filter
+        
+            // let webmFilterErr = new Error("not webm...Retrying"); //webm filter
 
             // if (aRandomPost.ext != ".webm"){//webm filter
             //     throw(webmFilterErr);
@@ -363,37 +350,10 @@ function get4chanBundleWorksafe() {
            
             return aRandomPost;
 
-            // return axios.get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
-            //     //responseType: "blob",
-            //     headers: {"Content-Type": "image/jpeg",
-            //         "Accept": "image/jpeg",
-
-            //     },
-            //     // headers: {"Content-Type" : "image/jpeg"},
-            //     // responseType: "blob",
-
-            //     //headers: {"Content-Type": "application/json"},
-            //     //headers: {"Content-Type": "*/*"},
-            //     //headers: {"Content-Type": "application/x-www-form-urlencoded"},
-            //     //headers: {"Content-Type": "application/octet-stream"},
-            //     //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
-            //     //this url serves thumbnails!!!
-            // }); 
-
-
+  
         })
-        // .then((res) => {
 
-
-        //     //console.log(res);
-
-
-        //     console.log(res.headers);
-        //     console.log(res.request);
-        //     //console.log(typeof(res.data));
-        //     thumbnail = (res.data);
-        //     console.log(thumbnail);
-        // })
+   
         .catch((err) => {
 
             if ((typeof(aRandomPost) === "undefined") || (typeof(onlyBoard) === 'undefined')) {
@@ -416,7 +376,6 @@ function get4chanBundleWorksafe() {
         })
         .finally(() => {
 
-            //console.log(onlyBoard, typeof(onlyBoard));
             console.log(aRandomPost, typeof(aRandomPost)); 
             console.log(`final board: ${onlyBoard}`);
             console.log(onlyBoard);
@@ -424,45 +383,11 @@ function get4chanBundleWorksafe() {
                 Board: onlyBoard,
                 Post: aRandomPost,
                 OP: randomThreadDecision,
-                //Thumbnail: thumbnail,
             };
 
             console.log("=========new=========")
-            //console.log(onlyBoard);
-            //console.log(aRandomPost);
-            //console.log(combinedJson);
-
-            // app.get("/ServerSideRequest", (req, res) => {
-
-            //     // onlyBoard = null;
-            //     // aRandomPost = null
-              
-            //     console.log("=========old=========")
-            //     console.log(onlyBoard);
-            //     console.log(aRandomPost);
-            //     console.log(combinedJson); 
-             
-            //     res.json(JSON.stringify(combinedJson));
-            //     // delete combinedJson.Board;
-            //     // delete combinedJson.Post;
-
-            //     console.log(get4chanBundle());
-
-
-
-            // });
-            
-          
-
-
-
-    
-
-            //combine the above two in a json object
-            //send these two variables to the front end from here
-            //
-           
-
+       
+        
 
             
         });
@@ -479,62 +404,28 @@ function get4chanBundleWorksafe() {
 
 function getThumbnailTwo(imageresponse) {
 
-    //thumbnail = null; -> makes all blobs/bufers return 0 butes
 
     axios
     .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
-            headers: {"Content-Type": "application/octet-stream"}, // or image/jpeg (???) since thumbnails are supposed to be only jog's
+            headers: {"Content-Type": "application/octet-stream"}, 
             responseType: "arraybuffer",
-            // headers: {"Content-Type": "application/octet-stream",
-            //     "Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
-
-            // },
-            // headers: {"Content-Type": "image/jpeg",
-            //     //"Accept" : "image/avif,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
-
-            // },
-
-
-
-           
-            //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
-            //this url serves thumbnails!!!
+          
         })
         .then((res) => {
 
-            //thumbnail = arrayBufferToBinaryString(res.data); //convert arraybuffer to binary string via blob-util library
             let thumbnail = res.data;
             console.log(res.status);
             console.log(typeof(thumbnail));
             console.log(thumbnail);
             imageresponse.send(thumbnail);
-            //thumbnail = res;
-            //console.log(`Raw Array Buffer data: ${res.data}`);
-
-            //console.log(typeof(res));
-            //console.log(`Array Buffer converted to binary: ${thumbnail}`);
-            //console.log(res.request);
+     
         })
         .catch((err) =>{
             console.log("No thumbnail");
             imageresponse.send(err.response.data);
-            //console.log(err.response);
-            //console.log(err.response.data);
-            //console.log(err.request);
-            //console.log(err.request.data);
-
-
-
-
-
-
-
 
         });
-        
-
-    // return thumbnail;
-
+    
 
 
 }
@@ -543,35 +434,25 @@ function getThumbnailTwo(imageresponse) {
 function getFullUserMedia(mediaresponse) {
     axios
     .get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}${aRandomPost.ext}`, {
-            headers: {"Content-Type": "application/octet-stream"}, // or image/jpeg (???) since thumbnails are supposed to be only jog's
+            headers: {"Content-Type": "application/octet-stream"}, 
             responseType: "arraybuffer",
         
         })
         .then((res) => {
 
-            //thumbnail = arrayBufferToBinaryString(res.data); //convert arraybuffer to binary string via blob-util library
             let media = res.data;
-            // console.log(res.status);
             console.log("=====FULL MEDIA INFO-- START --=========================")
             console.log(typeof(media));
             console.log(media);
             console.log("=====FULL MEDIA INFO-- END --=========================")
 
             mediaresponse.send(media);
-            //thumbnail = res;
-            //console.log(`Raw Array Buffer data: ${res.data}`);
-
-            //console.log(typeof(res));
-            //console.log(`Array Buffer converted to binary: ${thumbnail}`);
-            //console.log(res.request);
+ 
         })
         .catch((err) =>{
             console.log("No media");
             mediaresponse.send(err.response.data);
-            //console.log(err.response);
-            //console.log(err.response.data);
-            //console.log(err.request);
-            //console.log(err.request.data);
+     
 
 
 

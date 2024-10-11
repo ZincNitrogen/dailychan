@@ -53,9 +53,7 @@ let fileInfoFlexContainer = null;
 
 //THEMEING
 
-//stylesheetRoot.setAttribute("class", `MinimalPaperTheme`);
-//stylesheetRoot.setAttribute("class", `AnontismTheme`);
-// stylesheetRoot.setAttribute("class", `SleekTheme`);
+
 stylesheetRoot.setAttribute("class", `DefaultTheme`);
 
 
@@ -129,7 +127,6 @@ async function pingProxy(source, worksafeSource) {
     //some sort of flag sent with the request that lets the server know the state of the checkbox
     //the server will then only choose from boards that are approved.
 
-    // let usableFourChanData;
     console.log("top");
     console.log(ALLOW_NSFW_CHECKBOX.checked);
 
@@ -153,10 +150,8 @@ async function pingProxy(source, worksafeSource) {
 
 
  
-    //const convertThumbnail = usableFourChanData.Thumbnail;
 
 
-    //console.log(fourchanData);
     console.log(usableFourChanData);
     console.log(usableFourChanData.Board);
     console.log(usableFourChanData.Post);
@@ -172,16 +167,7 @@ async function pingProxy(source, worksafeSource) {
 
 
 
-    //console.log(usableFourChanData.Thumbnail);
 
-    //console.log(usableFourChanData[Board]);
-    //console.log(usableFourChanData[1]);
-
-    //let test = btoa(usableFourChanData.Thumbnail);
-    //let test = (usableFourChanData.Thumbnail);
-
-    // console.log(test);
-    // console.log(typeof(test));
     let paintName = document.createElement("div");
     let paintNow = document.createElement("div");
 
@@ -193,9 +179,7 @@ async function pingProxy(source, worksafeSource) {
 
     let paintCom = document.createElement("div");
    
-    //let paintImg = document.createElement("img");
-
-    // paintImg = document.createElement("img");   
+    
 
     mediaAndTextFlexContainer = document.createElement("div");
     fileInfoFlexContainer = document.createElement("div");
@@ -222,13 +206,7 @@ async function pingProxy(source, worksafeSource) {
     postTitleFlexContainer.setAttribute("class", "post-title-flex-container");
 
 
-    // paintImg.setAttribute("src", `data:image/jpeg;base64,${test}`);
-
-    // paintImg.setAttribute("src", `data:image/jpeg;base64,` + test);
-    // paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
-    // paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
-    // paintImg.setAttribute("class", "post-contianer-thumbnail");
-
+    
 
 
     if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length > 15) {
@@ -251,7 +229,6 @@ async function pingProxy(source, worksafeSource) {
 
     
 
-    // paintFileName.prepend(`File: ${usableFourChanData.Post.filename}${usableFourChanData.Post.ext}`); //including "ext" here and only here
 
     paintFsize.prepend(usableFourChanData.Post.fsize); //might have to round. investigate 4chan format
 
@@ -259,20 +236,17 @@ async function pingProxy(source, worksafeSource) {
     paintBoard.prepend(`/${usableFourChanData.Board}/`);
 
     paintNo.insertAdjacentHTML("afterbegin", '<a href=' + `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${usableFourChanData.Post.no}` +" target= '_blank' " + "title='See this post on 4chan.org in a new tab'" + '>' + `No.${usableFourChanData.Post.no}` + "</a>");
-    //paintNo.prepend(`No.${usableFourChanData.Post.no}`);
 
     
     paintNow.prepend(usableFourChanData.Post.now);
     paintName.prepend(usableFourChanData.Post.name);
     
-    //paintCom.insertAdjacentHTML( 'afterbegin',  usableFourChanData.Post.com + `<span class=quote>>this is a test, a test, a test, a test quote!</span>`);
     
     if (usableFourChanData.Post.com != undefined) {
         paintCom.insertAdjacentHTML( 'afterbegin',  usableFourChanData.Post.com);
 
 
     }
-    //paintCom.prepend(usableFourChanData.Post.com);
 
 
 
@@ -312,6 +286,8 @@ async function pingProxy(source, worksafeSource) {
     postTitleFlexContainer.append(paintNo);
 
     postContainer.append(paintBoard);
+    // postTitleFlexContainer.append(paintBoard);
+
 
 
 
@@ -326,11 +302,6 @@ async function pingProxy(source, worksafeSource) {
     
 
     }
-    //postContainer.append(paintImg);
-
-    // postContainer.append(paintCom);
-    
-
 
 
 
@@ -351,7 +322,6 @@ async function pingProxy(source, worksafeSource) {
 function containerDeletion() {
 
   
-    //paintImg.removeAttribute("src");
 
     for (let i = postContainerChildren.length -1; i >=0; i--){
         postContainerChildren[i].remove();
@@ -385,36 +355,17 @@ async function getThumbnailArrayBufferBinary(source) {
         const usableThumbnailData = await response.blob(); //takes in the incoming array buffer and resolves it as a blob
     
 
-        //const usableThumbnailData =  URL.createObjectURL( await response.blob());
 
         console.log(usableThumbnailData);
         console.log(usableThumbnailData.text());
-        //console.log(blobbyResponse.text());
         console.log(typeof(usableThumbnailData));  
-        //const thumbnail = URL.createObjectURL(blobbyResponse);
     
     
     
     
     
     
-        //turn arraybuffer into blob(?) NOW I HAVE TO FIGURE OUT WHY OLD THUMBNAILS SOMETIMES STICKAROUND PAST THEIR WELCOME!!
-
-
-
-        // const test =  new Blob([usableThumbnailData], {type: "image/*"}); //"or image/jpeg" ? since thumbnails are supposed to be only jpg's
-        // console.log(test);
-
         
-    
-    
-    
-        // const mediaContainer = document.createElement("img");
-        // mediaContainer.setAttribute("src", thumbnail);
-        // postContainer.append(mediaContainer);
-    
-        //console.log(URL.createObjectURL(blobbyResponse));
-
 
     
         if (usableFourChanData.Post.tim) {
@@ -441,115 +392,6 @@ async function getThumbnailArrayBufferBinary(source) {
 
 
 
-        // if (usableFourChanData.Post.ext == "jpg" || usableFourChanData.Post.ext == "png" || usableFourChanData.Post.ext == "gif") {
-
-        //     paintImg = document.createElement("img");
-      
-
-        //     paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData)); //test 
-        
-        
-        //     paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
-        //     paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
-        //     paintImg.setAttribute("class", "post-container-thumbnail");
-        //     postContainer.append(paintImg);
-        
-
-        // } else if (usableFourChanData.Post.ext == "webM") {
-        //     paintImg = document.createElement("video");
-
-        // }
-        
-        
-        
-        
-        // else {
-        //     throw (err);
-        // }
-       
-       
-
-        //Meda Access
-
-             //on thumbnail click - replace the thumbnail specs with that of the specs of the full media, add a "close" button near the spot.
-
-        // paintImg.addEventListener("pointerdown", (e)=> { //needs modal window
-        //     console.log("thumbnail clicked");
-
-
-        //     let heightClac = () => {
-        //         let dataHeight;
-        //         if (!(usableFourChanData.Post.h) > 1000) {
-        //             dataHeight = `${usableFourChanData.Post.h/2}px`;
-        //             console.log(usableFourChanData.h, typeof(usableFourChanData.h));
-        //             console.log('greater h')
-
-        //         }else {
-        //             dataHeight = `${usableFourChanData.Post.h}px`;
-        //         }
-
-        //         return dataHeight;
-        //     };
-
-
-            
-
-        //     let widthCalc = () => {
-
-        //         let dataWidth; 
-        //         if (!(usableFourChanData.Post.w) > 1000) {
-        //             dataWidth =  `${usableFourChanData.Post.w/2}px`;
-        //             console.log(usableFourChanData.w, typeof(usableFourChanData.w));
-
-        //             console.log('greater w')
-
-
-        //         } else {
-        //             dataWidth =  `${usableFourChanData.Post.w}px`;
-
-        //         }
-
-        //         return dataWidth;
-        //     };
-
-
-        //     paintImg.setAttribute("height", `${heightClac()}`); 
-
-
-
-        //     paintImg.setAttribute("width", `${widthCalc()}`);
-
-        //     console.log(usableFourChanData.h, typeof(usableFourChanData.h));
-        //     console.log(usableFourChanData.w, typeof(usableFourChanData.w));
-
-
-        //     console.log(`computed height: ${heightClac()}px`);
-        //     console.log(`computed width: ${widthCalc()}px`);
-
-        //     // paintImg.setAttribute("class", "post-container-thumbnail");
-
-
-        
-
-        // })
-  
-
-
-
-
-
-
-        // paintImg.addEventListener("pointerdown", (e)=> { //temp solution to sizinf connundrum that the above event listener tries to fox - must figure out how 4chan calculates display size of user media when user media full sizes aren't used.
-        //     console.log("thumbnail is clicked u utter sucker");
-
-
-        //     paintImg.setAttribute("class", "post-container-fullmedia");
-            
-
-        //     // paintImg.setAttribute("height", `${usableFourChanData.Post.h/3}`); 
-        //     // paintImg.setAttribute("width",`${usableFourChanData.Post.w/3}`);
-
-        // })
 
 
     } catch(err) {
@@ -583,11 +425,6 @@ async function getMedia(source) {
         console.log(`This is the full media: ${await fullMedia.text()}`);
 
     
-    
-        //get extention of the media
-        //if img, keep img tag
-        //if video, turn paintimg into video.
-
         let closebtn = document.createElement("p");
         closebtn.append(document.createTextNode("close"));
         closebtn.setAttribute("class", "closebtn");
@@ -616,11 +453,8 @@ async function getMedia(source) {
                 paintVid.setAttribute("class", "post-container-thumbnail");
                 paintImg.replaceWith(paintVid);
                 console.log("a");
-                // paintVid.setAttribute("height", `${usableFourChanData.Post.h/3}`); 
-                // paintVid.setAttribute("width",`${usableFourChanData.Post.w/3}`);
     
             } else {
-                // let closebtn = document.createElement("p");
                
                 let paintFullImg = document.createElement("img");
                 paintFullImg.setAttribute("src", URL.createObjectURL(fullMedia));
@@ -629,13 +463,10 @@ async function getMedia(source) {
                 fileInfoFlexContainer.append(closebtn);
                 console.log("b");
 
-                // paintFullImg.setAttribute("height", `${usableFourChanData.Post.h/3}`); 
-                // paintFullImg.setAttribute("width",`${usableFourChanData.Post.w/3}`);
     
         
     
             }
-            // paintImg.setAttribute("class", "post-container-fullmedia");
             
     
 
