@@ -117,6 +117,7 @@ anontismOption.addEventListener('pointerdown' , (e) => {
 
 
 
+
 //API DATA GATHERING AND PAINTING
 
 async function pingProxy(source, worksafeSource) {
@@ -283,7 +284,7 @@ async function pingProxy(source, worksafeSource) {
     postTitleFlexContainer.append(paintNo);
 
     // postContainer.append(paintBoard);
-    postTitleFlexContainer.append(paintBoard);
+    // postTitleFlexContainer.append(paintBoard);
 
 
 
@@ -307,6 +308,31 @@ async function pingProxy(source, worksafeSource) {
     postContainer.append(mediaAndTextFlexContainer);
     postContainer.append(fileInfoFlexContainer);
     postContainer.append(postTitleFlexContainer);
+
+    
+    //MEDIA QUERIES
+
+    const mobileSizing = window.matchMedia('(max-width: 800px)');
+
+    function mediaQurey(e) {
+        if (e.matches) {
+            //do something with the board placement
+            postTitleFlexContainer.append(paintBoard);
+
+            
+        }else {
+            postContainer.append(paintBoard);
+
+        }
+    }
+
+    mobileSizing.addEventListener("change", ()=> {
+        mediaQurey(mobileSizing);
+    });
+
+
+    mediaQurey(mobileSizing);
+
 
 
     return usableFourChanData 
