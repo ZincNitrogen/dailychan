@@ -3,7 +3,9 @@ let stylesheetRoot = document.querySelector(':root');
 let body = document.body;
 
 
+let aboutContent = document.querySelector(".about-content");
 
+let aboutBtn = document.querySelector(".aboutbtn");
 
 
 let themesDropdownBtn = document.querySelector(`.dropdown`);
@@ -56,6 +58,23 @@ let fileInfoFlexContainer = null;
 
 stylesheetRoot.setAttribute("class", `DefaultTheme`);
 
+//ABOUT
+
+// aboutContent.style.display = "none";
+
+aboutBtn.addEventListener("pointerenter", (e)=> {
+
+    aboutContent.style.display = "block";
+
+
+
+
+});
+
+aboutBtn.addEventListener("pointerleave", (e)=> {
+    aboutContent.style.display = "none";
+
+});
 
 
 //DROPDOWN

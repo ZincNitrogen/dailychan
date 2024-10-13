@@ -256,6 +256,31 @@ header {
     right: 0.47rem;
 
 }
+
+
+.about-content {
+    display:none;
+
+
+    text-align: center;
+    background-color: var(--bgColor_dropdowncontent);
+    width: 0.5rem;
+    color: var(--dropdownTextColor);
+    opacity: inherit;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+    font-size: 0.15rem;
+
+    position:absolute;
+    top: 0.3rem;
+
+
+
+
+
+}
+
+
 main {
     display: flex;
     flex-flow: column wrap;
