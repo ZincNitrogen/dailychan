@@ -22,10 +22,10 @@ let anontismOption = document.querySelector(`#AnontismOption`);
 
 
 const postContainer = document.querySelector('.post-container');
-const url = "https://localhost:8000/ServerSideRequest";
-const worksafeURL = "https://localhost:8000/WorksafeServerSideRequest";
-const thumbnailURL = "https://localhost:8000/ServeThumbnail";
-const mediaURL = "https://localhost:8000/ServeFullMedia";
+const url = "http://localhost:8000/ServerSideRequest";
+const worksafeURL = "http://localhost:8000/WorksafeServerSideRequest";
+const thumbnailURL = "http://localhost:8000/ServeThumbnail";
+const mediaURL = "http://localhost:8000/ServeFullMedia";
 
 
 
