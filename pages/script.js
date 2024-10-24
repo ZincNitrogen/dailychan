@@ -78,6 +78,17 @@ aboutBtn.addEventListener("pointerleave", (e)=> {
 });
 
 
+aboutBtn.addEventListener("touchend", (e) => {
+
+    if (aboutContent.style.display == "block"){
+        aboutContent.style.display = "none";
+    }else{
+        aboutContent.style.display == "block";
+    }
+
+});
+
+
 //DROPDOWN
 themesDropdownContent.style.display = "none"; //by default, dropdown is invisible
 
