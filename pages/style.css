@@ -723,7 +723,8 @@ footer {
         
         position:absolute;
         top: 0.5rem;
-        left: 1.3rem;
+        left: 1.4rem;
+        max-width: min-content;
        
     }
 
@@ -736,7 +737,10 @@ footer {
     
     }
 
-
+    .about-content {
+        top: 0.5rem;
+        left: 1.9rem;
+    }
 
     .post-container {
 
