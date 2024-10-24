@@ -63,6 +63,9 @@ stylesheetRoot.setAttribute("class", `DefaultTheme`);
 
 // aboutContent.style.display = "none";
 
+
+
+
 aboutBtn.addEventListener("pointerenter", (e)=> {
 
     aboutContent.style.display = "block";
@@ -78,15 +81,15 @@ aboutBtn.addEventListener("pointerleave", (e)=> {
 });
 
 
-aboutBtn.addEventListener("touchend", (e) => {
+// aboutBtn.addEventListener("pointerdown", (e) => {
 
-    if (aboutContent.style.display == "block"){
-        aboutContent.style.display = "none";
-    }else{
-        aboutContent.style.display == "block";
-    }
+    
 
-});
+//     aboutContent.style.display = "block";
+
+// });
+
+
 
 
 //DROPDOWN
@@ -156,8 +159,7 @@ async function pingProxy(source, worksafeSource) {
     //some sort of flag sent with the request that lets the server know the state of the checkbox
     //the server will then only choose from boards that are approved.
 
-    console.log("top");
-    console.log(ALLOW_NSFW_CHECKBOX.checked);
+    // console.log(ALLOW_NSFW_CHECKBOX.checked);
 
 
     if (ALLOW_NSFW_CHECKBOX.checked) {
@@ -181,10 +183,10 @@ async function pingProxy(source, worksafeSource) {
  
 
 
-    console.log(usableFourChanData);
-    console.log(usableFourChanData.Board);
-    console.log(usableFourChanData.Post);
-    console.log(usableFourChanData.OP.no);
+    // console.log(usableFourChanData);
+    // console.log(usableFourChanData.Board);
+    // console.log(usableFourChanData.Post);
+    // console.log(usableFourChanData.OP.no);
 
 
 
@@ -240,14 +242,14 @@ async function pingProxy(source, worksafeSource) {
 
     if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length > 15) {
         let shortenedFilename =   usableFourChanData.Post.filename.substr(0,15);
-        console.log(shortenedFilename);
+        // console.log(shortenedFilename);
         paintFileName.prepend(`File: ${shortenedFilename}(...)${  usableFourChanData.Post.ext}`); //including "ext" here and only here
 
 
     
     } else if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length <= 15) {
         let fullFilename =  usableFourChanData.Post.filename;
-        console.log(fullFilename);
+        // console.log(fullFilename);
         paintFileName.prepend(`File: ${fullFilename}${  usableFourChanData.Post.ext}`); //including "ext" here and only here
 
 
@@ -285,7 +287,7 @@ async function pingProxy(source, worksafeSource) {
 
     if (chanLink || false) {
 
-        console.log(chanLink);
+        // console.log(chanLink);
         chanLink.forEach((e) => {
             //console.log(e.text);
             let postReply = (e.text).slice(2);
@@ -410,9 +412,9 @@ async function getThumbnailArrayBufferBinary(source) {
     
 
 
-        console.log(usableThumbnailData);
-        console.log(usableThumbnailData.text());
-        console.log(typeof(usableThumbnailData));  
+        // console.log(usableThumbnailData);
+        // console.log(usableThumbnailData.text());
+        // console.log(typeof(usableThumbnailData));  
     
     
     
@@ -476,7 +478,7 @@ async function getMedia(source) {
         });
     
         const fullMedia = await response.blob();
-        console.log(`This is the full media: ${await fullMedia.text()}`);
+        // console.log(`This is the full media: ${await fullMedia.text()}`);
 
     
         let closebtn = document.createElement("p");
@@ -486,7 +488,7 @@ async function getMedia(source) {
     
     
         paintImg.addEventListener("pointerdown", (e)=> { //temp solution to sizinf connundrum that the above event listener tries to fox - must figure out how 4chan calculates display size of user media when user media full sizes aren't used.
-            console.log("thumbnail is clicked u utter sucker");
+            // console.log("thumbnail is clicked u utter sucker");
             
     
     
@@ -506,7 +508,6 @@ async function getMedia(source) {
                 paintVid.setAttribute("controls", " ");
                 paintVid.setAttribute("class", "post-container-thumbnail");
                 paintImg.replaceWith(paintVid);
-                console.log("a");
     
             } else {
                
@@ -515,7 +516,6 @@ async function getMedia(source) {
                 paintFullImg.setAttribute("class", "post-container-thumbnail");
                 paintImg.replaceWith(paintFullImg);
                 fileInfoFlexContainer.append(closebtn);
-                console.log("b");
 
     
         
