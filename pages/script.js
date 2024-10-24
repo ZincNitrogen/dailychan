@@ -22,10 +22,11 @@ let anontismOption = document.querySelector(`#AnontismOption`);
 
 
 const postContainer = document.querySelector('.post-container');
-const url = "http://localhost:8000/ServerSideRequest";
-const worksafeURL = "http://localhost:8000/WorksafeServerSideRequest";
-const thumbnailURL = "http://localhost:8000/ServeThumbnail";
-const mediaURL = "http://localhost:8000/ServeFullMedia";
+const baseLocation = window.location;
+const url = `${baseLocation}ServerSideRequest`;
+const worksafeURL = `${baseLocation}WorksafeServerSideRequest`;
+const thumbnailURL = `${baseLocation}ServeThumbnail`;
+const mediaURL = `${baseLocation}ServeFullMedia`;
 
 
 
@@ -560,6 +561,7 @@ pingProxy(url, worksafeURL);
 
 getThumbnailArrayBufferBinary(thumbnailURL);
 getMedia(mediaURL);
+console.log(window.location);
 
 
 
