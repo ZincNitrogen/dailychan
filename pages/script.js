@@ -2,6 +2,7 @@
 let stylesheetRoot = document.querySelector(':root');
 let body = document.body;
 
+let navBarUL = document.querySelector(".options");
 
 let aboutContent = document.querySelector(".about-content");
 
@@ -66,88 +67,156 @@ stylesheetRoot.setAttribute("class", `DefaultTheme`);
 
 
 
-aboutBtn.addEventListener("pointerenter", (e)=> {
-
-    aboutContent.style.display = "block";
-
-
-
-
-});
-
-aboutBtn.addEventListener("pointerleave", (e)=> {
-    aboutContent.style.display = "none";
-
-});
-
-
-// aboutBtn.addEventListener("pointerdown", (e) => {
-
-    
+// aboutBtn.addEventListener("pointerenter", (e)=> {
 
 //     aboutContent.style.display = "block";
+
+
+
+
+// });
+
+// aboutBtn.addEventListener("pointerleave", (e)=> {
+//     aboutContent.style.display = "none";
 
 // });
 
 
 
 
+
 //DROPDOWN
-themesDropdownContent.style.display = "none"; //by default, dropdown is invisible
+// themesDropdownContent.style.display = "none"; //by default, dropdown is invisible
 
-themesDropdownBtn.addEventListener("pointerenter", (e) => {
-    themesDropdownContent.style.display = "flex"; 
-    themesDropdownIcon.style.transform = "rotate(180deg)";
-
-
-
-});
+// themesDropdownBtn.addEventListener("pointerenter", (e) => {
+//     themesDropdownContent.style.display = "flex"; 
+//     themesDropdownIcon.style.transform = "rotate(180deg)";
 
 
-document.body.addEventListener("pointerdown", (e) => {
-    themesDropdownContent.style.display = "none";
-    themesDropdownIcon.style.transform = "rotate(0deg)";
+
+// });
+
+
+// document.body.addEventListener("pointerdown", (e) => {
+//     themesDropdownContent.style.display = "none";
+//     themesDropdownIcon.style.transform = "rotate(0deg)";
+    
+    
     
 
-    e.stopPropagation(); 
+//     e.stopPropagation(); 
 
 
-});
+// });
 
 
-themesDropdownContent.addEventListener("pointerenter", (e) => {
-    themesDropdownContent.style.display = "flex"; 
+// themesDropdownContent.addEventListener("pointerenter", (e) => {
+//     themesDropdownContent.style.display = "flex"; 
+//     themesDropdownIcon.style.transform = "rotate(180deg)";
+
+
+// });
+
+// themesDropdownContent.addEventListener("pointerleave", (e) => {
+//     themesDropdownContent.style.display = "none"; 
+//     themesDropdownIcon.style.transform = "rotate(0deg)";
+
+// });
+
+
+
+
+//navbar events, attempting event delegation
+
+
+//add event to navbar
+
+navBarUL.addEventListener("pointerdown", (e)=> {
+
+
+//test event target for being either the about button or the theme dropdown
+
+let target = e.target;
+if (target == aboutBtn && aboutContent.style.display == "none"){
+    aboutContent.style.display = "block";
+
+}else {
+    aboutContent.style.display = "none";
+
+}
+
+if(target == themesDropdownBtn  && themesDropdownContent.style.display == "none") {
+    themesDropdownContent.style.display = "flex"
     themesDropdownIcon.style.transform = "rotate(180deg)";
 
+}else {
+    themesDropdownContent.style.display = "none";
+    themesDropdownIcon.style.transform = "rotate(0deg)";
+}
+
+
+
+//set behvaiours depening on which element is triggered
+//prevent propogation of event loop bubble.
+
+e.stopPropagation();
+
 
 });
 
-themesDropdownContent.addEventListener("pointerleave", (e) => {
-    themesDropdownContent.style.display = "none"; 
-    themesDropdownIcon.style.transform = "rotate(0deg)";
+themesDropdownIcon.addEventListener("pointerdown", (e)=> {
+
+
+    if(themesDropdownContent.style.display == "none") {
+        themesDropdownContent.style.display = "flex"
+        themesDropdownIcon.style.transform = "rotate(180deg)";
+
+    }else {
+        themesDropdownContent.style.display = "none";
+        themesDropdownIcon.style.transform = "rotate(0deg)";
+    }
+    
 
 });
 
 //when theme option is clicked, remove all classes and add theme class to root elemnt
 
 
-defaultOption.addEventListener('pointerdown' , (e) => { 
-    stylesheetRoot.setAttribute("class", `DefaultTheme`);
-});
+// defaultOption.addEventListener('pointerdown' , (e) => { 
+//     stylesheetRoot.setAttribute("class", `DefaultTheme`);
+// });
    
 
 
-minimalPaperOption.addEventListener('pointerdown' , (e) => {
-    stylesheetRoot.setAttribute("class", `MinimalPaperTheme`);
+// minimalPaperOption.addEventListener('pointerdown' , (e) => {
+//     stylesheetRoot.setAttribute("class", `MinimalPaperTheme`);
 
-});
+// });
     
 
 
-anontismOption.addEventListener('pointerdown' , (e) => {
-    stylesheetRoot.setAttribute("class", `AnontismTheme`);
+// anontismOption.addEventListener('pointerdown' , (e) => {
+//     stylesheetRoot.setAttribute("class", `AnontismTheme`);
 
+// });
+
+
+themesDropdownContent.addEventListener("pointerdown", (e)=> {
+
+    let target = e.target;
+     
+    if (target == defaultOption){
+        stylesheetRoot.setAttribute("class", `DefaultTheme`);
+
+    }else if (target == minimalPaperOption){
+        stylesheetRoot.setAttribute("class", `MinimalPaperTheme`);
+
+    }else if (target == anontismOption){
+        stylesheetRoot.setAttribute("class", `AnontismTheme`);
+
+    }
 });
+
 
 
 

@@ -188,7 +188,7 @@ header {
 }
 
 .dropdown-content {
-    display: flex;
+    display: none; /*will become flex when activated*/
     flex-flow: column wrap;
     justify-content: center;
     align-content: center;
@@ -254,6 +254,8 @@ header {
 .dropdownarrow {
     position: relative;
     right: 0.47rem;
+    cursor:pointer;
+
 
 }
 
