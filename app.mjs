@@ -422,7 +422,7 @@ function getThumbnailTwo(imageresponse) {
         })
         .catch((err) =>{
             console.log("No thumbnail");
-            imageresponse.send(err.response.data);
+            // imageresponse.send(err.response.data);
 
         });
     
@@ -451,7 +451,7 @@ function getFullUserMedia(mediaresponse) {
         })
         .catch((err) =>{
             console.log("No media");
-            mediaresponse.send(err.response.data);
+            // mediaresponse.send(err.response.data);
      
 
 
