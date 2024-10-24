@@ -55,86 +55,21 @@ let fileInfoFlexContainer = null;
 
 
 
-//THEMEING
+// DEFAULT THEME
 
 
 stylesheetRoot.setAttribute("class", `DefaultTheme`);
 
-//ABOUT
-
-// aboutContent.style.display = "none";
 
 
-
-
-// aboutBtn.addEventListener("pointerenter", (e)=> {
-
-//     aboutContent.style.display = "block";
+// NAVBAR EVENTS
 
 
 
-
-// });
-
-// aboutBtn.addEventListener("pointerleave", (e)=> {
-//     aboutContent.style.display = "none";
-
-// });
-
-
-
-
-
-//DROPDOWN
-// themesDropdownContent.style.display = "none"; //by default, dropdown is invisible
-
-// themesDropdownBtn.addEventListener("pointerenter", (e) => {
-//     themesDropdownContent.style.display = "flex"; 
-//     themesDropdownIcon.style.transform = "rotate(180deg)";
-
-
-
-// });
-
-
-// document.body.addEventListener("pointerdown", (e) => {
-//     themesDropdownContent.style.display = "none";
-//     themesDropdownIcon.style.transform = "rotate(0deg)";
-    
-    
-    
-
-//     e.stopPropagation(); 
-
-
-// });
-
-
-// themesDropdownContent.addEventListener("pointerenter", (e) => {
-//     themesDropdownContent.style.display = "flex"; 
-//     themesDropdownIcon.style.transform = "rotate(180deg)";
-
-
-// });
-
-// themesDropdownContent.addEventListener("pointerleave", (e) => {
-//     themesDropdownContent.style.display = "none"; 
-//     themesDropdownIcon.style.transform = "rotate(0deg)";
-
-// });
-
-
-
-
-//navbar events, attempting event delegation
-
-
-//add event to navbar
 
 navBarUL.addEventListener("pointerdown", (e)=> {
 
 
-//test event target for being either the about button or the theme dropdown
 
 let target = e.target;
 if (target == aboutBtn && aboutContent.style.display == "none"){
@@ -156,13 +91,12 @@ if(target == themesDropdownBtn  && themesDropdownContent.style.display == "none"
 
 
 
-//set behvaiours depening on which element is triggered
-//prevent propogation of event loop bubble.
-
 e.stopPropagation();
 
 
 });
+
+//DROPDOWN ICON EVENTS
 
 themesDropdownIcon.addEventListener("pointerdown", (e)=> {
 
@@ -179,27 +113,7 @@ themesDropdownIcon.addEventListener("pointerdown", (e)=> {
 
 });
 
-//when theme option is clicked, remove all classes and add theme class to root elemnt
-
-
-// defaultOption.addEventListener('pointerdown' , (e) => { 
-//     stylesheetRoot.setAttribute("class", `DefaultTheme`);
-// });
-   
-
-
-// minimalPaperOption.addEventListener('pointerdown' , (e) => {
-//     stylesheetRoot.setAttribute("class", `MinimalPaperTheme`);
-
-// });
-    
-
-
-// anontismOption.addEventListener('pointerdown' , (e) => {
-//     stylesheetRoot.setAttribute("class", `AnontismTheme`);
-
-// });
-
+//THEMEING
 
 themesDropdownContent.addEventListener("pointerdown", (e)=> {
 
@@ -217,6 +131,18 @@ themesDropdownContent.addEventListener("pointerdown", (e)=> {
     }
 });
 
+
+//OUTSIDE CLICK RESETS
+
+document.body.addEventListener("pointerdown", (e)=> {
+
+    themesDropdownContent.style.display = "none";
+    themesDropdownIcon.style.transform = "rotate(0deg)";
+    aboutContent.style.display = "none";
+
+
+
+});
 
 
 
