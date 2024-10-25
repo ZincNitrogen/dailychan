@@ -92,7 +92,7 @@ navBarUL.addEventListener("pointerdown", (e)=> {
 
 
 
-    e.stopPropagation();
+   
 
 
 });
@@ -101,15 +101,21 @@ navBarUL.addEventListener("pointerdown", (e)=> {
 
 themesDropdownIcon.addEventListener("pointerdown", (e)=> {
 
+    let target = e.target;
 
-    if(themesDropdownContent.style.display == "none") {
-        themesDropdownContent.style.display = "flex"
+
+    if(target == themesDropdownIcon && themesDropdownContent.style.display == "none") {
+        themesDropdownContent.style.display = "flex";
         themesDropdownIcon.style.transform = "rotate(180deg)";
+        console.log("icon clicked");
 
-    }else {
+    }else if(target == themesDropdownIcon && themesDropdownContent.style.display == "flex"){
         themesDropdownContent.style.display = "none";
         themesDropdownIcon.style.transform = "rotate(0deg)";
+        console.log("icon clicked");
+
     }
+
     
 
 });
