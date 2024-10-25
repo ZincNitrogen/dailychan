@@ -59,14 +59,15 @@ let fileInfoFlexContainer = null;
 
 
 stylesheetRoot.setAttribute("class", `DefaultTheme`);
-// themesDropdownContent.style.display == "none"; //for some reason this has to be set here instead of obeying css rules.
+themesDropdownContent.style.display = "none";
+
 
 
 
 // NAVBAR EVENTS
 
 
-
+//combine the icon behavior and the themedropdown btn nehavior.
 
 navBarUL.addEventListener("pointerdown", (e)=> {
 
@@ -84,20 +85,23 @@ navBarUL.addEventListener("pointerdown", (e)=> {
     if(target == themesDropdownBtn  && themesDropdownContent.style.display == "none") {
         themesDropdownContent.style.display = "flex";
         themesDropdownIcon.style.transform = "rotate(180deg)";
+        console.log("themebtn clicked");
 
-    }else {
+
+    }else if (target == themesDropdownBtn && themesDropdownContent.style.display == "flex"){
         themesDropdownContent.style.display = "none";
         themesDropdownIcon.style.transform = "rotate(0deg)";
     }
 
 
+    e.stopPropagation();
 
    
 
 
 });
 
-//DROPDOWN ICON EVENTS
+//DROPDOWN ICON EVENTS //fix icon not responding to click events
 
 themesDropdownIcon.addEventListener("pointerdown", (e)=> {
 

@@ -188,7 +188,7 @@ header {
 }
 
 .dropdown-content {
-    display: none; /*will become flex when activated*/
+    display: flex; /*will become flex when activated*/
     flex-flow: column wrap;
     justify-content: center;
     align-content: center;
