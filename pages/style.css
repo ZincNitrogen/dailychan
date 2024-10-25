@@ -183,8 +183,17 @@ header {
 
 }
 
+
+
 .dropdown {
     border: none;
+}
+
+
+
+.options li:hover {
+    text-decoration: underline;
+
 }
 
 .dropdown-content {
@@ -260,6 +269,9 @@ header {
 }
 
 
+
+
+
 .about-content {
     display:none;
 
@@ -281,6 +293,7 @@ header {
 
 
 }
+
 
 
 main {

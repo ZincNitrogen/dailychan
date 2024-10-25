@@ -82,13 +82,13 @@ navBarUL.addEventListener("pointerdown", (e)=> {
 
     }
 
-    if((target == themesDropdownBtn || target == themesDropdownBtn)  && themesDropdownContent.style.display == "none") {
+    if((target == themesDropdownBtn || target == themesDropdownIcon)  && themesDropdownContent.style.display == "none") {
         themesDropdownContent.style.display = "flex";
         themesDropdownIcon.style.transform = "rotate(180deg)";
         console.log("themebtn clicked");
 
 
-    }else if ((target == themesDropdownBtn || target == themesDropdownBtn) && themesDropdownContent.style.display == "flex"){
+    }else if ((target == themesDropdownBtn || target == themesDropdownIcon) && themesDropdownContent.style.display == "flex"){
         themesDropdownContent.style.display = "none";
         themesDropdownIcon.style.transform = "rotate(0deg)";
     }
