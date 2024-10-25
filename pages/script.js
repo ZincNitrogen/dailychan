@@ -59,7 +59,7 @@ let fileInfoFlexContainer = null;
 
 
 stylesheetRoot.setAttribute("class", `DefaultTheme`);
-themesDropdownContent.style.display == "none"; //for some reason this has to be set here instead of obeying css rules.
+// themesDropdownContent.style.display == "none"; //for some reason this has to be set here instead of obeying css rules.
 
 
 
@@ -82,7 +82,7 @@ navBarUL.addEventListener("pointerdown", (e)=> {
     }
 
     if(target == themesDropdownBtn  && themesDropdownContent.style.display == "none") {
-        themesDropdownContent.style.display = "flex"
+        themesDropdownContent.style.display = "flex";
         themesDropdownIcon.style.transform = "rotate(180deg)";
 
     }else {
