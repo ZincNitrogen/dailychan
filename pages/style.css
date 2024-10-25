@@ -275,7 +275,7 @@ header {
 
     position:absolute;
     top: 0.3rem;
-
+     
 
 
 
@@ -722,8 +722,8 @@ footer {
     .dropdown-content {
         
         position:absolute;
-        top: 0.5rem;
-        left: 1.4rem;
+        top: 3.4em;
+        left: 9em;
         max-width: min-content;
        
     }
@@ -738,8 +738,8 @@ footer {
     }
 
     .about-content {
-        top: 0.5rem;
-        left: 1.9rem;
+        top: 3.4em;
+        left: 12.5em;
     }
 
     .post-container {
