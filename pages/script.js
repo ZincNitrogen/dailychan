@@ -59,7 +59,7 @@ let fileInfoFlexContainer = null;
 
 
 stylesheetRoot.setAttribute("class", `DefaultTheme`);
-themesDropdownContent.style.display == "none" //for some reason this has to be set here instead of obeying css rules.
+themesDropdownContent.style.display == "none"; //for some reason this has to be set here instead of obeying css rules.
 
 
 
