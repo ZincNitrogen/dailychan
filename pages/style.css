@@ -285,11 +285,20 @@ header {
 
     font-size: 0.15rem;
 
-    position:absolute;
+    /* position:absolute;
     top: 0.3rem;
+      */
+    /* position: absolute;
+    top: 4.5vw;
+
+ */
+   /* position:absolute;
+   top: 6%; */
+
+   position: fixed;
+   margin-top: 1.6rem;
+
      
-
-
 
 
 }
@@ -709,6 +718,7 @@ footer {
 
 }
 
+
 @media (max-width: 800px) {
     /* -header
     -main/body
@@ -750,11 +760,41 @@ footer {
     
     }
 
-    .about-content {
+    /* .about-content {
+
+        top: 10%;
+        right: 15%;
+        
+    } */
+
+    /* .about-content {
         top: 3.4em;
         left: 12.5em;
-    }
 
+        
+        
+    } */
+
+        /* .about-content {
+        top: 18vw;
+        right: 16vw;
+        
+
+        
+        
+    } */
+
+        .about-content {
+            margin-top: 1.7rem;
+            margin-left:1.5rem;
+        
+      
+       
+
+
+
+        
+    }
     .post-container {
 
         display:grid;
