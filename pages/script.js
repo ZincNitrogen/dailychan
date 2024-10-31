@@ -532,6 +532,153 @@ document.body.addEventListener("pointerdown", (e)=> {
 
 
 
+//create empty object
+//have one function that gets all data and puts them in object
+//have another function that gets object and paints them to browser.
+
+
+
+
+
+
+///////////////////////////////////////////
+
+async function* getting(source, worksafeSource, thumbnailSource, mediaSource) {
+
+    let usableFourChanData = null;
+    let usableThumbnailData = null;
+    let fullMedia = null;
+
+    //getting textual data
+    try {
+
+        if (ALLOW_NSFW_CHECKBOX.checked) {
+            let textResponse =  await fetch(source);
+            let fourchanData =  await textResponse.json(); 
+            usableFourChanData =  JSON.parse(fourchanData);
+        } else {
+            let textResponse =  await fetch(worksafeSource);
+            let fourchanData =  await textResponse.json(); 
+            usableFourChanData =  JSON.parse(fourchanData);
+        }
+
+
+
+    }catch(err) {
+        usableFourChanData = null;
+
+        // throw(err + " or text not avaliable");
+    }
+
+
+    // console.log(usableFourChanData);
+
+
+
+    //getting thumbnail
+
+
+    try {
+
+        let thumbnailResponse = await fetch(thumbnailSource, {
+            headers: {
+                "Content-Type": "application/octet-stream",
+            },
+        });
+    
+        
+        usableThumbnailData = await thumbnailResponse.blob(); //takes in the incoming array buffer and resolves it as a blob
+
+
+    }catch (err) {
+        usableThumbnailData = null;
+
+        // throw(err + " or no thumbnail avaliable");
+    }
+
+    // console.log(`This is the thumbnail: ${usableThumbnailData}`);
+
+    //getting full media
+
+
+    try {
+
+        let mediaResponse = await fetch(mediaSource, {
+            headers: {
+                "Content-Type": "application/octet-stream",
+    
+            },
+        });
+    
+        fullMedia = await mediaResponse.blob();
+
+    
+    
+
+    }catch(err) {
+        fullMedia = null;
+
+        // throw(err + "no media avaliable");
+    }
+
+    // console.log(`This is the media: ${fullMedia}`);
+
+
+    //return destructured thing
+
+    // let outputData =  [await usableFourChanData,usableThumbnailData, fullMedia];
+
+    // let outputData = {
+    //     textData: await usableFourChanData,
+    //     tnData: usableThumbnailData,
+    //     mda:  fullMedia,
+    // };
+
+    // // console.log(outputData);
+
+  
+    // return outputData
+
+    yield usableFourChanData;
+    yield usableThumbnailData;
+    return fullMedia;
+
+
+
+
+
+
+
+
+}
+
+
+
+//destructure the output
+
+let outputObject = getting(url, worksafeURL, thumbnailURL,mediaURL );
+
+
+
+let text = outputObject.next();
+let tn = outputObject.next();
+let media = outputObject.next();
+
+
+
+console.log(text);
+
+//pipe destructured output into paintinf function
+
+
+function painting() {
+    let  holder = null;
+}
+
+
+
+///////////////////////////////////////////
+
 
 ////////old///////
 async function pingProxy(source, worksafeSource) {
@@ -944,9 +1091,18 @@ async function getMedia(source) {
 
 
 console.log(window.location);
-pingProxy(url, worksafeURL);
-getThumbnailArrayBufferBinary(thumbnailURL);
-getMedia(mediaURL);
+
+getting(url, worksafeURL, thumbnailURL,mediaURL );
+
+
+
+
+
+
+
+// pingProxy(url, worksafeURL);
+// getThumbnailArrayBufferBinary(thumbnailURL);
+// getMedia(mediaURL);
 
 
 
@@ -958,16 +1114,19 @@ getMedia(mediaURL);
 
 newPostBtn.addEventListener("pointerup", (e) => {
     containerDeletion();
-    pingProxy(url, worksafeURL);
+    // pingProxy(url, worksafeURL);
 
 
-    getThumbnailArrayBufferBinary(thumbnailURL);
+    // getThumbnailArrayBufferBinary(thumbnailURL);
 
-    getMedia(mediaURL);
+    // getMedia(mediaURL);
 
 
 
     // fullMediaAspects(thumbnailAspects(textData()));
+
+    getting(url, worksafeURL, thumbnailURL,mediaURL );
+
 
     
 
