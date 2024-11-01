@@ -1,3 +1,4 @@
+//GLOBALS & DOM
 
 let stylesheetRoot = document.querySelector(':root');
 let body = document.body;
@@ -34,23 +35,6 @@ const mediaURL = `${baseLocation}ServeFullMedia`;
 const newPostBtn = document.querySelector(`.btn`);
 const ALLOW_NSFW_CHECKBOX = document.querySelector('#allownsfw');
 let postContainerChildren = postContainer.childNodes;
-
-
-
-
-// let chanLink;
-// let usableFourChanData;
-
-// Eventually attempt to get rid of these global variables. Start with defining usableFourChanData in the pingproxy function where it is usableFourChanData, used 
-// then since it is already returned from that function, just add that function as a callback to the thumbnail function.
-// let paintImg=null;
-
-// let fullMedia;
-
-// let mediaAndTextFlexContainer;
-// let fileInfoFlexContainer = null; 
-
-
 
 
 // DEFAULT THEME
@@ -152,14 +136,6 @@ async function get4chanData(source, worksafeSource) {
     }
 
 
- 
-
-    //needs to return both the json.parse AND the source type (whether url or worksafe)
-
-
-
-
-
 }
 
 async function getThumbnailData(source) {
@@ -172,8 +148,7 @@ async function getThumbnailData(source) {
             },
         });
 
-            return await response.blob();//or return null. THis is allow the return statement to either be blob or null and still show as resolved.
-
+            return await response.blob();
 
         
     
@@ -181,23 +156,6 @@ async function getThumbnailData(source) {
 
         return "there is no thumbnail"
     }
-
-    // const response = await fetch(source, {
-    //     headers: {
-    //         "Content-Type": "application/octet-stream",
-    //     },
-    // });
-
-
-    //     console.log(typeof(response));
-    //     try {
-    //         return await response.blob();//or return null. THis is allow the return statement to either be blob or null and still show as resolved.
-
-
-    //     }catch{
-    //         return null;
-    //     }
-
 
 
     
@@ -217,7 +175,7 @@ async function getFullMedia(source){
 
 
         
-        return await response.blob(); //was FullMedia
+        return await response.blob(); 
     
 
     }catch(err){
@@ -225,31 +183,12 @@ async function getFullMedia(source){
 
     }
 
-    // const response = await fetch(source, {
-    //     headers: {
-    //         "Content-Type": "application/octet-stream",
-
-    //     },
-    // });
-
-
-    // try {
-    //     return await response.blob(); //was FullMedia
-
-    // } catch {
-    //     return null;
-    // }
-
-
-
-    
-   
 }
 
 
 function paintText(usableFourChanData) {
 
-    let chanlink = null;
+    let chanLink = null;
     let paintName = document.createElement("div");
     let paintNow = document.createElement("div");
     let paintNo = document.createElement("div");
