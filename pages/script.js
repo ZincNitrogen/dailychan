@@ -40,7 +40,7 @@ let usableFourChanData;
 
 // Eventually attempt to get rid of these global variables. Start with defining usableFourChanData in the pingproxy function where it is usableFourChanData, used 
 // then since it is already returned from that function, just add that function as a callback to the thumbnail function.
-// let paintImg;
+let paintImg;
 
 let fullMedia;
 
@@ -543,144 +543,706 @@ document.body.addEventListener("pointerdown", (e)=> {
 
 ///////////////////////////////////////////
 
-async function* getting(source, worksafeSource, thumbnailSource, mediaSource) {
+// async function* getting(source, worksafeSource, thumbnailSource, mediaSource) {
 
-    let usableFourChanData = null;
-    let usableThumbnailData = null;
-    let fullMedia = null;
+//     let usableFourChanData = null;
+//     let usableThumbnailData = null;
+//     let fullMedia = null;
 
-    //getting textual data
-    try {
+//     //getting textual data
+//     try {
 
-        if (ALLOW_NSFW_CHECKBOX.checked) {
-            let textResponse =  await fetch(source);
-            let fourchanData =  await textResponse.json(); 
-            usableFourChanData =  JSON.parse(fourchanData);
-        } else {
-            let textResponse =  await fetch(worksafeSource);
-            let fourchanData =  await textResponse.json(); 
-            usableFourChanData =  JSON.parse(fourchanData);
-        }
-
-
-
-    }catch(err) {
-        usableFourChanData = null;
-
-        // throw(err + " or text not avaliable");
-    }
-
-
-    // console.log(usableFourChanData);
+//         if (ALLOW_NSFW_CHECKBOX.checked) {
+//             let textResponse =  await fetch(source);
+//             let fourchanData =  await textResponse.json(); 
+//             usableFourChanData =  JSON.parse(fourchanData);
+//         } else {
+//             let textResponse =  await fetch(worksafeSource);
+//             let fourchanData =  await textResponse.json(); 
+//             usableFourChanData =  JSON.parse(fourchanData);
+//         }
 
 
 
-    //getting thumbnail
+//     }catch(err) {
+//         usableFourChanData = null;
+
+//         // throw(err + " or text not avaliable");
+//     }
 
 
-    try {
+//     // console.log(usableFourChanData);
 
-        let thumbnailResponse = await fetch(thumbnailSource, {
-            headers: {
-                "Content-Type": "application/octet-stream",
-            },
-        });
+
+
+//     //getting thumbnail
+
+
+//     try {
+
+//         let thumbnailResponse = await fetch(thumbnailSource, {
+//             headers: {
+//                 "Content-Type": "application/octet-stream",
+//             },
+//         });
     
         
-        usableThumbnailData = await thumbnailResponse.blob(); //takes in the incoming array buffer and resolves it as a blob
+//         usableThumbnailData = await thumbnailResponse.blob(); //takes in the incoming array buffer and resolves it as a blob
 
 
-    }catch (err) {
-        usableThumbnailData = null;
+//     }catch (err) {
+//         usableThumbnailData = null;
 
-        // throw(err + " or no thumbnail avaliable");
-    }
+//         // throw(err + " or no thumbnail avaliable");
+//     }
 
-    // console.log(`This is the thumbnail: ${usableThumbnailData}`);
+//     // console.log(`This is the thumbnail: ${usableThumbnailData}`);
 
-    //getting full media
+//     //getting full media
 
 
-    try {
+//     try {
 
-        let mediaResponse = await fetch(mediaSource, {
-            headers: {
-                "Content-Type": "application/octet-stream",
+//         let mediaResponse = await fetch(mediaSource, {
+//             headers: {
+//                 "Content-Type": "application/octet-stream",
     
-            },
-        });
+//             },
+//         });
     
-        fullMedia = await mediaResponse.blob();
+//         fullMedia = await mediaResponse.blob();
 
     
     
 
-    }catch(err) {
-        fullMedia = null;
+//     }catch(err) {
+//         fullMedia = null;
 
-        // throw(err + "no media avaliable");
-    }
+//         // throw(err + "no media avaliable");
+//     }
 
-    // console.log(`This is the media: ${fullMedia}`);
+//     // console.log(`This is the media: ${fullMedia}`);
 
 
-    //return destructured thing
+//     //return destructured thing
 
-    // let outputData =  [await usableFourChanData,usableThumbnailData, fullMedia];
+//     // let outputData =  [await usableFourChanData,usableThumbnailData, fullMedia];
 
-    // let outputData = {
-    //     textData: await usableFourChanData,
-    //     tnData: usableThumbnailData,
-    //     mda:  fullMedia,
-    // };
+//     // let outputData = {
+//     //     textData: await usableFourChanData,
+//     //     tnData: usableThumbnailData,
+//     //     mda:  fullMedia,
+//     // };
 
-    // // console.log(outputData);
+//     // // console.log(outputData);
 
   
-    // return outputData
+//     // return outputData
 
-    yield usableFourChanData;
-    yield usableThumbnailData;
-    return fullMedia;
-
-
+//     yield usableFourChanData;
+//     yield usableThumbnailData;
+//     return fullMedia;
 
 
 
 
 
 
-}
+
+
+// }
 
 
 
 //destructure the output
 
-let outputObject = getting(url, worksafeURL, thumbnailURL,mediaURL );
+// let outputObject = getting(url, worksafeURL, thumbnailURL,mediaURL );
 
 
 
-let text = outputObject.next();
-let tn = outputObject.next();
-let media = outputObject.next();
+// let text = outputObject.next();
+// let tn = outputObject.next();
+// let media = outputObject.next();
 
 
 
-console.log(text);
+// console.log(text);
 
-//pipe destructured output into paintinf function
+// //pipe destructured output into paintinf function
 
 
-function painting() {
-    let  holder = null;
+// function painting() {
+//     let  holder = null;
+// }
+
+
+
+async function get4chanData(source, worksafeSource) {
+
+    if (ALLOW_NSFW_CHECKBOX.checked) {
+        let response =  await fetch(source);
+        let fourchanData =  await response.json(); 
+        return JSON.parse(fourchanData)
+    } else {
+        let response =  await fetch(worksafeSource);
+        let fourchanData =  await response.json(); 
+        return JSON.parse(fourchanData)
+    }
+
+
+    //needs to return both the json.parse AND the source type (whether url or worksafe)
+
+
+
+
+
+}
+
+async function getThumbnailData(source) {
+        
+
+    try{
+        const response = await fetch(source, {
+            headers: {
+                "Content-Type": "application/octet-stream",
+            },
+        });
+
+        return await response.blob();
+
+    
+    }catch(err) {
+
+        return null
+    }
+
+    
 }
 
 
+async function getFullMedia(source){
+    try {
+        const response = await fetch(source, {
+            headers: {
+                "Content-Type": "application/octet-stream",
+    
+            },
+        });
+
+
+        
+        return await response.blob(); //was FullMedia
+    
+
+    }catch(err){
+        return null;
+
+    }
+
+}
+
+
+async function PromiseAllTest() {
+
+    Promise.all([
+        get4chanData(url, worksafeURL),
+        getThumbnailData(thumbnailURL),
+        getFullMedia(mediaURL),
+    ]).then((values) => {
+        console.log(values);
+    });
+
+
+
+
+
+}
+
+
+// function paintText(usableFourChanData) {
+
+
+//     let paintName = document.createElement("div");
+//     let paintNow = document.createElement("div");
+//     let paintNo = document.createElement("div");
+//     let paintBoard = document.createElement("div");
+//     let paintFileName = document.createElement("div");
+//     let paintFsize = document.createElement("div");
+//     let paintCom = document.createElement("div");
+//     mediaAndTextFlexContainer = document.createElement("div");
+//     fileInfoFlexContainer = document.createElement("div");
+//     let postTitleFlexContainer = document.createElement("div");
+//     paintBoard.setAttribute('class',"post-container-board");
+//     paintNo.setAttribute('class',"post-container-no");
+//     paintNow.setAttribute('class',"post-container-now");
+//     paintName.setAttribute('class',"post-container-name");
+//     paintCom.setAttribute('class',"post-container-com");
+//     paintFileName.setAttribute('class',"post-container-filename");
+//     paintFsize.setAttribute('class',"post-container-fsize");
+//     mediaAndTextFlexContainer.setAttribute("class", "media-text-flex-container");
+//     fileInfoFlexContainer.setAttribute("class", "file-info-flex-container");
+//     postTitleFlexContainer.setAttribute("class", "post-title-flex-container");
+
+    
+//     if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length > 15) {
+//         let shortenedFilename =   usableFourChanData.Post.filename.substr(0,15);
+//         // console.log(shortenedFilename);
+//         paintFileName.prepend(`File: ${shortenedFilename}(...)${  usableFourChanData.Post.ext}`); //including "ext" here and only here
+
+
+    
+//     } else if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length <= 15) {
+//         let fullFilename =  usableFourChanData.Post.filename;
+//         // console.log(fullFilename);
+//         paintFileName.prepend(`File: ${fullFilename}${  usableFourChanData.Post.ext}`); //including "ext" here and only here
+
+
+//     }
+
+
+
+
+    
+
+
+//     paintFsize.prepend(usableFourChanData.Post.fsize); //might have to round. investigate 4chan format
+//     paintBoard.prepend(`/${usableFourChanData.Board}/`);
+//     paintNo.insertAdjacentHTML("afterbegin", '<a href=' + `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${usableFourChanData.Post.no}` +" target= '_blank' " + "title='See this post on 4chan.org in a new tab'" + '>' + `No.${usableFourChanData.Post.no}` + "</a>");
+//     paintNow.prepend(usableFourChanData.Post.now);
+//     paintName.prepend(usableFourChanData.Post.name);
+    
+    
+//     if (usableFourChanData.Post.com != undefined) {
+//         paintCom.insertAdjacentHTML( 'afterbegin',  usableFourChanData.Post.com);
+
+
+//     }
+
+
+//     chanLink = Array.from(paintCom.querySelectorAll(".quotelink"));
+
+
+//     if (chanLink || false) {
+
+//         // console.log(chanLink);
+//         chanLink.forEach((e) => {
+//             //console.log(e.text);
+//             let postReply = (e.text).slice(2);
+
+//             e.setAttribute("href", `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${postReply}`);
+
+//             e.setAttribute("target", "_blank");
+//             e.setAttribute("title" , "See this post on 4chan.org in a new tab");
+
+//         })
+
+    
+//     }
+
+
+    
+//     postTitleFlexContainer.append(paintName);
+//     postTitleFlexContainer.append(paintNow);
+//     postTitleFlexContainer.append(paintNo);
+
+//     if (typeof(usableFourChanData.Post.filename) !== "undefined") {
+    
+//         fileInfoFlexContainer.append(paintFileName);
+//         fileInfoFlexContainer.append(paintFsize);
+        
+    
+
+//     }
+
+
+
+//     mediaAndTextFlexContainer.append(paintCom);
+
+//     postContainer.append(mediaAndTextFlexContainer);
+//     postContainer.append(fileInfoFlexContainer);
+//     postContainer.append(postTitleFlexContainer);
+
+
+
+
+//     //media queries
+
+//     const mobileSizing = window.matchMedia('(max-width: 800px)');
+
+//     function mediaQurey(e) {
+//         if (e.matches) {
+//             //do something with the board placement
+//             postTitleFlexContainer.append(paintBoard);
+
+            
+//         }else {
+//             postContainer.append(paintBoard);
+
+//         }
+//     }
+
+//     mobileSizing.addEventListener("change", ()=> {
+//         mediaQurey(mobileSizing);
+//     });
+
+
+//     mediaQurey(mobileSizing);
+
+
+
+
+    
+
+// }
+
+// function paintTN(usableFourChanData, usableThumbnailData) {
+
+//     if (usableFourChanData.Post.tim) {
+
+//         let paintImg = document.createElement("img");
+//         paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData)); //test 
+
+//         paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
+//         paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
+//         paintImg.setAttribute("class", "post-container-thumbnail");
+//         mediaAndTextFlexContainer.append(paintImg);
+
+
+//         return paintImg;
+
+
+
+        
+
+
+
+
+//     }else {
+//         throw(err + "no thumbnail");
+//     }
+
+// }
+
+// function paintMedia(usableFourChanData, fullMedia) {
+    
+
+//     let closebtn = document.createElement("p");
+//     closebtn.append(document.createTextNode("close"));
+//     closebtn.setAttribute("class", "closebtn");
+
+//     console.log(`this is paintimg ${paintImg}`);
+
+
+
+//     paintImg.addEventListener("pointerdown", (e)=> { //temp solution to sizinf connundrum that the above event listener tries to fox - must figure out how 4chan calculates display size of user media when user media full sizes aren't used.
+//         // console.log("thumbnail is clicked u utter sucker");
+        
+
+
+        
+//         if (usableFourChanData.Post.ext == ".webm") {
+            
+
+//             fileInfoFlexContainer.append(closebtn);
+
+//             let paintVid = document.createElement("video");
+
+
+
+
+
+//             paintVid.setAttribute("src", URL.createObjectURL(fullMedia));
+//             paintVid.setAttribute("controls", " ");
+//             paintVid.setAttribute("class", "post-container-thumbnail");
+//             paintImg.replaceWith(paintVid);
+
+//         } else {
+        
+//             let paintFullImg = document.createElement("img");
+//             paintFullImg.setAttribute("src", URL.createObjectURL(fullMedia));
+//             paintFullImg.setAttribute("class", "post-container-thumbnail");
+//             paintImg.replaceWith(paintFullImg);
+//             fileInfoFlexContainer.append(closebtn);
+
+
+    
+
+//         }
+        
+
+//     })
+
+
+
+//     closebtn.addEventListener("pointerdown", (e)=> {
+//         closebtn.remove();
+//         mediaAndTextFlexContainer.children[1].replaceWith(paintImg); //1st index is second child of mediaandtextflexcontainer.
+
+//     })
+
+// }
+
+
+// let fourchanDataObject = {
+//     text: get4chanData(url, worksafeURL) ,
+//     tn: getThumbnailData(thumbnailURL),
+//     media:getFullMedia(mediaURL),
+    
+    
+// };
+
+
+
+
+// class dataObject {
+
+//     constructor(text, tn, media){
+//         this.text = get4chanData(url, worksafeURL);
+//         this.tn = getThumbnailData(thumbnailURL);
+//         this.media = getFullMedia(mediaURL);
+       
+//     }
+
+    
+
+
+//     paintText(usableFourChanData=text) {
+
+
+//         let paintName = document.createElement("div");
+//         let paintNow = document.createElement("div");
+//         let paintNo = document.createElement("div");
+//         let paintBoard = document.createElement("div");
+//         let paintFileName = document.createElement("div");
+//         let paintFsize = document.createElement("div");
+//         let paintCom = document.createElement("div");
+//         mediaAndTextFlexContainer = document.createElement("div");
+//         fileInfoFlexContainer = document.createElement("div");
+//         let postTitleFlexContainer = document.createElement("div");
+//         paintBoard.setAttribute('class',"post-container-board");
+//         paintNo.setAttribute('class',"post-container-no");
+//         paintNow.setAttribute('class',"post-container-now");
+//         paintName.setAttribute('class',"post-container-name");
+//         paintCom.setAttribute('class',"post-container-com");
+//         paintFileName.setAttribute('class',"post-container-filename");
+//         paintFsize.setAttribute('class',"post-container-fsize");
+//         mediaAndTextFlexContainer.setAttribute("class", "media-text-flex-container");
+//         fileInfoFlexContainer.setAttribute("class", "file-info-flex-container");
+//         postTitleFlexContainer.setAttribute("class", "post-title-flex-container");
+    
+        
+//         if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length > 15) {
+//             let shortenedFilename =   usableFourChanData.Post.filename.substr(0,15);
+//             // console.log(shortenedFilename);
+//             paintFileName.prepend(`File: ${shortenedFilename}(...)${  usableFourChanData.Post.ext}`); //including "ext" here and only here
+    
+    
+        
+//         } else if (usableFourChanData.Post.filename && usableFourChanData.Post.filename.length <= 15) {
+//             let fullFilename =  usableFourChanData.Post.filename;
+//             // console.log(fullFilename);
+//             paintFileName.prepend(`File: ${fullFilename}${  usableFourChanData.Post.ext}`); //including "ext" here and only here
+    
+    
+//         }
+    
+    
+    
+    
+        
+    
+    
+//         paintFsize.prepend(usableFourChanData.Post.fsize); //might have to round. investigate 4chan format
+//         paintBoard.prepend(`/${usableFourChanData.Board}/`);
+//         paintNo.insertAdjacentHTML("afterbegin", '<a href=' + `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${usableFourChanData.Post.no}` +" target= '_blank' " + "title='See this post on 4chan.org in a new tab'" + '>' + `No.${usableFourChanData.Post.no}` + "</a>");
+//         paintNow.prepend(usableFourChanData.Post.now);
+//         paintName.prepend(usableFourChanData.Post.name);
+        
+        
+//         if (usableFourChanData.Post.com != undefined) {
+//             paintCom.insertAdjacentHTML( 'afterbegin',  usableFourChanData.Post.com);
+    
+    
+//         }
+    
+    
+//         chanLink = Array.from(paintCom.querySelectorAll(".quotelink"));
+    
+    
+//         if (chanLink || false) {
+    
+//             // console.log(chanLink);
+//             chanLink.forEach((e) => {
+//                 //console.log(e.text);
+//                 let postReply = (e.text).slice(2);
+    
+//                 e.setAttribute("href", `https://boards.4chan.org/${usableFourChanData.Board}/thread/${usableFourChanData.OP.no}/#p${postReply}`);
+    
+//                 e.setAttribute("target", "_blank");
+//                 e.setAttribute("title" , "See this post on 4chan.org in a new tab");
+    
+//             })
+    
+        
+//         }
+    
+    
+        
+//         postTitleFlexContainer.append(paintName);
+//         postTitleFlexContainer.append(paintNow);
+//         postTitleFlexContainer.append(paintNo);
+    
+//         if (typeof(usableFourChanData.Post.filename) !== "undefined") {
+        
+//             fileInfoFlexContainer.append(paintFileName);
+//             fileInfoFlexContainer.append(paintFsize);
+            
+        
+    
+//         }
+    
+    
+    
+//         mediaAndTextFlexContainer.append(paintCom);
+    
+//         postContainer.append(mediaAndTextFlexContainer);
+//         postContainer.append(fileInfoFlexContainer);
+//         postContainer.append(postTitleFlexContainer);
+    
+    
+    
+    
+//         //media queries
+    
+//         const mobileSizing = window.matchMedia('(max-width: 800px)');
+    
+//         function mediaQurey(e) {
+//             if (e.matches) {
+//                 //do something with the board placement
+//                 postTitleFlexContainer.append(paintBoard);
+    
+                
+//             }else {
+//                 postContainer.append(paintBoard);
+    
+//             }
+//         }
+    
+//         mobileSizing.addEventListener("change", ()=> {
+//             mediaQurey(mobileSizing);
+//         });
+    
+    
+//         mediaQurey(mobileSizing);
+    
+    
+    
+    
+        
+    
+//     }
+    
+//     paintTN(usableFourChanData=text, usableThumbnailData = tn) {
+    
+//         if (usableFourChanData.Post.tim) {
+    
+//             let paintImg = document.createElement("img");
+//             paintImg.setAttribute("src", URL.createObjectURL(usableThumbnailData)); //test 
+    
+//             paintImg.setAttribute("height", `${usableFourChanData.Post.tn_h}`); //tn_h and _w stands for thumbnail height and width respectively
+//             paintImg.setAttribute("width", `${usableFourChanData.Post.tn_w}`);
+//             paintImg.setAttribute("class", "post-container-thumbnail");
+//             mediaAndTextFlexContainer.append(paintImg);
+    
+    
+//             return paintImg;
+    
+    
+    
+            
+    
+    
+    
+    
+//         }else {
+//             throw(err + "no thumbnail");
+//         }
+    
+//     }
+    
+//     paintMedia(usableFourChanData=text, fullMedia=media) {
+        
+    
+//         let closebtn = document.createElement("p");
+//         closebtn.append(document.createTextNode("close"));
+//         closebtn.setAttribute("class", "closebtn");
+    
+//         console.log(`this is paintimg ${paintImg}`);
+    
+    
+    
+//         paintImg.addEventListener("pointerdown", (e)=> { //temp solution to sizinf connundrum that the above event listener tries to fox - must figure out how 4chan calculates display size of user media when user media full sizes aren't used.
+//             // console.log("thumbnail is clicked u utter sucker");
+            
+    
+    
+            
+//             if (usableFourChanData.Post.ext == ".webm") {
+                
+    
+//                 fileInfoFlexContainer.append(closebtn);
+    
+//                 let paintVid = document.createElement("video");
+    
+    
+    
+    
+    
+//                 paintVid.setAttribute("src", URL.createObjectURL(fullMedia));
+//                 paintVid.setAttribute("controls", " ");
+//                 paintVid.setAttribute("class", "post-container-thumbnail");
+//                 paintImg.replaceWith(paintVid);
+    
+//             } else {
+            
+//                 let paintFullImg = document.createElement("img");
+//                 paintFullImg.setAttribute("src", URL.createObjectURL(fullMedia));
+//                 paintFullImg.setAttribute("class", "post-container-thumbnail");
+//                 paintImg.replaceWith(paintFullImg);
+//                 fileInfoFlexContainer.append(closebtn);
+    
+    
+        
+    
+//             }
+            
+    
+//         })
+    
+    
+    
+//         closebtn.addEventListener("pointerdown", (e)=> {
+//             closebtn.remove();
+//             mediaAndTextFlexContainer.children[1].replaceWith(paintImg); //1st index is second child of mediaandtextflexcontainer.
+    
+//         })
+    
+//     }
+    
+
+
+
+// }
 
 ///////////////////////////////////////////
 
 
 ////////old///////
+
+
+
+
+
 async function pingProxy(source, worksafeSource) {
     //while this solution works, the latency is terrible. I think a better way of doing this is to implement
     //some sort of flag sent with the request that lets the server know the state of the checkbox
@@ -1083,16 +1645,33 @@ async function getMedia(source) {
 
 
 
-// async function NewPost(url=url, worksafeURL=worksafeURL, thumbnailURL=thumbnailURL, mediaURL=mediaURL, usableFourChanData) {
-//     // let usableFourChanData = get4chanData(url, worksafeURL); //this shoule be the value of the return statesments in the mentioned functioned.need to destructure to get both json.pasre NAD source type.
-//     paint4chanData(usableFourChanData);
-//     paintFullMedia(fullMedia);
+// async function NewPost(url=url, worksafeURL=worksafeURL, thumbnailURL=thumbnailURL, mediaURL=mediaURL){
+   
+   
+   
+//    pingProxy(url, worksafeURL);
+//    getThumbnailArrayBufferBinary(thumbnailURL);
+//    getMedia(mediaURL);
+
+
 // }
 
 
 console.log(window.location);
 
-getting(url, worksafeURL, thumbnailURL,mediaURL );
+PromiseAllTest();
+
+// let newPost = new dataObject();
+// newPost.paintText(newPost.text, newP);
+
+
+
+
+// console.log(fourchanDataObject);
+
+
+
+// getting(url, worksafeURL, thumbnailURL,mediaURL );
 
 
 
@@ -1125,7 +1704,7 @@ newPostBtn.addEventListener("pointerup", (e) => {
 
     // fullMediaAspects(thumbnailAspects(textData()));
 
-    getting(url, worksafeURL, thumbnailURL,mediaURL );
+    // getting(url, worksafeURL, thumbnailURL,mediaURL );
 
 
     
