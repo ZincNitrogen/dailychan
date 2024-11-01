@@ -510,13 +510,6 @@ app.listen(PORT, () => {
 });
 
 
-//get image/gif from endpoint: thumbnails and full files (headers are content type: application/octet-stream <--try this one first, image/jpeg, image/png, image/gif, video/webm , audio/weba, /swf)
-//add it to combinedjson to pipe to front end
-//fornt end recievd it and parses out file
-//add cs class to it to put it in its place
-//paint it in post container with everything else
-
-
 
 
 //for 4chan post: "Hey anon, is my plebsite cool?"
