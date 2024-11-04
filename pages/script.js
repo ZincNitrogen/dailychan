@@ -317,7 +317,7 @@ function paintText(usableFourChanData) {
 
     return {
         MTFC: mediaAndTextFlexContainer,
-        FITC: fileInfoFlexContainer
+        FIFC: fileInfoFlexContainer
     
     }
     
@@ -464,7 +464,7 @@ async function PromiseAllTest() {
         let paintTextOutputObject = paintText(text);
 
         let mediaAndTextFlexContainer = paintTextOutputObject.MTFC;
-        let fileInfoFlexContainer = paintTextOutputObject.FITC;
+        let fileInfoFlexContainer = paintTextOutputObject.FIFC;
 
         let paintImg = paintTN(text, thumbnail, mediaAndTextFlexContainer);
         paintMedia(text, media, paintImg, fileInfoFlexContainer, mediaAndTextFlexContainer);
@@ -494,7 +494,16 @@ PromiseAllTest();
 
 newPostBtn.addEventListener("pointerup", (e) => {
     containerDeletion();
-    PromiseAllTest();
+
+    //do...while loop or regular while loop? Show loading image WHILE promisealltest is not resolved.
+
+
+
+    PromiseAllTest(); //this is an object not a promise.
+
+
+
+
 })
 
 
