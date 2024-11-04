@@ -499,5 +499,4 @@ newPostBtn.addEventListener("pointerup", (e) => {
 
 
 //TODO: Some sort of loading indicator for lag time between posts. Thinging either a balnd loading design or a pepe design
-//TODO: refactor backend
 //TODO: Move new post button higher up on mobile layout

@@ -277,9 +277,6 @@ function get4chanBundleWorksafe() {
                 OP: randomThreadDecision,
             };
 
-
-            // saferes.json(JSON.stringify(combinedJson));
-
         })
         .catch((err) => {
 
@@ -305,17 +302,9 @@ function get4chanBundleWorksafe() {
         })
         .finally(() => {
 
-           
-
             console.log("=========FINAL=========");
             console.log(combinedJson);
 
-
-
-       
-        
-
-            
         });
 
         
