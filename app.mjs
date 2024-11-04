@@ -1,11 +1,11 @@
-import express from "express";
+import express, { json } from "express";
 import axios from "axios";
 
 const app = express();
 const PORT = 8000;
 const HOST = "localhost";
 let date = new Date().toUTCString();
-let combinedJson;
+
 
 let onlyBoard = null;
 let aRandomPost;
@@ -142,7 +142,7 @@ function get4chanBundle() {
 
             //console.log(onlyBoard, typeof(onlyBoard));
             //console.log(aRandomPost, typeof(aRandomPost)); 
-            combinedJson = {
+            let combinedJson = {
                 Board: onlyBoard,
                 Post: aRandomPost,
                 OP: randomThreadDecision,
@@ -197,10 +197,7 @@ function get4chanBundle() {
 }
 
 
-
-
-
-function get4chanBundleWorksafe() {
+function get4chanBundleWorksafe(saferes) {
    
 
 
@@ -352,8 +349,22 @@ function get4chanBundleWorksafe() {
 
   
         })
+        .then((res) => {
+            console.log(aRandomPost, typeof(aRandomPost)); 
+            console.log(`final board: ${onlyBoard}`);
+            console.log(onlyBoard);
 
-   
+            let combinedJson = {
+                Board: onlyBoard,
+                Post: aRandomPost,
+                OP: randomThreadDecision,
+            };
+
+            console.log("=========new=========")
+
+            saferes.json(JSON.stringify(combinedJson));
+
+        })
         .catch((err) => {
 
             if ((typeof(aRandomPost) === "undefined") || (typeof(onlyBoard) === 'undefined')) {
@@ -374,32 +385,33 @@ function get4chanBundleWorksafe() {
 
             
         })
-        .finally(() => {
+        // .finally((saferes) => {
 
-            console.log(aRandomPost, typeof(aRandomPost)); 
-            console.log(`final board: ${onlyBoard}`);
-            console.log(onlyBoard);
-            combinedJson = {
-                Board: onlyBoard,
-                Post: aRandomPost,
-                OP: randomThreadDecision,
-            };
+        //     console.log(aRandomPost, typeof(aRandomPost)); 
+        //     console.log(`final board: ${onlyBoard}`);
+        //     console.log(onlyBoard);
+        //     let combinedJson = {
+        //         Board: onlyBoard,
+        //         Post: aRandomPost,
+        //         OP: randomThreadDecision,
+        //     };
 
-            console.log("=========new=========")
+        //     console.log("=========new=========")
+
+        //     saferes.json(JSON.stringify(combinedJson));
+
        
         
 
             
-        });
+        // });
 
         
         //console.log(combinedJson);
-    return combinedJson;
+    // return combinedJson;
         
 
 }
-
-
 
 
 function getThumbnailTwo(imageresponse) {
@@ -472,15 +484,26 @@ function getFullUserMedia(mediaresponse) {
 
 
 
+
+
 app.get("/ServerSideRequest", (req, res) => {
+    
     res.json(JSON.stringify(get4chanBundle()));
 
     
 })
 
-app.get("/WorksafeServerSideRequest", (req, res) => {
-    res.json(JSON.stringify(get4chanBundleWorksafe()));
+app.get("/WorksafeServerSideRequest", (req, saferes) => {
+    // res.json(JSON.stringify(get4chanBundleWorksafe()));
+
+    
+    get4chanBundleWorksafe(saferes);
+    
+
+    
 })
+
+
 
 
 
