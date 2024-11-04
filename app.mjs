@@ -6,7 +6,7 @@ const PORT = 8000;
 const HOST = "localhost";
 let date = new Date().toUTCString();
 
-
+let combinedJson;
 let onlyBoard = null;
 let aRandomPost;
 
@@ -94,7 +94,7 @@ function get4chanBundle() {
             // console.log(res.data);
 
             // console.log(`<<<<<<<<<<<<<<<<A RANDOM POST>>>>>>>>>>>>>>>>`) 
-            // console.log(aRandomPost);
+            console.log(aRandomPost);
            
             return aRandomPost;
 
@@ -117,6 +117,25 @@ function get4chanBundle() {
 
 
         })
+        .then(()=> {
+            combinedJson = {
+                Board: onlyBoard,
+                Post: aRandomPost,
+                OP: randomThreadDecision,
+            };
+        })
+        // .then((res)=> {
+        //     let combinedJson = {
+        //         Board: onlyBoard,
+        //         Post: aRandomPost,
+        //         OP: randomThreadDecision,
+        //         //Thumbnail: thumbnail,
+        //     };
+
+        //     nsfwres.json(JSON.stringify(combinedJson));
+
+
+        // })
         // .then((res) => {
 
 
@@ -142,14 +161,15 @@ function get4chanBundle() {
 
             //console.log(onlyBoard, typeof(onlyBoard));
             //console.log(aRandomPost, typeof(aRandomPost)); 
-            let combinedJson = {
-                Board: onlyBoard,
-                Post: aRandomPost,
-                OP: randomThreadDecision,
-                //Thumbnail: thumbnail,
-            };
+            // combinedJson = {
+            //     Board: onlyBoard,
+            //     Post: aRandomPost,
+            //     OP: randomThreadDecision,
+            //     //Thumbnail: thumbnail,
+            // };
 
             console.log("=========new=========")
+            console.log(combinedJson);
             //console.log(onlyBoard);
             //console.log(aRandomPost);
             //console.log(combinedJson);
@@ -197,7 +217,7 @@ function get4chanBundle() {
 }
 
 
-function get4chanBundleWorksafe(saferes) {
+function get4chanBundleWorksafe() {
    
 
 
@@ -354,7 +374,7 @@ function get4chanBundleWorksafe(saferes) {
             console.log(`final board: ${onlyBoard}`);
             console.log(onlyBoard);
 
-            let combinedJson = {
+            combinedJson = {
                 Board: onlyBoard,
                 Post: aRandomPost,
                 OP: randomThreadDecision,
@@ -362,7 +382,7 @@ function get4chanBundleWorksafe(saferes) {
 
             console.log("=========new=========")
 
-            saferes.json(JSON.stringify(combinedJson));
+            // saferes.json(JSON.stringify(combinedJson));
 
         })
         .catch((err) => {
@@ -408,7 +428,7 @@ function get4chanBundleWorksafe(saferes) {
 
         
         //console.log(combinedJson);
-    // return combinedJson;
+    return combinedJson;
         
 
 }
@@ -486,18 +506,20 @@ function getFullUserMedia(mediaresponse) {
 
 
 
-app.get("/ServerSideRequest", (req, res) => {
+app.get("/ServerSideRequest", (req, nsfwres) => {
     
-    res.json(JSON.stringify(get4chanBundle()));
+    nsfwres.json(JSON.stringify(get4chanBundle()));
+
+    // get4chanBundle(nsfwres);
 
     
 })
 
 app.get("/WorksafeServerSideRequest", (req, saferes) => {
-    // res.json(JSON.stringify(get4chanBundleWorksafe()));
+    saferes.json(JSON.stringify(get4chanBundleWorksafe()));
 
     
-    get4chanBundleWorksafe(saferes);
+    // get4chanBundleWorksafe(saferes);
     
 
     
