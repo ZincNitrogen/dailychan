@@ -98,23 +98,6 @@ function get4chanBundle() {
            
             return aRandomPost;
 
-            // return axios.get(`http://i.4cdn.org/${onlyBoard}/${aRandomPost.tim}s.jpg`, {
-            //     //responseType: "blob",
-            //     headers: {"Content-Type": "image/jpeg",
-            //         "Accept": "image/jpeg",
-
-            //     },
-            //     // headers: {"Content-Type" : "image/jpeg"},
-            //     // responseType: "blob",
-
-            //     //headers: {"Content-Type": "application/json"},
-            //     //headers: {"Content-Type": "*/*"},
-            //     //headers: {"Content-Type": "application/x-www-form-urlencoded"},
-            //     //headers: {"Content-Type": "application/octet-stream"},
-            //     //NOTE: [4chan image ID] is the "tim" property of the "aRandomPost" object. This is not documented.
-            //     //this url serves thumbnails!!!
-            // }); 
-
 
         })
         .then(()=> {
@@ -124,30 +107,7 @@ function get4chanBundle() {
                 OP: randomThreadDecision,
             };
         })
-        // .then((res)=> {
-        //     let combinedJson = {
-        //         Board: onlyBoard,
-        //         Post: aRandomPost,
-        //         OP: randomThreadDecision,
-        //         //Thumbnail: thumbnail,
-        //     };
 
-        //     nsfwres.json(JSON.stringify(combinedJson));
-
-
-        // })
-        // .then((res) => {
-
-
-        //     //console.log(res);
-
-
-        //     console.log(res.headers);
-        //     console.log(res.request);
-        //     //console.log(typeof(res.data));
-        //     thumbnail = (res.data);
-        //     console.log(thumbnail);
-        // })
         .catch((err) => {
 
              if ((typeof(aRandomPost) === "undefined") || (typeof(onlyBoard) === 'undefined')) {
@@ -159,58 +119,15 @@ function get4chanBundle() {
         })
         .finally(() => {
 
-            //console.log(onlyBoard, typeof(onlyBoard));
-            //console.log(aRandomPost, typeof(aRandomPost)); 
-            // combinedJson = {
-            //     Board: onlyBoard,
-            //     Post: aRandomPost,
-            //     OP: randomThreadDecision,
-            //     //Thumbnail: thumbnail,
-            // };
-
-            console.log("=========new=========")
-            console.log(combinedJson);
-            //console.log(onlyBoard);
-            //console.log(aRandomPost);
-            //console.log(combinedJson);
-
-            // app.get("/ServerSideRequest", (req, res) => {
-
-            //     // onlyBoard = null;
-            //     // aRandomPost = null
-              
-            //     console.log("=========old=========")
-            //     console.log(onlyBoard);
-            //     console.log(aRandomPost);
-            //     console.log(combinedJson); 
-             
-            //     res.json(JSON.stringify(combinedJson));
-            //     // delete combinedJson.Board;
-            //     // delete combinedJson.Post;
-
-            //     console.log(get4chanBundle());
-
-
-
-            // });
-            
-          
-
-
-
     
-
-            //combine the above two in a json object
-            //send these two variables to the front end from here
-            //
-           
-
+            console.log("=========FINAL=========")
+            console.log(combinedJson);
+          
 
             
         });
 
         
-        //console.log(combinedJson);
         return combinedJson;
         
 
@@ -268,32 +185,12 @@ function get4chanBundleWorksafe() {
                     
                 }
                 
-                
-               
-                
-                
 
             } while (isWorksafe == 0);
           
 
-            
-
-
-
-
-
             console.log(onlyBoard);
             console.log("checkpoint three");
-
-
-
-            
-            
-
-
-
-
-
 
             return axios.get(`http://a.4cdn.org/${onlyBoard}/catalog.json`, {
                 headers: {"Content-Type": "application/json"},
@@ -354,16 +251,16 @@ function get4chanBundleWorksafe() {
             let randomPostNumber =  Math.floor(Math.random()*(numberOfPosts));
             aRandomPost = res.data.posts[randomPostNumber];
 
-        
+        //>>>>>>>>>>>>>>>>.WEBM FILTER FOR DEVS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             // let webmFilterErr = new Error("not webm...Retrying"); //webm filter
 
             // if (aRandomPost.ext != ".webm"){//webm filter
             //     throw(webmFilterErr);
 
-
-        
     
             // }
+
+        //>>>>>>>>>>>>>>WEBM FILTER FOR DEVS END>>>>>>>>>>>>>>>>>>>>>>>>>>>    
            
             return aRandomPost;
 
@@ -380,7 +277,6 @@ function get4chanBundleWorksafe() {
                 OP: randomThreadDecision,
             };
 
-            console.log("=========new=========")
 
             // saferes.json(JSON.stringify(combinedJson));
 
@@ -392,7 +288,8 @@ function get4chanBundleWorksafe() {
                 get4chanBundleWorksafe();             
             }
 
-          
+         //>>>>>>>>>>>>>>>>.WEBM FILTER FOR DEVS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
             // if (aRandomPost.ext != ".webm"){//webm filter
             //     console.log("not webm...Retrying");
                 
@@ -402,39 +299,33 @@ function get4chanBundleWorksafe() {
     
             // }
            
+        //>>>>>>>>>>>>>>WEBM FILTER FOR DEVS END>>>>>>>>>>>>>>>>>>>>>>>>>>>    
 
             
         })
-        // .finally((saferes) => {
+        .finally(() => {
 
-        //     console.log(aRandomPost, typeof(aRandomPost)); 
-        //     console.log(`final board: ${onlyBoard}`);
-        //     console.log(onlyBoard);
-        //     let combinedJson = {
-        //         Board: onlyBoard,
-        //         Post: aRandomPost,
-        //         OP: randomThreadDecision,
-        //     };
+           
 
-        //     console.log("=========new=========")
+            console.log("=========FINAL=========");
+            console.log(combinedJson);
 
-        //     saferes.json(JSON.stringify(combinedJson));
+
 
        
         
 
             
-        // });
+        });
 
         
-        //console.log(combinedJson);
     return combinedJson;
         
 
 }
 
 
-function getThumbnailTwo(imageresponse) {
+function getThumbnail(imageresponse) {
 
 
     axios
@@ -507,33 +398,15 @@ function getFullUserMedia(mediaresponse) {
 
 
 app.get("/ServerSideRequest", (req, nsfwres) => {
-    
     nsfwres.json(JSON.stringify(get4chanBundle()));
-
-    // get4chanBundle(nsfwres);
-
-    
 })
 
 app.get("/WorksafeServerSideRequest", (req, saferes) => {
     saferes.json(JSON.stringify(get4chanBundleWorksafe()));
-
-    
-    // get4chanBundleWorksafe(saferes);
-    
-
-    
 })
 
-
-
-
-
 app.get("/ServeThumbnail", (imagerequest, imageresponse) =>{
-   getThumbnailTwo(imageresponse);
-
-
-    
+   getThumbnail(imageresponse);
 })
 
 
