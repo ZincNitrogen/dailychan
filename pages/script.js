@@ -192,22 +192,7 @@ async function getFullMedia(source){
 
 function paintText(usableFourChanData) {
 
-    //painting post container dynamically
-
-    // let postContainer = document.createElement("section");
-    // postContainer.setAttribute("class", "post-container");
-    // main.prepend(postContainer);
-    // let postContainerChildren = postContainer.childNodes;
-
-
-
-
-
-
-
-    //--------------------------------
-
-
+ 
 
     let chanLink = null;
     let paintName = document.createElement("div");
@@ -375,7 +360,7 @@ function paintTN(usableFourChanData, usableThumbnailData, mediaAndTextFlexContai
 
     }else {
         paintImg = null;
-        console.log ("no thumbnail");
+        // console.log ("no thumbnail");
         return paintImg;
     }
 
@@ -434,7 +419,7 @@ function paintMedia(usableFourChanData, fullMedia, paintImg, fileInfoFlexContain
     
 
     }catch(error) {
-        console.log("there is no media");
+        // console.log("there is no media");
     }
   
 
@@ -451,33 +436,11 @@ function paintMedia(usableFourChanData, fullMedia, paintImg, fileInfoFlexContain
 
 function containerDeletion() {
 
-    // postContainer.remove();
   
     for (let i = postContainerChildren.length -1; i >=0; i--){
-
-        console.log(i);
         postContainerChildren[i].remove();
     }
 
-
-
-    // console.log(postContainerChildren);
-    
-    // let postContainerChildrenArray = Array.from(postContainerChildren);
-
-    // console.log(postContainerChildrenArray);
-
-    // for (let element of postContainerChildrenArray){
-    //     if (element !== loadingIndicator) {
-    //         element.remove();
-    //     }
-    // }
-
- 
-
-
-
-    
 
 }
 
@@ -494,11 +457,11 @@ async function PromiseAllTest() { //async doesn't need to be here?
         let text = null;
         let thumbnail = null;
         let media = null;
-        console.log(values);
+        // console.log(values);
         [text, thumbnail, media] = values;
-        console.log(text);
-        console.log(thumbnail);
-        console.log(media);
+        // console.log(text);
+        // console.log(thumbnail);
+        // console.log(media);
 
         containerDeletion();
 
@@ -511,53 +474,10 @@ async function PromiseAllTest() { //async doesn't need to be here?
         let paintImg = paintTN(text, thumbnail, mediaAndTextFlexContainer);
         paintMedia(text, media, paintImg, fileInfoFlexContainer, mediaAndTextFlexContainer);
 
-
-        // newPostBtn.addEventListener("pointerup", (e) => {
-        //     containerDeletion(postContainer);
-        //     PromiseAllTest();
-
-        // }) 
-
-        // newPostBtn.addEventListener("pointerup", (e) => {
-        //     containerDeletion(postContainer);
-        //     PromiseAllTest();
-
-        // }) 
-
-        
-        
-
     }).catch((err) => {
         console.log(err);
     });
     
-    // .finally(()=>{
-
-        
-    //     let postContainer = paintTextOutputObject.pC;
-
-    //     newPostBtn.addEventListener("pointerup", (e) => {
-    //         containerDeletion(postContainer);
-    //         PromiseAllTest();
-
-    //     }) 
-
-    // });
-    
-
-    
-
-
-    //LOADING INDICATOR 
-
-    
-    
-
-
-
-
-
-
 }
 
 function loading() {
@@ -572,26 +492,9 @@ function loading() {
 
 }
 
-console.log(window.location);
+// console.log(window.location);
 
-// let PromiseAllOutputObject = PromiseAllTest();
-
-// let postContainer = PromiseAllOutputObject.postContainer;
-// let postContainerChildren = PromiseAllOutputObject.postContainerChildren;
-
-
-
-// let output = PromiseAllTest();
-// console.log(output);
-
-
-
-
-// newPostBtn.addEventListener("pointerup", (e) => {
-//     containerDeletion(output);
-//     PromiseAllTest();
-
-// });            
+     
 
 loading();
 PromiseAllTest();
@@ -602,28 +505,3 @@ newPostBtn.addEventListener("pointerup", (e) => {
     PromiseAllTest();
 
 }) 
-
-
-
-
-// newPostBtn.addEventListener("pointerup", (e) => {
-//     containerDeletion(postContainer, postContainerChildren);
-
-//     //do...while loop or regular while loop? Show loading image WHILE promisealltest is not resolved.
-//     //can't access promise value while it's happening AND concurrently preferentially choose to do something else, so I have to make the loading indicator
-//     //implicitly understand that it can exist only if there is nothing in the containers place, and it will leave once the container is there.
-
-
-//     let PromiseAllOutputObject = PromiseAllTest(); //this is an object not a promise.
-
-//     let postContainer = PromiseAllOutputObject.postContainer;
-//     let postContainerChildren = PromiseAllOutputObject.postContainerChildren;
-
-
-
-
-// })
-
-
-//TODO: Some sort of loading indicator for lag time between posts. Thinging either a balnd loading design or a pepe design
-//TODO: Move new post button higher up on mobile layout
