@@ -22,8 +22,7 @@ let anontismOption = document.querySelector(`#AnontismOption`);
 
 
 
-
-// const postContainer = document.querySelector('.post-container');
+let postContainer = document.querySelector(".post-container");
 const main = document.querySelector("main");
 const baseLocation = window.location;
 const url = `${baseLocation}ServerSideRequest`;
@@ -35,18 +34,11 @@ const mediaURL = `${baseLocation}ServeFullMedia`;
 
 const newPostBtn = document.querySelector(`.btn`);
 const ALLOW_NSFW_CHECKBOX = document.querySelector('#allownsfw');
-// let postContainerChildren = postContainer.childNodes;
+let postContainerChildren = postContainer.childNodes;
 
 
 
-//LOADING INDICATOR 
-// let loadingIndicator = docuement.createElement("p");
-// let loadingText = document.createTextNode("loading");
 
-// loadingIndicator.append(loadingText);
-//append loading indicator in body.
-
-let loadingIndicator = document.querySelector(".loading");
 
 
 // DEFAULT THEME
@@ -202,10 +194,10 @@ function paintText(usableFourChanData) {
 
     //painting post container dynamically
 
-    let postContainer = document.createElement("section");
-    postContainer.setAttribute("class", "post-container");
-    main.prepend(postContainer);
-    let postContainerChildren = postContainer.childNodes;
+    // let postContainer = document.createElement("section");
+    // postContainer.setAttribute("class", "post-container");
+    // main.prepend(postContainer);
+    // let postContainerChildren = postContainer.childNodes;
 
 
 
@@ -346,10 +338,8 @@ function paintText(usableFourChanData) {
 
     return {
         MTFC: mediaAndTextFlexContainer,
-        FIFC: fileInfoFlexContainer,
-        pC: postContainer,
-        pCC: postContainerChildren
-    
+        FIFC: fileInfoFlexContainer
+
     }
     
 
@@ -358,6 +348,7 @@ function paintText(usableFourChanData) {
 
 
 }
+
 
 
 function paintTN(usableFourChanData, usableThumbnailData, mediaAndTextFlexContainer) {
@@ -457,15 +448,16 @@ function paintMedia(usableFourChanData, fullMedia, paintImg, fileInfoFlexContain
 }
 
 
-function containerDeletion(postContainer) {
 
-    postContainer.remove();
+function containerDeletion() {
+
+    // postContainer.remove();
   
-    // for (let i = postContainerChildren.length -1; i >=0; i--){
+    for (let i = postContainerChildren.length -1; i >=0; i--){
 
-    //     console.log(i);
-    //     postContainerChildren[i].remove();
-    // }
+        console.log(i);
+        postContainerChildren[i].remove();
+    }
 
 
 
@@ -490,14 +482,15 @@ function containerDeletion(postContainer) {
 }
 
 
+
 async function PromiseAllTest() { //async doesn't need to be here?
-    // let postContainer=null; 
-    // let postContainerChildren = null;
     Promise.all([
         get4chanData(url, worksafeURL),
         getThumbnailData(thumbnailURL),
         getFullMedia(mediaURL),
     ]).then((values) => {
+
+     
         let text = null;
         let thumbnail = null;
         let media = null;
@@ -507,14 +500,14 @@ async function PromiseAllTest() { //async doesn't need to be here?
         console.log(thumbnail);
         console.log(media);
 
+        containerDeletion();
 
         let paintTextOutputObject = paintText(text);
 
         let mediaAndTextFlexContainer = paintTextOutputObject.MTFC;
         let fileInfoFlexContainer = paintTextOutputObject.FIFC;
-        let postContainer = paintTextOutputObject.pC;
-        // let postContainerChildren = paintTextOutputObject.pCC;
 
+        
         let paintImg = paintTN(text, thumbnail, mediaAndTextFlexContainer);
         paintMedia(text, media, paintImg, fileInfoFlexContainer, mediaAndTextFlexContainer);
 
@@ -525,11 +518,11 @@ async function PromiseAllTest() { //async doesn't need to be here?
 
         // }) 
 
-        newPostBtn.addEventListener("pointerup", (e) => {
-            containerDeletion(postContainer);
-            PromiseAllTest();
+        // newPostBtn.addEventListener("pointerup", (e) => {
+        //     containerDeletion(postContainer);
+        //     PromiseAllTest();
 
-        }) 
+        // }) 
 
         
         
@@ -550,16 +543,34 @@ async function PromiseAllTest() { //async doesn't need to be here?
     //     }) 
 
     // });
-
+    
 
     
+
+
+    //LOADING INDICATOR 
+
+    
+    
+
+
 
 
 
 
 }
 
+function loading() {
 
+    let loadingIndicator = document.createElement("p");
+    let loadingText = document.createTextNode("loading...");
+    loadingIndicator.append(loadingText);
+    postContainer.prepend(loadingIndicator);
+
+
+
+
+}
 
 console.log(window.location);
 
@@ -582,8 +593,17 @@ console.log(window.location);
 
 // });            
 
-
+loading();
 PromiseAllTest();
+
+newPostBtn.addEventListener("pointerup", (e) => {
+    containerDeletion();
+    loading();
+    PromiseAllTest();
+
+}) 
+
+
 
 
 // newPostBtn.addEventListener("pointerup", (e) => {
