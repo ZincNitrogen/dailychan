@@ -714,6 +714,11 @@ footer {
     margin: 0.08rem;
 }
 
+.loading {
+    display: none;
+    
+}
+
 
 @media (max-width: 800px) {
     /* -header

@@ -23,7 +23,8 @@ let anontismOption = document.querySelector(`#AnontismOption`);
 
 
 
-const postContainer = document.querySelector('.post-container');
+// const postContainer = document.querySelector('.post-container');
+const main = document.querySelector("main");
 const baseLocation = window.location;
 const url = `${baseLocation}ServerSideRequest`;
 const worksafeURL = `${baseLocation}WorksafeServerSideRequest`;
@@ -34,7 +35,18 @@ const mediaURL = `${baseLocation}ServeFullMedia`;
 
 const newPostBtn = document.querySelector(`.btn`);
 const ALLOW_NSFW_CHECKBOX = document.querySelector('#allownsfw');
-let postContainerChildren = postContainer.childNodes;
+// let postContainerChildren = postContainer.childNodes;
+
+
+
+//LOADING INDICATOR 
+// let loadingIndicator = docuement.createElement("p");
+// let loadingText = document.createTextNode("loading");
+
+// loadingIndicator.append(loadingText);
+//append loading indicator in body.
+
+let loadingIndicator = document.querySelector(".loading");
 
 
 // DEFAULT THEME
@@ -188,6 +200,23 @@ async function getFullMedia(source){
 
 function paintText(usableFourChanData) {
 
+    //painting post container dynamically
+
+    let postContainer = document.createElement("section");
+    postContainer.setAttribute("class", "post-container");
+    main.prepend(postContainer);
+    let postContainerChildren = postContainer.childNodes;
+
+
+
+
+
+
+
+    //--------------------------------
+
+
+
     let chanLink = null;
     let paintName = document.createElement("div");
     let paintNow = document.createElement("div");
@@ -317,7 +346,9 @@ function paintText(usableFourChanData) {
 
     return {
         MTFC: mediaAndTextFlexContainer,
-        FIFC: fileInfoFlexContainer
+        FIFC: fileInfoFlexContainer,
+        pC: postContainer,
+        pCC: postContainerChildren
     
     }
     
@@ -426,16 +457,31 @@ function paintMedia(usableFourChanData, fullMedia, paintImg, fileInfoFlexContain
 }
 
 
-function containerDeletion() {
+function containerDeletion(postContainer) {
 
+    postContainer.remove();
   
+    // for (let i = postContainerChildren.length -1; i >=0; i--){
 
-    for (let i = postContainerChildren.length -1; i >=0; i--){
-        postContainerChildren[i].remove();
-    }
+    //     console.log(i);
+    //     postContainerChildren[i].remove();
+    // }
 
 
 
+    // console.log(postContainerChildren);
+    
+    // let postContainerChildrenArray = Array.from(postContainerChildren);
+
+    // console.log(postContainerChildrenArray);
+
+    // for (let element of postContainerChildrenArray){
+    //     if (element !== loadingIndicator) {
+    //         element.remove();
+    //     }
+    // }
+
+ 
 
 
 
@@ -444,9 +490,9 @@ function containerDeletion() {
 }
 
 
-async function PromiseAllTest() {
-  
-
+async function PromiseAllTest() { //async doesn't need to be here?
+    // let postContainer=null; 
+    // let postContainerChildren = null;
     Promise.all([
         get4chanData(url, worksafeURL),
         getThumbnailData(thumbnailURL),
@@ -461,24 +507,52 @@ async function PromiseAllTest() {
         console.log(thumbnail);
         console.log(media);
 
+
         let paintTextOutputObject = paintText(text);
 
         let mediaAndTextFlexContainer = paintTextOutputObject.MTFC;
         let fileInfoFlexContainer = paintTextOutputObject.FIFC;
+        let postContainer = paintTextOutputObject.pC;
+        // let postContainerChildren = paintTextOutputObject.pCC;
 
         let paintImg = paintTN(text, thumbnail, mediaAndTextFlexContainer);
         paintMedia(text, media, paintImg, fileInfoFlexContainer, mediaAndTextFlexContainer);
 
 
+        // newPostBtn.addEventListener("pointerup", (e) => {
+        //     containerDeletion(postContainer);
+        //     PromiseAllTest();
 
+        // }) 
 
+        newPostBtn.addEventListener("pointerup", (e) => {
+            containerDeletion(postContainer);
+            PromiseAllTest();
 
+        }) 
 
+        
+        
 
     }).catch((err) => {
         console.log(err);
     });
+    
+    // .finally(()=>{
 
+        
+    //     let postContainer = paintTextOutputObject.pC;
+
+    //     newPostBtn.addEventListener("pointerup", (e) => {
+    //         containerDeletion(postContainer);
+    //         PromiseAllTest();
+
+    //     }) 
+
+    // });
+
+
+    
 
 
 
@@ -489,22 +563,46 @@ async function PromiseAllTest() {
 
 console.log(window.location);
 
+// let PromiseAllOutputObject = PromiseAllTest();
+
+// let postContainer = PromiseAllOutputObject.postContainer;
+// let postContainerChildren = PromiseAllOutputObject.postContainerChildren;
+
+
+
+// let output = PromiseAllTest();
+// console.log(output);
+
+
+
+
+// newPostBtn.addEventListener("pointerup", (e) => {
+//     containerDeletion(output);
+//     PromiseAllTest();
+
+// });            
+
+
 PromiseAllTest();
 
 
-newPostBtn.addEventListener("pointerup", (e) => {
-    containerDeletion();
+// newPostBtn.addEventListener("pointerup", (e) => {
+//     containerDeletion(postContainer, postContainerChildren);
 
-    //do...while loop or regular while loop? Show loading image WHILE promisealltest is not resolved.
-
-
-
-    PromiseAllTest(); //this is an object not a promise.
+//     //do...while loop or regular while loop? Show loading image WHILE promisealltest is not resolved.
+//     //can't access promise value while it's happening AND concurrently preferentially choose to do something else, so I have to make the loading indicator
+//     //implicitly understand that it can exist only if there is nothing in the containers place, and it will leave once the container is there.
 
 
+//     let PromiseAllOutputObject = PromiseAllTest(); //this is an object not a promise.
+
+//     let postContainer = PromiseAllOutputObject.postContainer;
+//     let postContainerChildren = PromiseAllOutputObject.postContainerChildren;
 
 
-})
+
+
+// })
 
 
 //TODO: Some sort of loading indicator for lag time between posts. Thinging either a balnd loading design or a pepe design
